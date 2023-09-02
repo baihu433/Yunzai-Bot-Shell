@@ -1,4 +1,4 @@
-<h1 align="center">Ubuntu-Yunzai</h1>
+<h1 align="center">Yunzai-Bot-Shell</h1>
 <h6 align="center">QQ群:狐狸窝 705226976</h6>
 <hr/>
 

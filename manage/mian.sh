@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=1.0.0
+export ver=1.0.1
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -292,11 +292,11 @@ esac
 esac
 
 if [ ! "${up}" = "false" ];then
-version=`curl -s https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/version-bh.sh`
+version=`curl -s https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version`
     if [ "$version" != "$ver" ];then
         echo -e ${cyan}正在更新${background}
         rm /usr/local/bin/bh
-        curl -o bh https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/Yunzai-shell.sh
+        curl -o bh https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/main.sh
         mv bh /usr/local/bin/bh
         chmod +x /usr/local/bin/bh
         echo -e ${cyan}更新完成 回车继续${background};read
@@ -623,20 +623,38 @@ if (${dialog_whiptail} --title "白狐" \
 fi
 } #install_Genshin
 
+function qsign_server(){
+if [ ! -d $HOME/QSignServer ];then
+    if (${dialog_whiptail} --title "白狐" \
+       --yes-button "马上部署" \
+       --no-button "暂不部署" \
+       --yesno "是否部署本地签名服务器?" 10 50)
+       then
+           export install_QSignServer=true
+           bash <(curl -sL https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/QSignServer3.0.sh)
+    fi
+fi
+}
+
 function Git_BOT(){
 PACKAGE="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/BOT-PACKAGE.sh"
 if [ ${Bot_Name} == "Yunzai|Yunzai-Bot" ];then
     install_Bot
     bash <(curl -sL ${PACKAGE})
+    qsign_server
+    Bot_Path
 elif [ ${Bot_Name} == "Miao-Yunzai" ];then
     install_Bot
     install_Miao_Plugin
     bash <(curl -sL ${PACKAGE})
+    qsign_server
+    Bot_Path
 elif [ ${Bot_Name} == "TRSS-Yunzai" ];then
     install_Bot
     install_Miao_Plugin
     install_Genshin
     bash <(curl -sL ${PACKAGE})
+    Bot_Path
 fi
 cd ${Bot_Name}
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/manage/BOT-PACKAGE.sh)
