@@ -1,4 +1,5 @@
 #!/bin/env bash
+export ver=1.0.0
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -13,14 +14,296 @@ Arch_Script="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/ArchLinux/Bo
 Kernel_Script="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Centos/Bot-Install.sh"
 Ubuntu_Script="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Ubuntu/Bot-Install.sh"
 Debian_Script="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Debian/Bot-Install.sh"
+if [ -d /usr/local/node/bin ];then
+    export PATH=$PATH:/usr/local/node/bin
+    if [ ! -d $HOME/.local/share/pnpm ];then
+        mkdir -p $HOME/.local/share/pnpm
+    fi
+    export PATH=$PATH:/root/.local/share/pnpm
+    export PNPM_HOME=/root/.local/share/pnpm
+fi
+function QSIGN(){
+if [ -d $HOME/QSignServer/qsign117e ]
+then
+export QSIGN_VERSION="117e"
+elif [ -d $HOME/QSignServer/qsign119 ]
+then
+export QSIGN_VERSION="119"
+fi
+if [ -d $HOME/QSignServer/jdk ];then
+export PATH=$PATH:$HOME/QSignServer/jdk/bin
+export JAVA_HOME=$HOME/QSignServer/jdk
+fi
+if [ -d /usr/local/node/bin ];then
+    if [ ! -d $HOME/.local/share/pnpm ];then
+        mkdir -p $HOME/.local/share/pnpm
+    fi
+    export PATH=$PATH:$HOME/.local/share/pnpm
+    export PNPM_HOME=$HOME/.local/share/pnpm
+elif [ -d $HOME/QSignServer/node/bin ];then
+    export PATH=$PATH:$HOME/QSignServer/node/bin
+    export PNPM_HOME=$HOME/QSignServer/node/bin
+elif [ -d /usr/lib/node_modules/pnpm/bin ];then
+    if [ ! -d $HOME/.local/share/pnpm ];then
+        mkdir -p $HOME/.local/share/pnpm
+    fi
+    export PATH=$PATH:$HOME/.local/share/pnpm
+    export PNPM_HOME=$HOME/.local/share/pnpm
+fi
+if ! [ -x "$(command -v pm2)" ];then
+    echo -e ${yellow}正在使用pnpm安装pm2${background}
+    pnpm config set registry https://registry.npmmirror.com
+    pnpm config set registry https://registry.npmmirror.com
+    until pnpm install -g pm2@latest
+    do
+      echo -e ${red}pm2安装失败 ${green}正在重试${background}
+      pnpm setup
+    done
+    echo
+fi
+if [ -d $HOME/QSignServer/qsign${QSIGN_VERSION} ];then
+    ICQQ_VERSION="$(pnpm list icqq | grep icqq | sed "s/icqq //g" )"
+    case ${ICQQ_VERSION} in
+    0.5.3|0.5.2|0.5.1|0.5.0|0.4.14|0.4.13|0.4.12)
+    export version=8.9.70
+    ;;
+    0.4.11)
+    export version=8.9.68
+    ;;
+    0.4.10)
+    export version=8.9.63
+    ;;
+    0.3.*)
+    echo -e ${yellow}请更新icqq${background}
+    export version=8.9.70
+    ;;
+    *)
+    echo -e ${yellow}读取失败 请更新icqq${background}
+    export version=8.9.70
+    ;;
+    esac
+    if [ ! -e $HOME/QSignServer/txlib/${version}/config.json ];then
+        echo -e ${red}文件不存在 请确认您已经部署签名服务器${background}
+        exit
+    fi
+    file="$HOME/QSignServer/txlib/${version}/config.json"
+    port="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
+    key="$(grep -E key ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
+    host="$(grep -E host ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
+    API="http://"${host}":"${port}"/sign?key="${key}
+    API=$(echo ${API})
+    file1="$HOME/.fox@bot/${bot_name}/config/config/bot.yaml"
+    file2="$HOME/.fox@bot/${bot_name}/config/config/qq.yaml"
+    equipment="platform: 2"
+    if [ -e ${file1} ];then
+        if ! grep -q "${API}" ${file1};then
+            sed -i '/sign_api_addr/d' ${file1}
+            sed -i "\$a\sign_api_addr: ${API}" ${file1}
+        fi
+    #cd && sed -i '/sign_api_addr/d' M*/con*/con*/bot* && sed -i '$a\sign_api_addr: 127.0.0.1:6666/sign?key=fox' M*/con*/con*/bot*
+    fi
+    if [ -e ${file2} ];then
+        if ! grep -q "${equipment}" ${file2};then
+            sed -i "s/$(grep platform ${file2})/${equipment}/g" ${file2}
+            sed -i "s/$(grep ver ${file2})//g" ${file2}
+        fi
+    fi
+    API=$(echo ${API} | sed "s#/sign?key=${key}##g" )
+    if pm2 list qsign${QSIGN_VERSION} | grep -q online
+    then
+        echo -e ${green}签名服务器 ${cyan}已启动${background}
+            if curl -sL ${API} | grep -q ${version}
+              then
+                echo -e ${cyan}签名服务器的共享库版本 ${green}正确${background}
+              else
+                echo -e ${cyan}签名服务器的共享库版本 ${red}错误${background}
+                echo -e ${yellow}正在重启签名服务器${background}
+                pm2 delete qsign${QSIGN_VERSION}
+                pm2 start --name qsign${QSIGN_VERSION} "bash $HOME/QSignServer/qsign${QSIGN_VERSION}/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${version}"
+                sleep 5s
+            fi
+    else
+        echo -e ${green}签名服务器 ${red}未启动${background}
+        echo -e ${yellow}正在尝试启动签名服务器${background}
+        pm2 start --name qsign${QSIGN_VERSION} "bash $HOME/QSignServer/qsign${QSIGN_VERSION}/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${version}"
+        sleep 5s
+    fi
+fi
+}
+function pkg(){
+if [ ! -e package.json ];then
+echo -e ${red}参数错误${background}
+exit
+fi
+}
+function help(){
+echo -e ${green}=============================${background}
+echo -e ${cyan} bh"        | "${blue}打开白狐脚本${background}
+echo -e ${cyan} help"      | "${blue}获取快捷命令${background}
+echo -e ${cyan} QS"        | "${blue}管理签名服务器${background}
+echo -e ${cyan} YZ/MZ/TZ"  | "${green}[大写]${blue}选择您要控制的对象${background}
+echo -e ${cyan} yz/mz/tz"  | "${green}[小写]${blue}进入相应的bot文件夹${background}
+echo -e ${cyan} n"         | "${blue}前台启动${background}
+echo -e ${cyan} start"     | "${blue}后台启动${background}
+echo -e ${cyan} log"       | "${blue}打开日志${background}
+echo -e ${cyan} stop"      | "${blue}停止运行${background}
+echo -e ${cyan} login"     | "${blue}重新登陆${background}
+echo -e ${cyan} pi"        | "${blue}打开插件管理脚本${background}
+echo -e ${cyan} install"   | "${green}[依赖名] ${blue}安装依赖${background}
+echo -e ${cyan} qsign"     | "${green}[API链接] ${blue}填写签名服务器API${background}
+echo -e ${green}=============================${background}
+echo -e ${yellow} 脚本完全免费 如果你是购买所得 请给差评 打击倒卖 从你我做起${background}
+echo -e ${green} QQ群:${cyan}狐狸窝:705226976${background}
+echo -e ${green}=============================${background}
+}
 
-function redis_server(){
+case "$1" in
+QS)
+bash <(curl https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/QSignServer3.0.sh)
+exit
+;;
+YZ)
+export bot_name=Yunzai-Bot
+cd $HOME/Yunzai-Bot
+;;
+MZ)
+export bot_name=Miao-Yunzai
+cd $HOME/Miao-Yunzai
+;;
+TZ)
+export bot_name=TRSS-Yunzai
+cd $HOME/TRSS-Yunzai
+;;
+yz)
+cd $HOME/Yunzai-Bot && exec bash -i
+exit
+;;
+mz)
+cd  $HOME/Miao-Yunzai && exec bash -i
+exit
+;;
+tz)
+cd $HOME/TRSS-Yunzai && exec bash -i
+exit
+;;
+help)
+help
+exit
+;;
+redis)
 Redis=$(redis-cli ping)
-if [ ! "${Redis}" = "PONG" ]; then
+if ! [ "${Redis}" = "PONG" ]; then
  nohup redis-server &
  echo
 fi
-}
+;;
+unup)
+up=false
+;;
+pi)
+bash <(curl -sL https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/plug-in.sh)
+;;
+esac
+
+case "$2" in
+n)
+pkg
+QSIGN
+Redis=$(redis-cli ping)
+if ! [ "${Redis}" = "PONG" ]; then
+ redis-server &
+ echo
+fi
+node app
+exit
+;;
+start)
+pkg
+QSIGN
+Redis=$(redis-cli ping)
+if ! [ "${Redis}" = "PONG" ]; then
+ nohup redis-server &
+ echo
+fi
+pnpm run start
+exit
+;;
+stop)
+pkg
+pnpm run stop
+exit
+;;
+log)
+pkg
+pnpm run log
+exit
+;;
+login)
+pkg
+pnpm run login
+exit
+;;
+install)
+pkg
+pnpm install
+pnpm install "$3" -w
+exit
+;;
+qsign)
+pkg
+sed -i '/sign_api_addr/d' config/config/bot.yaml
+sed -i "\$a\sign_api_addr: $3" config/config/bot.yaml
+API=$(grep sign_api_addr config/config/bot.yaml)
+API=$(echo ${API} | sed "s/sign_api_addr//g")
+echo -e ${cyan}您的API链接已修改为 ${green}${API}${background}
+exit
+;;
+up)
+case $3 in
+  bot)
+  git pull
+  exit
+  ;;
+  pkg)
+  echo "Y" | pnpm install
+  echo "Y" | pnpm install puppeteer@19.0.0 -w
+  exit
+  ;;
+esac
+;;
+fix)
+pkg
+case $3 in
+  bot)
+  git fetch --all
+  git reset --hard origin/master || git reset --hard origin/main
+  git pull
+  exit
+  ;;
+  pkg)
+  rm -rf node_modules 
+  pnpm install -P
+  pnpm install
+  pnpm install puppeteer@19.0.0 -w
+  exit
+  ;;
+esac
+;;
+esac
+
+if [ ! "${up}" = "false" ];then
+version=`curl -s https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/version-bh.sh`
+    if [ "$version" != "$ver" ];then
+        echo -e ${cyan}正在更新${background}
+        rm /usr/local/bin/bh
+        curl -o bh https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/Yunzai-shell.sh
+        mv bh /usr/local/bin/bh
+        chmod +x /usr/local/bin/bh
+        echo -e ${cyan}更新完成 回车继续${background};read
+        bh
+        exit
+    fi
+fi
 
 function BOT(){
 if [[ "$1" == log ]];then
@@ -31,8 +314,8 @@ if [[ "$1" == log ]];then
         exit
     else
         redis_server
-        if (dialog --yesno "${Bot_Name} [未启动] \n是否立刻启动${Bot_Name}" 8 50);then
-            tmux new -s ${Bot_Name} "node app"
+        if (${dialog_whiptail} --yesno "${Bot_Name} [未启动] \n是否立刻启动${Bot_Name}" 8 50);then
+            tmux new -s ${Bot_Name} "bh redis && node app"
         fi
         main
         exit
@@ -40,14 +323,14 @@ if [[ "$1" == log ]];then
 elif [[ "$1" == start ]];then
     if tmux ls | grep ${Bot_Name}
     then
-        if (dialog --yesno "${Bot_Name} [已启动] \n是否打开${Bot_Name}窗口" 8 50);then
+        if (${dialog_whiptail} --yesno "${Bot_Name} [已启动] \n是否打开${Bot_Name}窗口" 8 50);then
             tmux attach -t ${Bot_Name}
         fi
         main
         exit
     else
         redis_server
-        tmux new -s ${Bot_Name} "node app"
+        tmux new -s ${Bot_Name} "bh redis && node app"
         main
         exit
     fi
@@ -58,7 +341,7 @@ elif [[ "$1" == stop ]];then
         main
         exit
     else
-        dialog --msgbox "${Bot_Name} [未启动]" 8 50
+        ${dialog_whiptail} --msgbox "${Bot_Name} [未启动]" 8 50
         main
         exit
     fi
@@ -66,25 +349,25 @@ elif [[ "$1" == restart ]];then
     if tmux ls | grep ${Bot_Name}
     then
         tmux kill-session -t ${Bot_Name}
-        tmux new -s ${Bot_Name} "node app"
+        tmux new -s ${Bot_Name} "bh redis && node app"
         main
         exit
     else
-        dialog --msgbox "${Bot_Name} [未启动]" 8 50
+        ${dialog_whiptail} --msgbox "${Bot_Name} [未启动]" 8 50
         main
         exit
     fi
 elif [[ "$1" == login ]];then
-    QQ=$(dialog --title "白狐-BOT" --inputbox "请输入您的机器人QQ号" 10 30 3>&1 1>&2 2>&3)
-    password=$(dialog --title "白狐-BOT" --inputbox "请输入您的机器人QQ密码" 10 30 3>&1 1>&2 2>&3)
-    dialog --title "请确认账号和密码" --yesno "\nQQ号: ${QQ} \n密码: ${password}" 10 30
+    QQ=$(${dialog_whiptail} --title "白狐-BOT" --inputbox "请输入您的机器人QQ号" 10 30 3>&1 1>&2 2>&3)
+    password=$(${dialog_whiptail} --title "白狐-BOT" --inputbox "请输入您的机器人QQ密码" 10 30 3>&1 1>&2 2>&3)
+    ${dialog_whiptail} --title "请确认账号和密码" --yesno "\nQQ号: ${QQ} \n密码: ${password}" 10 30
     feedback=$?
     if [[ ${feedback} == "1" ]];then
         main
         exit
     fi
     if [ ! -e config/config/qq.yaml ];then
-        dialog --title "白狐-BOT" --msgbox "账密文件不存在" 8 40
+        ${dialog_whiptail} --title "白狐-BOT" --msgbox "账密文件不存在" 8 40
         main
         exit
     fi
@@ -106,7 +389,7 @@ elif [[ "$1" == login ]];then
     old_password=$(echo ${old_password})
     sed -i "s/${old_password}/${password}/g" ${file}
 elif [[ "$1" == qsign ]];then
-    API=$(dialog --title "白狐-BOT" --inputbox "请输入您的签名服务器API" 10 50 3>&1 1>&2 2>&3)
+    API=$(${dialog_whiptail} --title "白狐-BOT" --inputbox "请输入您的签名服务器API" 10 50 3>&1 1>&2 2>&3)
     feedback=$?
     if [[ ${feedback} == "1" ]];then
         main
@@ -114,7 +397,7 @@ elif [[ "$1" == qsign ]];then
     fi
     file=config/config/bot.yaml
     if [ ! -e config/config/bot.yaml ];then
-        dialog --title "白狐-BOT" --msgbox "配置文件不存在" 8 40
+        ${dialog_whiptail} --title "白狐-BOT" --msgbox "配置文件不存在" 8 40
         main
         exit
     fi
@@ -163,14 +446,14 @@ function configure_file(){
 micro_yaml(){
 file=config/config/"$1"
 if [ ! -e config/config/"$1" ];then
-    dialog --title "白狐-BOT" --msgbox "配置文件不存在" 8 40
+    ${dialog_whiptail} --title "白狐-BOT" --msgbox "配置文件不存在" 8 40
     main
     exit
 fi
 micro ${file}
 }
 
-Number=$(dialog \
+Number=$(${dialog_whiptail} \
 --title "白狐 QQ群:705226976" \
 --menu "配置文件管理" \
 23 35 11 \
@@ -204,24 +487,24 @@ fi
 }
 
 function main(){
-Number=$(dialog \
+Number=$(${dialog_whiptail} \
 --title "白狐 QQ群:705226976" \
 --menu "${Bot_Name}管理" \
 23 35 11 \
-"1" "打开日志" \
+"1" "打开窗口" \
 "2" "启动运行" \
 "3" "停止运行" \
 "4" "重新启动" \
-"5" "插件管理" \
-"6" "重新登陆" \
-"7" "前台启动" \
-"8" "填写签名" \
-"9" "配置文件" \
-"10" "报错修复" \
+"5" "打开日志" \
+"6" "插件管理" \
+"7" "重新登陆" \
+"8" "前台启动" \
+"9" "填写签名" \
+"10" "配置文件" \
+"11" "报错修复" \
 "A" "我要卸崽" \
 "0" "返回" \
 3>&1 1>&2 2>&3)
-clear
 if [[ ${Number} == "1" ]];then
     BOT log
     echo -en ${cyan}回车返回${background};read
@@ -243,32 +526,36 @@ elif [[ ${Number} == "4" ]];then
     main
     exit
 elif [[ ${Number} == "5" ]];then
-    bash <(curl -sL https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/plug-in.sh)
+    pnpm run log
     main
     exit
 elif [[ ${Number} == "6" ]];then
+    bash <(curl -sL https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/plug-in.sh)
+    main
+    exit
+elif [[ ${Number} == "7" ]];then
     BOT login
     echo -en ${cyan}回车返回${background};read
     main
     exit
-elif [[ ${Number} == "7" ]];then
-    redis_server
+elif [[ ${Number} == "8" ]];then
+    bh redis
     node app
     echo -en ${cyan}回车返回${background};read
     main
     exit
-elif [[ ${Number} == "8" ]];then
+elif [[ ${Number} == "9" ]];then
     BOT qsign
     echo -en ${cyan}回车返回${background};read
     main
     exit
-elif [[ ${Number} == "9" ]];then
+elif [[ ${Number} == "10" ]];then
     configure_file
     echo -en ${cyan}回车返回${background};read
     main
     exit
-elif [[ ${Number} == "10" ]];then
-    echo -e ${red}重构未完成${background}
+elif [[ ${Number} == "11" ]];then
+    echo -e ${red}正在收集${background}
     main
     exit
 elif [[ ${Number} == "A" ]];then
@@ -279,7 +566,7 @@ fi
 }
 
 function install_Bot(){
-if (dialog --title "白狐" \
+if (${dialog_whiptail} --title "白狐" \
   --yes-button "Gitee" \
   --no-button "Github" \
   --yesno "请选择${Bot_Name}的下载服务器\n国内用户建议选择Gitee" 13 40)
@@ -297,7 +584,7 @@ fi
 } #install_Yunzai_Bot
 
 function install_Miao_Plugin(){
-if (dialog --title "白狐" \
+if (${dialog_whiptail} --title "白狐" \
 --yes-button "Gitee" \
 --no-button "Github" \
 --yesno "请选择的miao-plugin下载服务器\n国内用户建议选择Gitee" 13 40)
@@ -317,7 +604,7 @@ fi
 } #install_Miao_Plugin
 
 function install_Genshin(){
-if (dialog --title "白狐" \
+if (${dialog_whiptail} --title "白狐" \
 --yes-button "Gitee" \
 --no-button "Github" \
 --yesno "请选择的Genshin下载服务器\n国内用户建议选择Gitee" 13 40)
@@ -415,7 +702,7 @@ elif [ -d "/root/TRSS_AllBot/${Bot_Name}/node_modules" ];then
     cd ${Bot_Path}
     main
 else
-    if (dialog --title "白狐-Script" \
+    if (${dialog_whiptail} --title "白狐-Script" \
        --yes-button "安装" \
        --no-button "取消" \
        --yesno "未能找到${Bot_Name}根目录 \n请问是否立刻安装${Bot_Name}?" 10 50)
@@ -432,7 +719,7 @@ fi
 }
 
 function master(){
-Number=$(dialog \
+Number=$(${dialog_whiptail} \
 --title "白狐 QQ群:705226976" \
 --menu "请选择bot" \
 20 38 10 \
@@ -444,7 +731,6 @@ Number=$(dialog \
 "6" "编辑器使用方法" \
 "0" "退出" \
 3>&1 1>&2 2>&3)
-clear
 feedback=$?
 feedback
 if [[ ${Number} == "1" ]];then
@@ -453,37 +739,39 @@ if [[ ${Number} == "1" ]];then
     else
         export Bot_Name=Yunzai-Bot
     fi
-    Gitee=https://gitee.com/yoimiya-kokomi/Yunzai-Bot.git
-    Github=https://github.com/yoimiya-kokomi/Yunzai-Bot.git
+    export Gitee=https://gitee.com/yoimiya-kokomi/Yunzai-Bot.git
+    export Github=https://github.com/yoimiya-kokomi/Yunzai-Bot.git
     Bot_Path
 elif [[ ${Number} == "2" ]];then
     export Bot_Name=Miao-Yunzai
-    Gitee=https://gitee.com/yoimiya-kokomi/Miao-Yunzai.git
-    Github=https://github.com/yoimiya-kokomi/Miao-Yunzai.git
+    export Gitee=https://gitee.com/yoimiya-kokomi/Miao-Yunzai.git
+    export Github=https://github.com/yoimiya-kokomi/Miao-Yunzai.git
     Bot_Path
 elif [[ ${Number} == "3" ]];then
     export Bot_Name=TRSS-Yunzai
-    Gitee=https://gitee.com/TimeRainStarSky/Yunzai.git
-    Github=https://github.com/TimeRainStarSky/Yunzai.git
+    export Gitee=https://gitee.com/TimeRainStarSky/Yunzai.git
+    export Github=https://github.com/TimeRainStarSky/Yunzai.git
     Bot_Path
 elif [[ ${Number} == "4" ]];then
-    QSignServer
+    URL='https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/QSignServer3.0.sh'
+    bash <(curl -sL ${URL})
 elif [[ ${Number} == "5" ]];then
-    Gocq-Http
+    URL='https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/Gocq-Http.sh'
+    bash <(curl -sL ${URL})
 elif [[ ${Number} == "6" ]];then
     echo -e ${white}==================${background}
-    echo -e ${green}Ctrl + ${yellow}S  ${blue}保存${background}
-    echo -e ${green}Ctrl + ${yellow}Q  ${blue}退出${background}
-    echo -e ${green}Ctrl + ${yellow}C  ${blue}复制${background}
-    echo -e ${green}Ctrl + ${yellow}V  ${blue}粘贴${background}
-    echo -e ${green}Ctrl + ${yellow}X  ${blue}剪切${background}
-    echo -e ${green}Ctrl + ${yellow}/  ${blue}注释${background}
-    echo -e ${green}Ctrl + ${yellow}Z  ${blue}撤销${background}
-    echo -e ${green}Ctrl + ${yellow}Y  ${blue}重做${background}
-    echo -e ${green}Ctrl + ${yellow}L  ${blue}跳转指定行${background}
-    echo -e ${green}Ctrl + ${yellow}F  ${blue}搜索${background}
-    echo -e ${green}Ctrl + ${yellow}N  ${blue}搜索下一个${background}
-    echo -e ${green}Ctrl + ${yellow}P  ${blue}搜索上一个${background}
+    echo -e ${green} Ctrl + ${yellow}S  ${blue}保存${background}
+    echo -e ${green} Ctrl + ${yellow}Q  ${blue}退出${background}
+    echo -e ${green} Ctrl + ${yellow}C  ${blue}复制${background}
+    echo -e ${green} Ctrl + ${yellow}V  ${blue}粘贴${background}
+    echo -e ${green} Ctrl + ${yellow}X  ${blue}剪切${background}
+    echo -e ${green} Ctrl + ${yellow}/  ${blue}注释${background}
+    echo -e ${green} Ctrl + ${yellow}Z  ${blue}撤销${background}
+    echo -e ${green} Ctrl + ${yellow}Y  ${blue}重做${background}
+    echo -e ${green} Ctrl + ${yellow}L  ${blue}跳转指定行${background}
+    echo -e ${green} Ctrl + ${yellow}F  ${blue}搜索${background}
+    echo -e ${green} Ctrl + ${yellow}N  ${blue}搜索下一个${background}
+    echo -e ${green} Ctrl + ${yellow}P  ${blue}搜索上一个${background}
     echo -e ${white}==================${background}
     echo -en ${cyan}回车返回${background};read
 elif [[ ${Number} == "0" ]];then
@@ -492,6 +780,12 @@ else
     exit
 fi
 }
+
+if [ -x "$(command -v whiptail)" ];then
+    export dialog_whiptail=whiptail
+elif [ -x "$(command -v dialog)" ];then
+    export dialog_whiptail=dialog
+fi
 
 function mainbak()
 {

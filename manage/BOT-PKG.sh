@@ -46,7 +46,6 @@ pkg_list=("tar" \
 "curl" \
 "unzip" \
 "git" \
-"dialog"
 "tmux")
 
 for package in ${pkg_list[@]}
@@ -78,6 +77,15 @@ do
         fi
     fi
 done
+
+if [ -x "$(command -v whiptail)" ];then
+    dialog_whiptail=whiptail
+elif [ -x "$(command -v dialog)" ];then
+    dialog_whiptail=dialog
+else
+    package=dialog
+    pkg_install
+fi
 
 if [ ! -x "/usr/local/bin/ffmpeg" ]
     then
