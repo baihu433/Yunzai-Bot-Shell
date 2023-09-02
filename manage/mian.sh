@@ -158,6 +158,50 @@ elif [[ "$1" == delete ]];then
 fi
 }
 
+function configure_file(){
+vim_yaml(){
+file=config/config/"$1"
+if [ ! -e config/config/"$1" ];then
+    dialog --title "白狐-BOT" --msgbox "配置文件不存在" 8 40
+    main
+    exit
+fi
+vi ${file}
+}
+
+Number=$(dialog \
+--title "白狐 QQ群:705226976" \
+--menu "配置文件管理" \
+23 35 11 \
+"1" "bot.yaml" \
+"2" "group.yaml" \
+"3" "notice.yaml" \
+"4" "other.yaml" \
+"5" "qq.yaml" \
+"6" "redis.yaml" \
+"7" "renderer.yaml" \
+"0" "返回" \
+3>&1 1>&2 2>&3)
+if [ ${Number} == "1" ];then
+    vim_yaml bot.yaml
+elif [ ${Number} == "2" ];then
+    vim_yaml group.yaml
+elif [ ${Number} == "3" ];then
+    vim_yaml notice.yaml
+elif [ ${Number} == "4" ];then
+    vim_yaml other.yaml
+elif [ ${Number} == "5" ];then
+    vim_yaml qq.yaml
+elif [ ${Number} == "6" ];then
+    vim_yaml redis.yaml
+elif [ ${Number} == "7" ];then
+    vim_yaml renderer.yaml
+elif [ ${Number} == "0" ];then
+    main
+    exit
+fi
+}
+
 function main(){
 Number=$(dialog \
 --title "白狐 QQ群:705226976" \
@@ -198,7 +242,7 @@ elif [[ ${Number} == "4" ]];then
     main
     exit
 elif [[ ${Number} == "5" ]];then
-    
+    bash <(curl -sL https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/plug-in.sh)
     main
     exit
 elif [[ ${Number} == "6" ]];then
@@ -209,12 +253,17 @@ elif [[ ${Number} == "6" ]];then
 elif [[ ${Number} == "7" ]];then
     redis_server
     node app
+    echo -en ${cyan}回车返回${background};read
+    main
+    exit
 elif [[ ${Number} == "8" ]];then
     BOT qsign
+    echo -en ${cyan}回车返回${background};read
     main
     exit
 elif [[ ${Number} == "9" ]];then
-    echo -e ${red}重构未完成${background}
+    configure_file
+    echo -en ${cyan}回车返回${background};read
     main
     exit
 elif [[ ${Number} == "10" ]];then
@@ -223,6 +272,8 @@ elif [[ ${Number} == "10" ]];then
     exit
 elif [[ ${Number} == "A" ]];then
     BOT delete
+else
+    return
 fi
 }
 
