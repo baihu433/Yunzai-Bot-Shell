@@ -40,12 +40,13 @@ done
 pkg_list=("tar" \
 "gzip" \
 "pv" \
+"vim" \
 "redis" \
 "wget" \
 "curl" \
 "unzip" \
 "git" \
-"dialog")
+"whiptail")
 
 for package in ${pkg_list[@]}
 do
