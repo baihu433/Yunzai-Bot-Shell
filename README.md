@@ -65,6 +65,10 @@ bh
 ```
 bh help
 ```
+>修复白狐脚本打不开的命令
+```
+bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.sh)
+```
 >删除白狐脚本的命令
 ```
 rm /usr/local/bin/bh
