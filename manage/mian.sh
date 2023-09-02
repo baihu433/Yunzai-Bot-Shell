@@ -104,7 +104,7 @@ elif [[ "$1" == login ]];then
         exit
     fi
     sef -i "s/${old_password}/${password}/g" ${file}
-elif [[ "$1" == qsign ]]
+elif [[ "$1" == qsign ]];then
     API=$(dialog --title "白狐-BOT" --inputbox "请输入您的签名服务器API" 10 50 3>&1 1>&2 2>&3)
     feedback=$?
     if [[ ${feedback} == "1" ]];then
@@ -155,7 +155,6 @@ elif [[ "$1" == delete ]];then
         exit
     ;;
     esac
-
 fi
 }
 
@@ -215,9 +214,13 @@ elif [[ ${Number} == "8" ]];then
     main
     exit
 elif [[ ${Number} == "9" ]];then
-
+    echo -e ${red}重构未完成${background}
+    main
+    exit
 elif [[ ${Number} == "10" ]];then
-
+    echo -e ${red}重构未完成${background}
+    main
+    exit
 elif [[ ${Number} == "A" ]];then
     BOT delete
 fi
