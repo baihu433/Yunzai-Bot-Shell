@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=1.0.1
+export ver=1.0.2
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"

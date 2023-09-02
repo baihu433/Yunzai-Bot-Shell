@@ -25,9 +25,9 @@ mv go-cqhttp/go-cqhttp* go-cqhttp/go-cqhttp
 chmod +x go-cqhttp/go-cqhttp
 cd go-cqhttp
 ./go-cqhttp
-QQ=$(dialog --title "白狐-BOT" --inputbox "请输入您的机器人QQ号" 10 30 3>&1 1>&2 2>&3)
-password=$(dialog --title "白狐-BOT" --inputbox "请输入您的机器人QQ密码" 10 30 3>&1 1>&2 2>&3)
-dialog --title "请确认账号和密码" --yesno "\nQQ号: ${QQ} \n密码: ${password}" 10 30
+QQ=$(${dialog_whiptail} --title "白狐-BOT" --inputbox "请输入您的机器人QQ号" 10 30 3>&1 1>&2 2>&3)
+password=$(${dialog_whiptail} --title "白狐-BOT" --inputbox "请输入您的机器人QQ密码" 10 30 3>&1 1>&2 2>&3)
+${dialog_whiptail} --title "请确认账号和密码" --yesno "\nQQ号: ${QQ} \n密码: ${password}" 10 30
 feedback=$?
 if [[ ${feedback} == "1" ]];then
     echo -en ${cyan}回车返回${background};read
@@ -60,7 +60,7 @@ if [[ "$1" == log ]];then
         exit
     else
         redis_server
-        if (dialog --yesno "go-cqhttp [未启动] \n是否立刻启动go-cqhttp" 8 50);then
+        if (${dialog_whiptail} --yesno "go-cqhttp [未启动] \n是否立刻启动go-cqhttp" 8 50);then
             tmux new -s go-cqhttp "node app"
         fi
         main
@@ -69,7 +69,7 @@ if [[ "$1" == log ]];then
 elif [[ "$1" == start ]];then
     if tmux ls | grep go-cqhttp
     then
-        if (dialog --yesno "go-cqhttp [已启动] \n是否打开go-cqhttp窗口" 8 50);then
+        if (${dialog_whiptail} --yesno "go-cqhttp [已启动] \n是否打开go-cqhttp窗口" 8 50);then
             tmux attach -t go-cqhttp
         fi
         main
@@ -87,7 +87,7 @@ elif [[ "$1" == stop ]];then
         main
         exit
     else
-        dialog --msgbox "go-cqhttp [未启动]" 8 50
+        ${dialog_whiptail} --msgbox "go-cqhttp [未启动]" 8 50
         main
         exit
     fi
@@ -99,7 +99,7 @@ elif [[ "$1" == restart ]];then
         main
         exit
     else
-        dialog --msgbox "go-cqhttp [未启动]" 8 50
+        ${dialog_whiptail} --msgbox "go-cqhttp [未启动]" 8 50
         main
         exit
     fi
@@ -112,7 +112,7 @@ if [ ! ${feedback} == "0" ];then
 fi
 }
 function main(){
-Number=$(dialog \
+Number=$(${dialog_whiptail} \
 --title "白狐 QQ群:705226976" \
 --menu "请选择操作" \
 20 38 13 \
@@ -125,7 +125,6 @@ Number=$(dialog \
 "7" "卸载go-cqhttp" \
 "0" "退出" \
 3>&1 1>&2 2>&3)
-clear
 feedback=$?
 feedback
 if [ ${feedback} == "1" ];then
@@ -150,7 +149,7 @@ elif [[ ${Number} == "6" ]];then
     then
         micro $HOME/go-cqhttp/config.yml
     else
-        dialog --msgbox "go-cqhttp 配置文件 [不存在]" 8 50
+        ${dialog_whiptail} --msgbox "go-cqhttp 配置文件 [不存在]" 8 50
     fi
 elif [[ ${Number} == "7" ]];then
     rm -rvf $HOME/go-cqhttp > /dev/null
@@ -159,6 +158,11 @@ elif [[ ${Number} == "0" ]];then
     exit
 fi
 }
+if [ -x "$(command -v whiptail)" ];then
+    export dialog_whiptail=whiptail
+elif [ -x "$(command -v dialog)" ];then
+    export dialog_whiptail=dialog
+fi
 function mainbak()
 {
    while true
