@@ -37,7 +37,7 @@ do
 done
 }
 
-pkg_list=("tar" "gzip" "pv" "redis" "redis-server" "wget" "curl" "unzip" "git" "dpkg")
+pkg_list=("tar" "gzip" "pv" "redis" "wget" "curl" "unzip" "git" "dpkg")
 for package in ${pkg_list[@]}; do
     if [ ! -x "$(command -v ${package})" ]
     then
