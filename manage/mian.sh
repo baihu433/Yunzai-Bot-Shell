@@ -386,27 +386,27 @@ fi
 }
 
 function Bot_Path(){
-if [ -d "/root/${Bot_Name}" ];then
+if [ -d "/root/${Bot_Name}/node_modules" ];then
     Bot_Path="/root/${Bot_Name}"
     cd ${Bot_Path}
     main
-elif [ -d "/root/.fox@bot/${Bot_Name}" ];then
+elif [ -d "/root/.fox@bot/${Bot_Name}/node_modules" ];then
     Bot_Path="/root/.fox@bot/${Bot_Name}"
     cd ${Bot_Path}
     main
-elif [ -d "/home/lighthouse/ubuntu/${Bot_Name}" ];then
+elif [ -d "/home/lighthouse/ubuntu/${Bot_Name}/node_modules" ];then
     Bot_Path="/home/lighthouse/ubuntu/${Bot_Name}"
     cd ${Bot_Path}
     main
-elif [ -d "/home/lighthouse/centos/${Bot_Name}" ];then
+elif [ -d "/home/lighthouse/centos/${Bot_Name}/node_modules" ];then
     Bot_Path="/home/lighthouse/centos/${Bot_Name}"
     cd ${Bot_Path}
     main
-elif [ -d "/home/lighthouse/debian/${Bot_Name}" ];then
+elif [ -d "/home/lighthouse/debian/${Bot_Name}/node_modules" ];then
     Bot_Path="/home/lighthouse/debian/${Bot_Name}"
     cd ${Bot_Path}
     main
-elif [ -d "/root/TRSS_AllBot/${Bot_Name}" ];then
+elif [ -d "/root/TRSS_AllBot/${Bot_Name}/node_modules" ];then
     Bot_Path="/root/TRSS_AllBot/${Bot_Name}"
     cd ${Bot_Path}
     main
