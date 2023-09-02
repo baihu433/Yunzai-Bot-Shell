@@ -38,6 +38,7 @@ echo -e ${white}"=========================="${background}
 echo -en ${green}请输入:${background};read yn
 if [  "${yn}" == "同意安装" ]
 then
+    echo -e ${green}3秒后开始安装${background}
     Script_Install
 else
     echo -e ${red}终止!! 脚本停止运行${background}

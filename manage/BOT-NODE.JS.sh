@@ -31,8 +31,6 @@ export PNPM_HOME=/root/.local/share/pnpm
 source /etc/profile
 rm -rf node node.tar.xz > /dev/null
 rm -rf node node.tar.xz > /dev/null
-fi
-
 if [ ! -x "$(command -v pnpm)" ];then
     echo -e ${yellow}正在使用npm安装pnpm${background}
     a=0

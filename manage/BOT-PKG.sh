@@ -62,7 +62,7 @@ do
             pkg_install
         fi
     elif [ -x "$(command -v apt)" ];then
-        if ! dpkg -s "${package}";then
+        if ! dpkg -s "${package}" > /dev/null 2>&1;then
             echo -e ${yellow}安装软件 ${package}${background}
             pkg_install
         fi
@@ -82,6 +82,8 @@ done
 if [ ! -x "/usr/local/bin/ffmpeg" ]
     then
         echo -e ${yellow}安装软件 ffmpeg${background}
-        bash <(curl -sL https://gitee.com/baihu433/ffmpeg/raw/master/ffmpeg.sh)
+        source <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/BOT-ARCH.sh)
+        wget -q --show-progress -O ffmpeg https://cdn.npmmirror.com/binaries/ffmpeg-static/b6.0/ffmpeg-linux-${ARCH}
+        wget -q --show-progress -O ffprobe https://cdn.npmmirror.com/binaries/ffmpeg-static/b6.0/ffprobe-linux-${ARCH}
 fi
 
