@@ -40,7 +40,7 @@ done
 pkg_list=("tar" \
 "gzip" \
 "pv" \
-"vim" \
+"micro" \
 "redis" \
 "wget" \
 "curl" \

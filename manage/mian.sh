@@ -65,7 +65,6 @@ elif [[ "$1" == stop ]];then
 elif [[ "$1" == restart ]];then
     if tmux ls | grep ${Bot_Name}
     then
-        
         tmux kill-session -t ${Bot_Name}
         tmux new -s ${Bot_Name} "node app"
         main
@@ -96,6 +95,7 @@ elif [[ "$1" == login ]];then
         main
         exit
     fi
+    old_QQ=$(echo ${old_QQ})
     sed -i "s/${old_QQ}/${QQ}/g" ${file}
     old_password=$(grep -w "password:" ${file} | sed 's/password://g')
     if [ -z "${old_password}" ]; then
@@ -103,7 +103,8 @@ elif [[ "$1" == login ]];then
         main
         exit
     fi
-    sef -i "s/${old_password}/${password}/g" ${file}
+    old_password=$(echo ${old_password})
+    sed -i "s/${old_password}/${password}/g" ${file}
 elif [[ "$1" == qsign ]];then
     API=$(dialog --title "白狐-BOT" --inputbox "请输入您的签名服务器API" 10 50 3>&1 1>&2 2>&3)
     feedback=$?
@@ -159,14 +160,14 @@ fi
 }
 
 function configure_file(){
-vim_yaml(){
+micro_yaml(){
 file=config/config/"$1"
 if [ ! -e config/config/"$1" ];then
     dialog --title "白狐-BOT" --msgbox "配置文件不存在" 8 40
     main
     exit
 fi
-vi ${file}
+micro ${file}
 }
 
 Number=$(dialog \
@@ -183,19 +184,19 @@ Number=$(dialog \
 "0" "返回" \
 3>&1 1>&2 2>&3)
 if [ ${Number} == "1" ];then
-    vim_yaml bot.yaml
+    micro_yaml bot.yaml
 elif [ ${Number} == "2" ];then
-    vim_yaml group.yaml
+    micro_yaml group.yaml
 elif [ ${Number} == "3" ];then
-    vim_yaml notice.yaml
+    micro_yaml notice.yaml
 elif [ ${Number} == "4" ];then
-    vim_yaml other.yaml
+    micro_yaml other.yaml
 elif [ ${Number} == "5" ];then
-    vim_yaml qq.yaml
+    micro_yaml qq.yaml
 elif [ ${Number} == "6" ];then
-    vim_yaml redis.yaml
+    micro_yaml redis.yaml
 elif [ ${Number} == "7" ];then
-    vim_yaml renderer.yaml
+    micro_yaml renderer.yaml
 elif [ ${Number} == "0" ];then
     main
     exit
@@ -279,26 +280,19 @@ fi
 
 function install_Bot(){
 if (dialog --title "白狐" \
-   --yes-button "安装" \
-   --no-button "返回" \
-   --yesno "${Bot_Name}未安装，是否开始安装?" 13 40)
-   then
-     if (dialog --title "白狐" \
-       --yes-button "Gitee" \
-       --no-button "Github" \
-       --yesno "请选择${Bot_Name}的下载服务器\n国内用户建议选择Gitee" 13 40)
-       then
-         if ! git clone --depth=1 ${Gitee} ~/.fox@bot/${Bot_Name};then
-           echo -e ${red} 克隆失败 ${cyan}试试Github ${background}
-           exit
-         fi
-       else
-         if ! git clone --depth=1 ${Github} ~/.fox@bot/${Bot_Name};then
-           echo -e ${red} 克隆失败 ${cyan}试试Gitee ${background}
-           exit
-         fi
-     fi
-     ln -sf ~/.fox@bot/${Bot_Name} ~/${Bot_Name}
+  --yes-button "Gitee" \
+  --no-button "Github" \
+  --yesno "请选择${Bot_Name}的下载服务器\n国内用户建议选择Gitee" 13 40)
+  then
+    if ! git clone --depth=1 ${Gitee} ~/${Bot_Name};then
+      echo -e ${red} 克隆失败 ${cyan}试试Github ${background}
+      exit
+    fi
+  else
+    if ! git clone --depth=1 ${Github} ~/${Bot_Name};then
+      echo -e ${red} 克隆失败 ${cyan}试试Gitee ${background}
+      exit
+    fi
 fi
 } #install_Yunzai_Bot
 
@@ -308,13 +302,13 @@ if (dialog --title "白狐" \
 --no-button "Github" \
 --yesno "请选择的miao-plugin下载服务器\n国内用户建议选择Gitee" 13 40)
   then
-    if ! git clone --depth=1 https://gitee.com/yoimiya-kokomi/miao-plugin.git ~/.fox@bot/${Bot_Name}/plugins/miao-plugin
+    if ! git clone --depth=1 https://gitee.com/yoimiya-kokomi/miao-plugin.git ~/${Bot_Name}/plugins/miao-plugin
     then
       echo -e ${red} 克隆失败 ${cyan}试试Github ${background}
       exit
     fi
   else
-    if ! git clone --depth=1 https://github.com/yoimiya-kokomi/miao-plugin.git ~/.fox@bot/${Bot_Name}/plugins/miao-plugin
+    if ! git clone --depth=1 https://github.com/yoimiya-kokomi/miao-plugin.git ~/${Bot_Name}/plugins/miao-plugin
     then
       echo -e ${red} 克隆失败 ${cyan}试试Gitee ${background}
       exit
@@ -328,13 +322,13 @@ if (dialog --title "白狐" \
 --no-button "Github" \
 --yesno "请选择的Genshin下载服务器\n国内用户建议选择Gitee" 13 40)
   then
-    if ! git clone --depth=1 https://gitee.com/TimeRainStarSky/Yunzai-genshin ~/.fox@bot/${Bot_Name}/plugins/genshin
+    if ! git clone --depth=1 https://gitee.com/TimeRainStarSky/Yunzai-genshin ~/${Bot_Name}/plugins/genshin
     then
       echo -e ${red} 克隆失败 ${cyan}试试Github ${background}
       exit
     fi
   else
-    if ! git clone --depth=1 https://github.com/TimeRainStarSky/Yunzai-genshin ~/.fox@bot/${Bot_Name}/plugins/genshin
+    if ! git clone --depth=1 https://github.com/TimeRainStarSky/Yunzai-genshin ~/${Bot_Name}/plugins/genshin
     then
       echo -e ${red} 克隆失败 ${cyan}试试Gitee ${background}
       exit
@@ -359,22 +353,34 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/manage/B
 
 function BOT_INSTALL(){
 if grep -q -E Alpine /etc/issue && [ -x /sbin/apk ];then
-    bash <(curl -sL ${Alpine_Script})
+    if ! bash <(curl -sL ${Alpine_Script});then
+        exit
+    fi
     Git_BOT
 elif grep -q -E Arch /etc/issue && [ -x /usr/bin/pacman ];then
-    bash <(curl -sL ${Arch_Script})
+    if ! bash <(curl -sL ${Arch_Script});then
+        exit
+    fi
     Git_BOT
 elif grep -q -E Kernel /etc/issue && [ -x /usr/bin/dnf ];then
-    bash <(curl -sL ${Kernel_Script})
+    if ! bash <(curl -sL ${Kernel_Script});then
+        exit
+    fi
     Git_BOT
 elif grep -q -E Kernel /etc/issue && [ -x /usr/bin/yum ];then
-    bash <(curl -sL ${Kernel_Script})
+    if ! bash <(curl -sL ${Kernel_Script});then
+        exit
+    fi
     Git_BOT
 elif grep -q -E Ubuntu /etc/issue && [ -x /usr/bin/apt ];then
-    bash <(curl -sL ${Ubuntu_Script})
+    if ! bash <(curl -sL ${Ubuntu_Script});then
+        exit
+    fi
     Git_BOT
 elif grep -q -E Debian /etc/issue && [ -x /usr/bin/apt ];then
-    bash <(curl -sL ${Debian_Script})
+    if ! bash <(curl -sL ${Debian_Script});then
+        exit
+    fi
     Git_BOT
 fi
 }
@@ -386,7 +392,7 @@ if [ -d "/root/${Bot_Name}" ];then
     main
 elif [ -d "/root/.fox@bot/${Bot_Name}" ];then
     Bot_Path="/root/.fox@bot/${Bot_Name}"
-    cd ${Bot_Path} 
+    cd ${Bot_Path}
     main
 elif [ -d "/home/lighthouse/ubuntu/${Bot_Name}" ];then
     Bot_Path="/home/lighthouse/ubuntu/${Bot_Name}"
@@ -416,13 +422,12 @@ fi
 }
 
 function feedback(){
-if [ ${feedback} == "1" ];then
-    exit
-elif [ ${feedback} == "255" ];then
+if [ ! ${feedback} == "0" ];then
     exit
 fi
 }
 
+function master(){
 Number=$(dialog \
 --title "白狐 QQ群:705226976" \
 --menu "请选择bot" \
@@ -432,6 +437,7 @@ Number=$(dialog \
 "3" "TRSS-Yunzai" \
 "4" "签名服务器管理" \
 "5" "gocq-http管理" \
+"6" "编辑器使用方法" \
 "0" "退出" \
 3>&1 1>&2 2>&3)
 clear
@@ -460,8 +466,35 @@ elif [[ ${Number} == "4" ]];then
     QSignServer
 elif [[ ${Number} == "5" ]];then
     Gocq-Http
+elif [[ ${Number} == "6" ]];then
+    echo -e ${white}==================${background}
+    echo -e ${green}Ctrl + ${yellow}S  ${blue}保存${background}
+    echo -e ${green}Ctrl + ${yellow}Q  ${blue}退出${background}
+    echo -e ${green}Ctrl + ${yellow}C  ${blue}复制${background}
+    echo -e ${green}Ctrl + ${yellow}V  ${blue}粘贴${background}
+    echo -e ${green}Ctrl + ${yellow}X  ${blue}剪切${background}
+    echo -e ${green}Ctrl + ${yellow}/  ${blue}注释${background}
+    echo -e ${green}Ctrl + ${yellow}Z  ${blue}撤销${background}
+    echo -e ${green}Ctrl + ${yellow}Y  ${blue}重做${background}
+    echo -e ${green}Ctrl + ${yellow}L  ${blue}跳转指定行${background}
+    echo -e ${green}Ctrl + ${yellow}F  ${blue}搜索${background}
+    echo -e ${green}Ctrl + ${yellow}N  ${blue}搜索下一个${background}
+    echo -e ${green}Ctrl + ${yellow}P  ${blue}搜索上一个${background}
+    echo -e ${white}==================${background}
+    echo -en ${cyan}回车返回${background};read
 elif [[ ${Number} == "0" ]];then
     exit
 else
     exit
 fi
+}
+
+function mainbak()
+{
+   while true
+   do
+       master
+       mainbak
+   done
+}
+mainbak

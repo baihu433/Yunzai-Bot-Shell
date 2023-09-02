@@ -47,14 +47,15 @@ if ! ${pkg_install} list installed fonts >/dev/null 2>&1
         done    
 fi
 
-if [ ! -x "$(command -v node)" ]
+if [ -x "$(command -v node)" ]
 then
     echo -e ${yellow}安装软件 Node.JS${background}
     Nodsjs_Version=$(node -v | cut -d '.' -f1)
 fi
 i=0
 if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
-    bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/BOT-ARCH.sh)
+    source <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/BOT-ARCH.sh)
+    rm -rf node.tar.xz
     until wget -q --show-progress -O node.tar.xz -c https://cdn.npmmirror.com/binaries/node/latest-v18.x/node-v18.17.0-linux-${ARCH}.tar.xz
     do
         if [ ${i} -eq 3 ]

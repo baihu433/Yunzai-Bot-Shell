@@ -58,7 +58,7 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/BO
 
 Nodsjs_Version=$(node -v | cut -d '.' -f1)
 if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
-    bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/BOT-ARCH.sh)
+    source <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/BOT-ARCH.sh)
     if awk '{print $2}' /etc/issue | grep -q -E 22.*
         then
             version1=v18
