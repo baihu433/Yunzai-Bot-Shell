@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=1.0.2
+export ver=1.0.3
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -299,7 +299,7 @@ version=`curl -s https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version`
         curl -o bh https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/main.sh
         mv bh /usr/local/bin/bh
         chmod +x /usr/local/bin/bh
-        echo -e ${cyan}更新完成 回车继续${background};read
+        echo -en ${cyan}更新完成 回车继续${background};read
         bh
         exit
     fi
