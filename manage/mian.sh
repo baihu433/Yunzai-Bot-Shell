@@ -337,15 +337,19 @@ fi
 } #install_Genshin
 
 function Git_BOT(){
+PACKAGE="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/BOT-PACKAGE.sh"
 if [ ${Bot_Name} == "Yunzai|Yunzai-Bot" ];then
     install_Bot
+    bash <(curl -sL ${PACKAGE})
 elif [ ${Bot_Name} == "Miao-Yunzai" ];then
     install_Bot
     install_Miao_Plugin
+    bash <(curl -sL ${PACKAGE})
 elif [ ${Bot_Name} == "TRSS-Yunzai" ];then
     install_Bot
     install_Miao_Plugin
     install_Genshin
+    bash <(curl -sL ${PACKAGE})
 fi
 cd ${Bot_Name}
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/manage/BOT-PACKAGE.sh)
