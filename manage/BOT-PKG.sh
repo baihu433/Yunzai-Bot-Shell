@@ -75,6 +75,7 @@ do
             echo -e ${yellow}安装软件 ${package}${background}
             pkg_install
         fi
+    fi
 done
 
 if [ ! -x "/usr/local/bin/ffmpeg" ]
