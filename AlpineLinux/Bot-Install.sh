@@ -11,18 +11,34 @@ export background="\033[0m"
 
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/BOT-PKG.sh)
 
-if ! dpkg -s xz >/dev/null 2>&1
-        then
-            apk add xz
+if ! apk info -e xz >/dev/null 2>&1
+    then
+        echo -e ${yellow}安装xz解压工具${background}
+        until apk add xz
+        do
+            echo -e ${red}安装失败 3秒后重试${background}
+            sleep 3s
+        done
 fi
 
-if ! dpkg -s chromium-browser >/dev/null 2>&1
-        then
-            until apk add chromium
-            do
-                echo -e ${red}安装失败 3秒后重试${background}
-                sleep 3s
-            done
+if ! apk info -e chromium >/dev/null 2>&1
+    then
+        echo -e ${yellow}安装chromium浏览器${background}
+        until apk add chromium
+        do
+            echo -e ${red}安装失败 3秒后重试${background}
+            sleep 3s
+        done
+fi
+
+if ! apk info -e ttf-dejavu && apk info -e wqy-zenhei >/dev/null 2>&1
+    then
+        echo -e ${yellow}安装中文字体包${background}
+        until apk add ttf-dejavu wqy-zenhei
+        do
+            echo -e ${red}安装失败 3秒后重试${background}
+            sleep 3s
+        done
 fi
 
 if [ ! -x "$(command -v node)" ]

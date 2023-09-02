@@ -46,12 +46,34 @@ pkg_list=("tar" \
 "unzip" \
 "git" \
 "dialog")
-for package in ${pkg_list[@]}; do
-    if ! dpkg -s ${package} >/dev/null 2>&1
-    then
-        echo -e ${yellow}安装软件 ${package}${background}
-        pkg_install
-    fi
+
+for package in ${pkg_list[@]}
+do
+    if [ -x "$(command -v apk)" ];then
+        if ! apk info -e "${package}" > /dev/null 2>&1;then
+            echo -e ${yellow}安装软件 ${package}${background}
+            pkg_install
+        fi
+    elif [ -x "$(command -v pacman)" ];then
+        if ! pacman -Qs "${package}" > /dev/null 2>&1;then
+            echo -e ${yellow}安装软件 ${package}${background}
+            pkg_install
+        fi
+    elif [ -x "$(command -v apt)" ];then
+        if ! dpkg -s "${package}";then
+            echo -e ${yellow}安装软件 ${package}${background}
+            pkg_install
+        fi
+    elif [ -x "$(command -v yum)" ];then
+        if ! yum list installed "${package}" > /dev/null 2>&1;then
+            echo -e ${yellow}安装软件 ${package}${background}
+            pkg_install
+        fi
+    elif [ -x "$(command -v dnf)" ];then
+        if ! dnf list installed "${package}" > /dev/null 2>&1;then
+            echo -e ${yellow}安装软件 ${package}${background}
+            pkg_install
+        fi
 done
 
 if [ ! -x "/usr/local/bin/ffmpeg" ]

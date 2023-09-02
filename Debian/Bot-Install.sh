@@ -12,13 +12,33 @@ export background="\033[0m"
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/BOT-PKG.sh)
 
 if ! dpkg -s xz-utils >/dev/null 2>&1
-        then
-            apt install -y xz-utils
+    then
+        echo -e ${yellow}安装xz解压工具${background}
+        until apt install -y xz-utils
+        do
+            echo -e ${red}安装失败 3秒后重试${background}
+            sleep 3s
+        done
 fi
 
 if ! dpkg -s chromium >/dev/null 2>&1
-        then
-            apt install -y chromium
+    then
+        echo -e ${yellow}安装chromium浏览器${background}
+        until apt install -y chromium
+        do
+            echo -e ${red}安装失败 3秒后重试${background}
+            sleep 3s
+        done
+fi
+
+if ! dpkg -s fonts-wqy-zenhei fonts-wqy-microhei >/dev/null 2>&1
+    then
+        echo -e ${yellow}安装中文字体包${background}
+        until apt install -y fonts-wqy*
+        do
+            echo -e ${red}安装失败 3秒后重试${background}
+            sleep 3s
+        done
 fi
 
 if [ ! -x "$(command -v node)" ]

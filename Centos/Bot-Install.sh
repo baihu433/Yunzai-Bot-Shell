@@ -10,21 +10,41 @@ export white="\033[37m"
 export background="\033[0m"
 
 if [ $(command -v dnf) ];then
-    pkg_install="dnf install -y"
+    pkg_install="dnf"
 elif [ $(command -v yum) ];then
-    pkg_install="yum install -y"
+    pkg_install="yum"
 fi
 
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/BOT-PKG.sh)
 
-if ! dpkg -s xz >/dev/null 2>&1
-        then
-            ${pkg_install} xz
+if ! ${pkg_install} list installed xz >/dev/null 2>&1
+    then
+        echo -e ${yellow}安装xz解压工具${background}
+        until ${pkg_install} install -y xz
+        do
+            echo -e ${red}安装失败 3秒后重试${background}
+            sleep 3s
+        done
 fi
 
-if ! dpkg -s chromium >/dev/null 2>&1
-        then
-            ${pkg_install} chromium
+if ! ${pkg_install} list installed chromium >/dev/null 2>&1
+    then
+        echo -e ${yellow}安装chromium浏览器${background}
+        until ${pkg_install} install -y chromium
+        do
+            echo -e ${red}安装失败 3秒后重试${background}
+            sleep 3s
+        done    
+fi
+
+if ! ${pkg_install} list installed fonts >/dev/null 2>&1
+    then
+        echo -e ${yellow}安装中文字体${background}
+        until ${pkg_install} groupinstall -y fonts
+        do
+            echo -e ${red}安装失败 3秒后重试${background}
+            sleep 3s
+        done    
 fi
 
 if [ ! -x "$(command -v node)" ]

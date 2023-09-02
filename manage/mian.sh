@@ -11,9 +11,43 @@ export background="\033[0m"
 
 
 
-function Bot_Path(){
-if [ ! -d ];then
 
+
+
+
+
+
+
+
+
+
+
+function BOT_INSTALL(){
+
+
+
+}
+
+
+
+
+
+function Bot_Path(){
+if [ -d "/root/${Bot_Name}" ];then
+    Bot_Path="/root/${Bot_Name}"
+elif [ -d "/root/.fox@bot/${Bot_Name}" ];then
+    Bot_Path="/root/.fox@bot/${Bot_Name}"
+elif [ -d "/home/lighthouse/ubuntu/${Bot_Name}" ];then
+    Bot_Path="/home/lighthouse/ubuntu/${Bot_Name}"
+elif [ -d "/home/lighthouse/centos/${Bot_Name}" ];then
+    Bot_Path="/home/lighthouse/centos/${Bot_Name}"
+elif [ -d "/home/lighthouse/debian/${Bot_Name}" ];then
+    Bot_Path="/home/lighthouse/debian/${Bot_Name}"
+elif [ -d "/root/TRSS_AllBot/${Bot_Name}" ];then
+    Bot_Path="/root/TRSS_AllBot/${Bot_Name}"
+else
+    
+    BOT_INSTALL
 fi
 }
 

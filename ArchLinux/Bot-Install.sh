@@ -11,9 +11,44 @@ export background="\033[0m"
 
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/BOT-PKG.sh)
 
-if ! dpkg -s chromium >/dev/null 2>&1
-        then
-            pacman -Syy --noconfirm --needed chromium
+if ! pacman -Qs xz >/dev/null 2>&1
+    then
+        echo -e ${yellow}安装xz解压工具${background}
+        until pacman -Syy --noconfirm --needed xz
+        do
+            echo -e ${red}安装失败 3秒后重试${background}
+            sleep 3s
+        done
+fi
+
+if ! pacman -Qs chromium >/dev/null 2>&1
+    then
+        echo -e ${yellow}安装chromium浏览器${background}
+        until pacman -Syy --noconfirm --needed chromium
+        do
+            echo -e ${red}安装失败 3秒后重试${background}
+            sleep 3s
+        done
+fi
+
+if ! ttf-dejavu wqy-zenhei >/dev/null 2>&1
+    then
+        echo -e ${yellow}安装中文字体包${background}
+        until pacman -Syy --noconfirm --needed ttf-dejavu wqy-zenhei
+        do
+            echo -e ${red}安装失败 3秒后重试${background}
+            sleep 3s
+        done
+fi
+
+if ! pacman -Qs ttf-dejavu >/dev/null 2>&1 && ! pacman -Qs wqy-zenhei >/dev/null 2>&1
+    then
+        echo -e ${yellow}安装中文字体包${background}
+        until pacman -Syy --noconfirm --needed ttf-dejavu wqy-zenhei
+        do
+            echo -e ${red}安装失败 3秒后重试${background}
+            sleep 3s
+        done
 fi
 
 if [ ! -x "$(command -v node)" ]

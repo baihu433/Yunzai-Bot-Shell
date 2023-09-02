@@ -21,14 +21,6 @@ elif [ $(command -v apk) ];then
     pkg_install="apk add"
 fi
 
-function dpkg_install(){
-if [ ! -x "$(command -v dpkg)" ]
-then
-    echo -e ${yellow}安装软件 Node.JS${background}
-    Nodsjs_Version=$(node -v | cut -d '.' -f1)
-fi
-}
-
 function Script(){
 if grep -q -E Alpine /etc/issue && [ -x /sbin/apk ];then
     
