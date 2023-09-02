@@ -41,7 +41,7 @@ if ! apk info -e ttf-dejavu && apk info -e wqy-zenhei >/dev/null 2>&1
         done
 fi
 
-if [ ! -x "$(command -v node)" ]
+if [ -x "$(command -v node)" ]
 then
     echo -e ${yellow}安装软件 Node.JS${background}
     Nodsjs_Version=$(node -v | cut -d '.' -f1)
