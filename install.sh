@@ -9,32 +9,21 @@ export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
 
-if [ $(command -v apt) ];then
-    pkg_install="apt install -y"
-elif [ $(command -v dnf) ];then
-    pkg_install="dnf install -y"
-elif [ $(command -v yum) ];then
-    pkg_install="yum install -y"
-elif [ $(command -v pacman) ];then
-    pkg_install="pacman -Syy --noconfirm --needed"
-elif [ $(command -v apk) ];then
-    pkg_install="apk add"
-fi
-
-function Script(){
-if grep -q -E Alpine /etc/issue && [ -x /sbin/apk ];then
-    
-elif grep -q -E Arch /etc/issue && [ -x /usr/bin/pacman ];then
-    
-elif grep -q -E Kernel /etc/issue && [ -x /usr/bin/dnf ];then
-    
-elif grep -q -E Kernel /etc/issue && [ -x /usr/bin/yum ];then
-    
-elif grep -q -E Ubuntu /etc/issue && [ -x /usr/bin/apt ];then
-    
-elif grep -q -E Debian /etc/issue && [ -x /usr/bin/apt ];then
-    
-fi
+function Script_Install(){
+    echo
+    echo -e ${white}=========================${background}
+    echo -e ${red}" "白狐 ${yellow}BOT ${green}Install ${cyan}Script ${background}
+    echo -e "  "————"  "————"  "————"  "————"  "
+    echo -e ${green}" "版本:" "v1.0.0 ${cyan}\(20230902\) ${background}
+    echo -e ${green}" "作者:" "${cyan}白狐"   "\(baihu433\) ${background}
+    echo -e ${white}=========================${background}
+    echo
+    echo -e ${yellow} - ${yellow}正在安装${background}
+    curl -o bh https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/mian.sh
+    mv bh /usr/local/bin/bh
+    chmod +x /usr/local/bin/bh
+    echo -e ${yellow} - ${yellow}安装成功${background}
+    echo -e ${yellow} - ${cyan}请使用 ${green}bh ${cyan}命令 打开脚本${background}
 }
 
 echo -e ${white}"====="${green}白狐-Script${white}"====="${background}
@@ -49,12 +38,7 @@ echo -e ${white}"=========================="${background}
 echo -en ${green}请输入您的选项: ${background};read yn
 if [  "yn" == "同意安装" ]
 then
-    if [ ! -x "$(command -v dpkg)" ]
-    then
-        echo -e ${yellow}安装软件 dpkg${background}
-        dpkg_install
-        Script
-    fi
+    Script_Install
 else
     echo -e ${red}终止!! 脚本停止运行${background}
 fi

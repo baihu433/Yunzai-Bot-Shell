@@ -50,3 +50,8 @@ if [ ! -x "$(command -v pnpm)" ];then
     done
     echo
 fi
+echo -e ${yellow}正在为pnpm更换默认源${background}
+pnpm config set registry https://registry.npmmirror.com
+pnpm config set registry https://registry.npmmirror.com
+pnpm config set node_sqlite3_binary_host_mirror https://npmmirror.com/mirrors/sqlite3
+pnpm config set node_sqlite3_binary_host_mirror https://npmmirror.com/mirrors/sqlite3
