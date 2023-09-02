@@ -32,7 +32,7 @@ if [[ "$1" == log ]];then
     else
         redis_server
         if (dialog --yesno "${Bot_Name} [未启动] \n是否立刻启动${Bot_Name}" 8 50);then
-            tmux new -s ${Bot_Name} "&& node app"
+            tmux new -s ${Bot_Name} "node app"
         fi
         main
         exit
@@ -79,16 +79,83 @@ elif [[ "$1" == login ]];then
     QQ=$(dialog --title "白狐-BOT" --inputbox "请输入您的机器人QQ号" 10 30 3>&1 1>&2 2>&3)
     password=$(dialog --title "白狐-BOT" --inputbox "请输入您的机器人QQ密码" 10 30 3>&1 1>&2 2>&3)
     dialog --title "请确认账号和密码" --yesno "\nQQ号: ${QQ} \n密码: ${password}" 10 30
+    feedback=$?
+    if [[ ${feedback} == "1" ]];then
+        main
+        exit
+    fi
     if [ ! -e config/config/qq.yaml ];then
-        dialog --msgbox "账密文件不存在" 8 50
+        dialog --title "白狐-BOT" --msgbox "账密文件不存在" 8 40
         main
         exit
     fi
     file=config/config/qq.yaml
     old_QQ=$(grep -w "qq:" ${file} | sed 's/qq://g')
+    if [ -z "${old_QQ}" ]; then
+        echo -en ${red}读取失败 回车返回${background};read
+        main
+        exit
+    fi
     sed -i "s/${old_QQ}/${QQ}/g" ${file}
     old_password=$(grep -w "password:" ${file} | sed 's/password://g')
+    if [ -z "${old_password}" ]; then
+        echo -en ${red}读取失败 回车返回${background};read
+        main
+        exit
+    fi
     sef -i "s/${old_password}/${password}/g" ${file}
+elif [[ "$1" == qsign ]]
+    API=$(dialog --title "白狐-BOT" --inputbox "请输入您的签名服务器API" 10 50 3>&1 1>&2 2>&3)
+    feedback=$?
+    if [[ ${feedback} == "1" ]];then
+        main
+        exit
+    fi
+    file=config/config/bot.yaml
+    if [ ! -e config/config/bot.yaml ];then
+        dialog --title "白狐-BOT" --msgbox "配置文件不存在" 8 40
+        main
+        exit
+    fi
+    old_qsign=$(grep sign_api_addr ${file} | sed 's/sign_api_addr: //g')
+    if [ -z "${old_qsign}" ]; then
+        echo -en ${red}读取失败 回车返回${background};read
+        main
+        exit
+    fi
+    sed -i "s#${old_qsign}#sign_api_addr: ${API}#g" config/config/bot.yaml
+    API=$(grep sign_api_addr config/config/bot.yaml)
+    API=$(echo ${API} | sed "s/sign_api_addr: //g")
+    echo -e ${cyan}您的API链接已修改为 ${green}${API}${background}
+elif [[ "$1" == delete ]];then
+    echo -e ${yellow}是否删除${red}${Bot_Name}${cyan}[N/y] ${background};read -p "" num
+    case $num in
+    Y|y)
+        echo -e ${red}3${background}
+        sleep 1
+        echo -e ${red}2${background}
+        sleep 1
+        echo -e ${red}1${background}
+        sleep 1
+        echo -e ${red}正在删除${bot_name}${background}
+        rm -rf ~/${bot_name} > /dev/null
+        rm -rf ~/${bot_name} > /dev/null
+        rm -rf ~/.fox@bot/${bot_name} > /dev/null
+        rm -rf ~/.fox@bot/${bot_name} > /dev/null
+        echo -en ${cyan}删除完成 回车返回${background};read
+    ;;
+        n|N)
+        echo -en ${cyan}回车返回${background};read
+        main
+        exit
+    ;;
+    *)
+        echo -en ${red}输入错误${cyan}回车返回${background};read
+        main
+        exit
+    ;;
+    esac
+
 fi
 }
 
@@ -106,6 +173,7 @@ Number=$(dialog \
 "7" "前台启动" \
 "8" "填写签名" \
 "9" "配置文件" \
+"10" "报错修复" \
 "A" "我要卸崽" \
 "0" "返回" \
 3>&1 1>&2 2>&3)
@@ -131,7 +199,7 @@ elif [[ ${Number} == "4" ]];then
     main
     exit
 elif [[ ${Number} == "5" ]];then
-    echo -en ${cyan}还没有重构完成 回车返回${background};read
+    
     main
     exit
 elif [[ ${Number} == "6" ]];then
@@ -143,13 +211,15 @@ elif [[ ${Number} == "7" ]];then
     redis_server
     node app
 elif [[ ${Number} == "8" ]];then
-    echo -en ${cyan}还没有重构完成 回车返回${background};read
+    BOT qsign
     main
     exit
+elif [[ ${Number} == "9" ]];then
+
+elif [[ ${Number} == "10" ]];then
+
 elif [[ ${Number} == "A" ]];then
-    echo -en ${cyan}还没有重构完成 回车返回${background};read
-    main
-    exit
+    BOT delete
 fi
 }
 
