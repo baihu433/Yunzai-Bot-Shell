@@ -16,7 +16,7 @@ elif [ $(command -v dnf) ];then
 elif [ $(command -v yum) ];then
     pkg_install="yum install -y"
 elif [ $(command -v pacman) ];then
-    pkg_install="pacman -Sy --noconfirm --needed"
+    pkg_install="pacman -Syy --noconfirm --needed"
 elif [ $(command -v apk) ];then
     pkg_install="apk add"
 fi
@@ -37,18 +37,26 @@ do
 done
 }
 
-pkg_list=("tar" "gzip" "pv" "redis" "wget" "curl" "unzip" "git" "dpkg")
+pkg_list=("tar" \
+"gzip" \
+"pv" \
+"redis" \
+"wget" \
+"curl" \
+"unzip" \
+"git" \
+"dialog")
 for package in ${pkg_list[@]}; do
-    if [ ! -x "$(command -v ${package})" ]
+    if ! dpkg -s ${package} >/dev/null 2>&1
     then
-        echo -e ${yellow}安装软件 ${pkg}${background}
+        echo -e ${yellow}安装软件 ${package}${background}
         pkg_install
     fi
 done
 
 if [ ! -x "/usr/local/bin/ffmpeg" ]
     then
-        echo -e ${yellow}正在安装ffmpeg${background}
-        bash <(curl https://gitee.com/baihu433/ffmpeg/raw/master/ffmpeg.sh)
+        echo -e ${yellow}安装软件 ffmpeg${background}
+        bash <(curl -sL https://gitee.com/baihu433/ffmpeg/raw/master/ffmpeg.sh)
 fi
 
