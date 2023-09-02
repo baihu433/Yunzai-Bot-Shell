@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=1.0.3
+export ver=1.0.5
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -452,7 +452,6 @@ if [ ! -e config/config/"$1" ];then
 fi
 micro ${file}
 }
-
 Number=$(${dialog_whiptail} \
 --title "白狐 QQ群:705226976" \
 --menu "配置文件管理" \
@@ -486,11 +485,26 @@ elif [ ${Number} == "0" ];then
 fi
 }
 
+function Fix_Error(){
+Number=$(${dialog_whiptail} \
+--title "白狐 QQ群:705226976" \
+--menu "${Bot_Name}管理" \
+23 35 15 \
+"1" "降级puppeteer" \
+3>&1 1>&2 2>&3)
+if [[ ${Number} == "1" ]];then
+    echo "Y" | pnpm install
+    echo "Y" | pnpm install puppeteer@19.0.0 -w
+else
+    return
+fi
+}
+
 function main(){
 Number=$(${dialog_whiptail} \
 --title "白狐 QQ群:705226976" \
 --menu "${Bot_Name}管理" \
-23 35 11 \
+23 35 15 \
 "1" "打开窗口" \
 "2" "启动运行" \
 "3" "停止运行" \
@@ -555,7 +569,8 @@ elif [[ ${Number} == "10" ]];then
     main
     exit
 elif [[ ${Number} == "11" ]];then
-    echo -e ${red}正在收集${background}
+    Fix_Error
+    echo -en ${cyan}回车返回${background};read
     main
     exit
 elif [[ ${Number} == "A" ]];then
@@ -631,7 +646,8 @@ if [ ! -d $HOME/QSignServer ];then
        --yesno "是否部署本地签名服务器?" 10 50)
        then
            export install_QSignServer=true
-           bash <(curl -sL https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/QSignServer3.0.sh)
+           URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/QSignServer3.0.sh"
+           bash <(curl -sL ${URL})
     fi
 fi
 }
@@ -656,8 +672,8 @@ elif [ ${Bot_Name} == "TRSS-Yunzai" ];then
     bash <(curl -sL ${PACKAGE})
     Bot_Path
 fi
-cd ${Bot_Name}
-bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/manage/BOT-PACKAGE.sh)
+cd $HOME/${Bot_Name}
+bash <(curl -sL ${PACKAGE})
 }
 
 function BOT_INSTALL(){
@@ -777,6 +793,8 @@ elif [[ ${Number} == "5" ]];then
     URL='https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/Gocq-Http.sh'
     bash <(curl -sL ${URL})
 elif [[ ${Number} == "6" ]];then
+    echo
+    echo
     echo -e ${white}==================${background}
     echo -e ${green} Ctrl + ${yellow}S  ${blue}保存${background}
     echo -e ${green} Ctrl + ${yellow}Q  ${blue}退出${background}

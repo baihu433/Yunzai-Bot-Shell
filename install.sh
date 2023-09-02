@@ -9,6 +9,46 @@ export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
 
+if [ "$(uname -o)" = "Android" ]; then
+	echo "看来你是大聪明 加Q群获取帮助吧 596660282"
+	exit 1
+fi
+
+if ! [ "$(uname)" == "Linux" ];then
+    echo -e ${red}请使用linux!${background}
+    exit 0
+fi
+
+if [ "$(id -u)" != "0" ]; then
+    echo -e ${red} 请使用root用户!${background}
+    exit 0
+fi
+function system_test(){
+if grep -q -E Alpine /etc/issue && [ -x /sbin/apk ];then
+    echo -e ${green}系统效验通过${background}
+elif grep -q -E Arch /etc/issue && [ -x /usr/bin/pacman ];then
+    echo -e ${green}系统效验通过${background}
+elif grep -q -E Kernel /etc/issue && [ -x /usr/bin/dnf ];then
+    echo -e ${green}系统效验通过${background}
+elif grep -q -E Kernel /etc/issue && [ -x /usr/bin/yum ];then
+    echo -e ${green}系统效验通过${background}
+elif grep -q -E Ubuntu /etc/issue && [ -x /usr/bin/apt ];then
+    echo -e ${green}系统效验通过${background}
+elif grep -q -E Debian /etc/issue && [ -x /usr/bin/apt ];then
+    echo -e ${green}系统效验通过${background}
+else
+    echo -e ${red}您的系统暂时不受支持 ${yellow}是否继续安装? [Y/N] ${background};read YN
+    case ${YN} in
+        Y/y)
+            Script_Install
+            ;;
+        N/n)
+            echo -e ${red}程序终止!! 脚本停止运行${background}
+            exit
+            ;;
+    esac
+fi
+}
 function Script_Install(){
     echo
     echo -e ${white}=========================${background}
@@ -22,6 +62,10 @@ function Script_Install(){
     curl -o bh https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/mian.sh
     mv bh /usr/local/bin/bh
     chmod +x /usr/local/bin/bh
+    if ! bh help > /dev/null 2>&1;then
+        echo -e ${yellow} - ${red}安装失败${background}
+        exit
+    fi
     echo -e ${yellow} - ${yellow}安装成功${background}
     echo -e ${yellow} - ${cyan}请使用 ${green}bh ${cyan}命令 打开脚本${background}
 }
@@ -39,7 +83,11 @@ echo -en ${green}请输入:${background};read yn
 if [  "${yn}" == "同意安装" ]
 then
     echo -e ${green}3秒后开始安装${background}
+    sleep 2s
+    system_test
+    sleep 1s
+    echo
     Script_Install
 else
-    echo -e ${red}终止!! 脚本停止运行${background}
+    echo -e ${red}程序终止!! 脚本停止运行${background}
 fi

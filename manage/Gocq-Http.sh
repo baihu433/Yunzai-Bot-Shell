@@ -52,6 +52,9 @@ sed -i "s/${old_password}/${password}/g" ${file}
 }
 
 function GOCQ_HTTP(){
+if [ ! -x $HOME/go-cqhttp/go-cqhttp ];then
+    ${dialog_whiptail} --msgbox "go-cqhttp [未安装]" 8 50
+fi
 if [[ "$1" == log ]];then
     if tmux ls | grep go-cqhttp
     then
@@ -59,9 +62,8 @@ if [[ "$1" == log ]];then
         main
         exit
     else
-        redis_server
         if (${dialog_whiptail} --yesno "go-cqhttp [未启动] \n是否立刻启动go-cqhttp" 8 50);then
-            tmux new -s go-cqhttp "node app"
+            tmux new -s go-cqhttp "cd $HOME/go-cqhttp && ./go-cqhttp"
         fi
         main
         exit
@@ -75,8 +77,7 @@ elif [[ "$1" == start ]];then
         main
         exit
     else
-        redis_server
-        tmux new -s go-cqhttp "node app"
+        tmux new -s go-cqhttp "cd $HOME/go-cqhttp && ./go-cqhttp"
         main
         exit
     fi
@@ -95,7 +96,7 @@ elif [[ "$1" == restart ]];then
     if tmux ls | grep go-cqhttp
     then
         tmux kill-session -t go-cqhttp
-        tmux new -s go-cqhttp "node app"
+        tmux new -s go-cqhttp "cd $HOME/go-cqhttp && ./go-cqhttp"
         main
         exit
     else
