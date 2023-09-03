@@ -17,8 +17,6 @@ elif [ $(command -v yum) ];then
     pkg_install="yum install -y"
 elif [ $(command -v pacman) ];then
     pkg_install="pacman -Syy --noconfirm --needed"
-elif [ $(command -v apk) ];then
-    pkg_install="apk add"
 fi
 
 function pkg_install(){
@@ -50,12 +48,7 @@ pkg_list=("tar" \
 
 for package in ${pkg_list[@]}
 do
-    if [ -x "$(command -v apk)" ];then
-        if ! apk info -e "${package}" > /dev/null 2>&1;then
-            echo -e ${yellow}安装软件 ${package}${background}
-            pkg_install
-        fi
-    elif [ -x "$(command -v pacman)" ];then
+    if [ -x "$(command -v pacman)" ];then
         if ! pacman -Qs "${package}" > /dev/null 2>&1;then
             echo -e ${yellow}安装软件 ${package}${background}
             pkg_install

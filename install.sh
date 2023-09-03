@@ -24,9 +24,7 @@ if [ "$(id -u)" != "0" ]; then
     exit 0
 fi
 function system_test(){
-if grep -q -E Alpine /etc/issue && [ -x /sbin/apk ];then
-    echo -e ${green}系统效验通过${background}
-elif grep -q -E Arch /etc/issue && [ -x /usr/bin/pacman ];then
+if grep -q -E Arch /etc/issue && [ -x /usr/bin/pacman ];then
     echo -e ${green}系统效验通过${background}
 elif grep -q -E Kernel /etc/issue && [ -x /usr/bin/dnf ];then
     echo -e ${green}系统效验通过${background}

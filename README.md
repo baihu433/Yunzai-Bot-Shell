@@ -3,8 +3,6 @@
 <hr/>
 
 #### 适配系统
-
-- [x] AlpineLinux
 - [x] Android
 - [x] ArchLinux
 - [x] Centos
@@ -15,9 +13,7 @@
 - [ ] Fedora
 - [ ] OpenSUSE
 - [ ] Kali
-
 #### 特点
-
 - [x] 一键化部署
 - [x] 多BOT支持
 - [x] 多系统支持
@@ -27,7 +23,6 @@
 - [x] 插件的安装/更新/卸载
 - [x] ffmpeg安装
 - [x] 签名服务器部署
-
 ###### 下面是正在鸽的功能
 - [ ] 自定义安装目录
 - [ ] python3.10 pip poetry的安装
