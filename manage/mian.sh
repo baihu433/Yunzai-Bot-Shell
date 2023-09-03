@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=1.0.7
+export ver=1.0.8
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -92,13 +92,16 @@ if [ -d $HOME/QSignServer/qsign${QSIGN_VERSION} ];then
     host="$(grep -E host ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
     API="http://"${host}":"${port}"/sign?key="${key}
     API=$(echo ${API})
-    file1="$HOME/.fox@bot/${bot_name}/config/config/bot.yaml"
-    file2="$HOME/.fox@bot/${bot_name}/config/config/qq.yaml"
+    echo -e ${cyan}您的本地签名服务器API链接: ${green}${API}${background}
+    file1="$HOME/${Bot_Name}/config/config/bot.yaml"
+    file2="$HOME/${Bot_Name}/config/config/qq.yaml"
     equipment="platform: 2"
     if [ -e ${file1} ];then
         if ! grep -q "${API}" ${file1};then
+            sed - '/ver*/d' ${file1}
             sed -i '/sign_api_addr/d' ${file1}
             sed -i "\$a\sign_api_addr: ${API}" ${file1}
+            sed -i "\$a\ver: ${version}" ${file1}
         fi
     #cd && sed -i '/sign_api_addr/d' M*/con*/con*/bot* && sed -i '$a\sign_api_addr: 127.0.0.1:6666/sign?key=fox' M*/con*/con*/bot*
     fi
@@ -169,15 +172,15 @@ bash <(curl https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/QSignServer3.0.s
 exit
 ;;
 YZ|Yunzai|Yunzai-Bot)
-export bot_name=Yunzai-Bot
+export Bot_Name=Yunzai-Bot
 cd $HOME/Yunzai-Bot
 ;;
 MZ|Miao-Yunzai)
-export bot_name=Miao-Yunzai
+export Bot_Name=Miao-Yunzai
 cd $HOME/Miao-Yunzai
 ;;
 TZ|TRSS-Yunzai)
-export bot_name=TRSS-Yunzai
+export Bot_Name=TRSS-Yunzai
 cd $HOME/TRSS-Yunzai
 ;;
 yz)
@@ -420,11 +423,9 @@ elif [[ "$1" == delete ]];then
         sleep 1
         echo -e ${red}1${background}
         sleep 1
-        echo -e ${red}正在删除${bot_name}${background}
-        rm -rf ~/${bot_name} > /dev/null
-        rm -rf ~/${bot_name} > /dev/null
-        rm -rf ~/.fox@bot/${bot_name} > /dev/null
-        rm -rf ~/.fox@bot/${bot_name} > /dev/null
+        echo -e ${red}正在删除${Bot_Name}${background}
+        rm -rf ~/${Bot_Name} > /dev/null
+        rm -rf ~/${Bot_Name} > /dev/null
         echo -en ${cyan}删除完成 回车返回${background};read
     ;;
         n|N)
