@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=1.0.8
+export ver=1.1.0
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -98,7 +98,7 @@ if [ -d $HOME/QSignServer/qsign${QSIGN_VERSION} ];then
     equipment="platform: 2"
     if [ -e ${file1} ];then
         if ! grep -q "${API}" ${file1};then
-            sed - '/ver*/d' ${file1}
+            sed -i '/ver*/d' ${file1}
             sed -i '/sign_api_addr/d' ${file1}
             sed -i "\$a\sign_api_addr: ${API}" ${file1}
             sed -i "\$a\ver: ${version}" ${file1}
@@ -442,6 +442,35 @@ elif [[ "$1" == delete ]];then
 fi
 }
 
+function git_update(){
+cd $HOME/${Bot_Name}
+git_pull(){
+echo -e ${yellow}正在更新 ${Name}
+if ! git pull
+then
+    echo -e ${red}${Name}更新失败 ${yellow}是否强制更新 [Y/N]${background};read YN
+    if [[ ${YN} == "Y|y" ]];then
+        remote=$(grep 'remote =' .git/config | sed 's/remote =//g')
+        remote=$(echo ${remote})
+        branch=$(grep branch .git/config | sed "s/\[branch \"//g" | sed 's/"//g' | sed "s/\]//g")
+        branch=$(echo ${branch})
+        git fetch --all
+        git reset --hard ${remote}/${branch}
+        git_pull
+    fi
+fi
+}
+Name=${Bot_Name}
+git_pull
+for folder in $(ls -I example -I bin -I other -I system plugins)
+do
+    if [ -d plugins/${folder}/.git ];then
+        cd plugins/${folder}
+        git_pull
+        cd ../../
+done
+}
+
 function configure_file(){
 micro_yaml(){
 file=config/config/"$1"
@@ -511,11 +540,12 @@ Number=$(${dialog_whiptail} \
 "4" "重新启动" \
 "5" "打开日志" \
 "6" "插件管理" \
-"7" "重新登陆" \
-"8" "前台启动" \
-"9" "填写签名" \
-"10" "配置文件" \
-"11" "报错修复" \
+"7" "全部更新" \
+"8" "重新登陆" \
+"9" "前台启动" \
+"10" "填写签名" \
+"11" "配置文件" \
+"12" "报错修复" \
 "A" "我要卸崽" \
 "0" "返回" \
 3>&1 1>&2 2>&3)
@@ -548,26 +578,30 @@ elif [[ ${Number} == "6" ]];then
     main
     exit
 elif [[ ${Number} == "7" ]];then
+    git_update
+    main
+    exit
+elif [[ ${Number} == "8" ]];then
     BOT login
     echo -en ${cyan}回车返回${background};read
     main
     exit
-elif [[ ${Number} == "8" ]];then
+elif [[ ${Number} == "9" ]];then
     bh ${Bot_Name} n
     echo -en ${cyan}回车返回${background};read
     main
     exit
-elif [[ ${Number} == "9" ]];then
+elif [[ ${Number} == "10" ]];then
     BOT qsign
     echo -en ${cyan}回车返回${background};read
     main
     exit
-elif [[ ${Number} == "10" ]];then
+elif [[ ${Number} == "11" ]];then
     configure_file
     echo -en ${cyan}回车返回${background};read
     main
     exit
-elif [[ ${Number} == "11" ]];then
+elif [[ ${Number} == "12" ]];then
     Fix_Error
     echo -en ${cyan}回车返回${background};read
     main
