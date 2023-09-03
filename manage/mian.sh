@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=1.1.0
+export ver=1.1.1
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -468,6 +468,7 @@ do
         cd plugins/${folder}
         git_pull
         cd ../../
+    fi
 done
 }
 
