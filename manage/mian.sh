@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=1.0.5
+export ver=1.0.6
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -136,6 +136,11 @@ echo -e ${red}参数错误${background}
 exit
 fi
 }
+function run(){
+if pnpm pm2 list | grep -q ${Bot_Name};then
+    pnpm pm2 stop ${Bot_Name}
+    pnpm pm2 delete ${Bot_Name}
+fi
 function help(){
 echo -e ${green}=============================${background}
 echo -e ${cyan} bh"        | "${blue}打开白狐脚本${background}
@@ -162,15 +167,15 @@ QS)
 bash <(curl https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/QSignServer3.0.sh)
 exit
 ;;
-YZ)
+YZ|Yunzai|Yunzai-Bot)
 export bot_name=Yunzai-Bot
 cd $HOME/Yunzai-Bot
 ;;
-MZ)
+MZ|Miao-Yunzai)
 export bot_name=Miao-Yunzai
 cd $HOME/Miao-Yunzai
 ;;
-TZ)
+TZ|TRSS-Yunzai)
 export bot_name=TRSS-Yunzai
 cd $HOME/TRSS-Yunzai
 ;;
@@ -190,13 +195,6 @@ help)
 help
 exit
 ;;
-redis)
-Redis=$(redis-cli ping)
-if ! [ "${Redis}" = "PONG" ]; then
- nohup redis-server &
- echo
-fi
-;;
 unup)
 up=false
 ;;
@@ -215,6 +213,8 @@ if ! [ "${Redis}" = "PONG" ]; then
  echo
 fi
 node app
+run
+echo -en ${cyan}回车退出${background};read
 exit
 ;;
 start)
@@ -265,8 +265,8 @@ case $3 in
   exit
   ;;
   pkg)
-  echo "Y" | pnpm install
-  echo "Y" | pnpm install puppeteer@19.0.0 -w
+  yes "Y" | pnpm install
+  yes "Y" | pnpm install puppeteer@19.0.0 -w
   exit
   ;;
 esac
@@ -282,9 +282,9 @@ case $3 in
   ;;
   pkg)
   rm -rf node_modules 
-  pnpm install -P
-  pnpm install
-  pnpm install puppeteer@19.0.0 -w
+  yes "Y" | pnpm install -P
+  yes "Y" | pnpm install
+  yes "Y" | pnpm install puppeteer@19.0.0 -w
   exit
   ;;
 esac
@@ -315,7 +315,7 @@ if [[ "$1" == log ]];then
     else
         redis_server
         if (${dialog_whiptail} --yesno "${Bot_Name} [未启动] \n是否立刻启动${Bot_Name}" 8 50);then
-            tmux new -s ${Bot_Name} "bh redis && node app"
+            tmux new -s ${Bot_Name} "bh ${Bot_Name} n"
         fi
         main
         exit
@@ -329,8 +329,7 @@ elif [[ "$1" == start ]];then
         main
         exit
     else
-        redis_server
-        tmux new -s ${Bot_Name} "bh redis && node app"
+        tmux new -s ${Bot_Name} "bh ${Bot_Name} n"
         main
         exit
     fi
@@ -349,7 +348,7 @@ elif [[ "$1" == restart ]];then
     if tmux ls | grep ${Bot_Name}
     then
         tmux kill-session -t ${Bot_Name}
-        tmux new -s ${Bot_Name} "bh redis && node app"
+        tmux new -s ${Bot_Name} "bh ${Bot_Name} n"
         main
         exit
     else
@@ -655,25 +654,48 @@ fi
 function Git_BOT(){
 PACKAGE="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/BOT-PACKAGE.sh"
 if [ ${Bot_Name} == "Yunzai|Yunzai-Bot" ];then
-    install_Bot
-    bash <(curl -sL ${PACKAGE})
-    qsign_server
+    if [ ! -e ~/${Bot_Name}/index.js ];then
+        install_Bot
+    fi
+    if [ ! -d ~/${Bot_Name}/node_modules ];then
+        bash <(curl -sL ${PACKAGE})
+    fi
+    if [ ! -d ~/QSignServer ];then
+        qsign_server
+    fi
     Bot_Path
 elif [ ${Bot_Name} == "Miao-Yunzai" ];then
-    install_Bot
-    install_Miao_Plugin
-    bash <(curl -sL ${PACKAGE})
-    qsign_server
+    if [ ! -e ~/${Bot_Name}/index.js ];then
+        install_Bot
+    fi
+    if [ ! -e ~/${Bot_Name}/miao-plugin/index.js ];then
+        install_Miao_Plugin
+    fi
+    if [ ! -d ~/${Bot_Name}/node_modules ];then
+        bash <(curl -sL ${PACKAGE})
+    fi
+    if [ ! -d ~/QSignServer ];then
+        qsign_server
+    fi
     Bot_Path
 elif [ ${Bot_Name} == "TRSS-Yunzai" ];then
-    install_Bot
-    install_Miao_Plugin
-    install_Genshin
-    bash <(curl -sL ${PACKAGE})
+    if [ ! -e ~/${Bot_Name}/index.js ];then
+        install_Bot
+    fi
+    if [ ! -e ~/${Bot_Name}/miao-plugin/index.js ];then
+        install_Miao_Plugin
+    fi
+    if [ ! -d ~/${Bot_Name}/node_modules ];then
+        bash <(curl -sL ${PACKAGE})
+    fi
+    if [ ! -e ~/${Bot_Name}/genshin/index.js ];then
+        install_Genshin
+    fi
+    if [ ! -d ~/QSignServer ];then
+        qsign_server
+    fi
     Bot_Path
 fi
-cd $HOME/${Bot_Name}
-bash <(curl -sL ${PACKAGE})
 }
 
 function BOT_INSTALL(){
