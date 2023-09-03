@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=1.0.6
+export ver=1.0.7
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -141,6 +141,7 @@ if pnpm pm2 list | grep -q ${Bot_Name};then
     pnpm pm2 stop ${Bot_Name}
     pnpm pm2 delete ${Bot_Name}
 fi
+}
 function help(){
 echo -e ${green}=============================${background}
 echo -e ${cyan} bh"        | "${blue}打开白狐脚本${background}
@@ -296,7 +297,7 @@ version=`curl -s https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version`
     if [ "$version" != "$ver" ];then
         echo -e ${cyan}正在更新${background}
         rm /usr/local/bin/bh
-        curl -o bh https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/main.sh
+        curl -o bh https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/mian.sh
         mv bh /usr/local/bin/bh
         chmod +x /usr/local/bin/bh
         echo -en ${cyan}更新完成 回车继续${background};read
@@ -313,7 +314,6 @@ if [[ "$1" == log ]];then
         main
         exit
     else
-        redis_server
         if (${dialog_whiptail} --yesno "${Bot_Name} [未启动] \n是否立刻启动${Bot_Name}" 8 50);then
             tmux new -s ${Bot_Name} "bh ${Bot_Name} n"
         fi
@@ -552,8 +552,7 @@ elif [[ ${Number} == "7" ]];then
     main
     exit
 elif [[ ${Number} == "8" ]];then
-    bh redis
-    node app
+    bh ${Bot_Name} n
     echo -en ${cyan}回车返回${background};read
     main
     exit
@@ -685,11 +684,11 @@ elif [ ${Bot_Name} == "TRSS-Yunzai" ];then
     if [ ! -e ~/${Bot_Name}/miao-plugin/index.js ];then
         install_Miao_Plugin
     fi
-    if [ ! -d ~/${Bot_Name}/node_modules ];then
-        bash <(curl -sL ${PACKAGE})
-    fi
     if [ ! -e ~/${Bot_Name}/genshin/index.js ];then
         install_Genshin
+    fi
+    if [ ! -d ~/${Bot_Name}/node_modules ];then
+        bash <(curl -sL ${PACKAGE})
     fi
     if [ ! -d ~/QSignServer ];then
         qsign_server
@@ -809,10 +808,10 @@ elif [[ ${Number} == "3" ]];then
     export Github=https://github.com/TimeRainStarSky/Yunzai.git
     Bot_Path
 elif [[ ${Number} == "4" ]];then
-    URL='https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/QSignServer3.0.sh'
+    URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/QSignServer3.0.sh"
     bash <(curl -sL ${URL})
 elif [[ ${Number} == "5" ]];then
-    URL='https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/Gocq-Http.sh'
+    URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/Gocq-Http.sh"
     bash <(curl -sL ${URL})
 elif [[ ${Number} == "6" ]];then
     echo
