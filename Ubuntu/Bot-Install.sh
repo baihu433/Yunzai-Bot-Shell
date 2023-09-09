@@ -9,7 +9,7 @@ export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
 
-bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/BOT-PKG.sh)
+bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PKG.sh)
 
 if ! dpkg -s xz-utils >/dev/null 2>&1
     then
