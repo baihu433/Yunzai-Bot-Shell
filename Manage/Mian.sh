@@ -8,7 +8,7 @@ elif ping -c 1 www.google.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=1.1.2
+export ver=0.0.1
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -152,6 +152,7 @@ function run(){
 if pnpm pm2 list | grep -q ${Bot_Name};then
     pnpm pm2 stop ${Bot_Name}
     pnpm pm2 delete ${Bot_Name}
+    node app
 fi
 }
 function help(){
