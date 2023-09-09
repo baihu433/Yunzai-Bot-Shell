@@ -31,10 +31,10 @@ if ! apk info -e chromium >/dev/null 2>&1
         done
 fi
 
-if ! apk info -e ttf-dejavu >/dev/null 2>&1 && ! apk info -e wqy-zenhei >/dev/null 2>&1
+if ! apk info -e ttf-dejavu >/dev/null 2>&1
     then
         echo -e ${yellow}安装中文字体包${background}
-        until apk add ttf-dejavu wqy-zenhei
+        until apk add ttf-dejavu
         do
             echo -e ${red}安装失败 3秒后重试${background}
             sleep 3s
