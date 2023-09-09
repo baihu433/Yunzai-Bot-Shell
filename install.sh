@@ -71,14 +71,16 @@ function Script_Install(){
     echo
     echo -e ${yellow} - ${cyan}正在安装${background}
     file="/etc/profile"
-    if grep -q -E bh ${file};then
-        sed -i '/alias bh="/usr/local/bin/bh"/d' ${file}
-    fi
+    bh='alias bh="/usr/local/bin/bh"'
     curl -o bh https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Mian.sh
     mv -f bh /usr/local/bin/bh
     chmod +x /usr/local/bin/bh
     alias bh="bash /usr/local/bin/bh"
-    echo 'alias bh="/usr/local/bin/bh"' >> ${file}
+    if grep -q -E bh ${file};then
+        sed -i 's#alias bh="/usr/local/bin/bh"##g' ${file}
+    else
+        echo 'alias bh="/usr/local/bin/bh"' >> ${file}
+    fi
     source /etc/profile
     echo
     if ! bh help > /dev/null 2>&1;then
