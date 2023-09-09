@@ -36,8 +36,6 @@ elif grep -q -E -i Ubuntu /etc/issue && [ -x /usr/bin/apt ];then
     echo -e ${green}系统效验通过${background}
 elif grep -q -E -i Debian /etc/issue && [ -x /usr/bin/apt ];then
     echo -e ${green}系统效验通过${background}
-elif grep -q -E -i manjaro /etc/issue && [ -x /usr/bin/pacman ];then
-    echo -e ${green}系统效验通过${background}
 elif grep -q -E -i Kali /etc/issue && [ -x /usr/bin/apt ];then
     echo -e ${green}系统效验通过${background}
 elif grep -q -E -i Alpine /etc/os-release && [ -x /sbin/apk ];then

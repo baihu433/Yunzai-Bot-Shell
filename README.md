@@ -9,7 +9,6 @@
 - [x] Centos
 - [x] Debian
 - [x] Ubuntu
-- [x] OpenSUSE
 - [x] Kali
 ###### 下面是正在鸽的系统
 - [ ] Fedora

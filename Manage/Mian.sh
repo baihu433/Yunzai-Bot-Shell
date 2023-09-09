@@ -309,7 +309,7 @@ version=`curl -s https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version`
     if [ "$version" != "$ver" ];then
         echo -e ${cyan}正在更新${background}
         rm /usr/local/bin/bh
-        curl -o bh https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/mian.sh
+        curl -o bh https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/mian.sh
         mv bh /usr/local/bin/bh
         chmod +x /usr/local/bin/bh
         echo -en ${cyan}更新完成 回车继续${background};read
@@ -530,10 +530,20 @@ Number=$(${dialog_whiptail} \
 --menu "${Bot_Name}管理" \
 23 35 15 \
 "1" "降级puppeteer" \
+"2" "修复浏览器错误" \
 3>&1 1>&2 2>&3)
 if [[ ${Number} == "1" ]];then
     echo "Y" | pnpm install
     echo "Y" | pnpm install puppeteer@19.0.0 -w
+elif [[ ${Number} == "2" ]];then
+    file="config/config/bot.yaml"
+    old_chromium_path=$(grep chromium_path ${file})
+    new_chromium_path=$(which chrome || which chromium || which chromium-browser)
+    if [ -z "${new_chromium_path}" ];then
+        echo -en ${red}未安装浏览器${background}
+        return
+    fi
+    sed -i "s/${old_chromium_path}/${new_chromium_path}/g" ${file}
 else
     return
 fi
@@ -689,14 +699,14 @@ if [ ! -d $HOME/QSignServer ];then
        --yesno "是否部署本地签名服务器?" 10 50)
        then
            export install_QSignServer=true
-           URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/QSignServer3.0.sh"
+           URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QSignServer3.0.sh"
            bash <(curl -sL ${URL})
     fi
 fi
 }
 
 function Git_BOT(){
-PACKAGE="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/BOT-PACKAGE.sh"
+PACKAGE="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PACKAGE.sh"
 if [ ${Bot_Name} == "Yunzai|Yunzai-Bot" ];then
     if [ ! -e ~/${Bot_Name}/index.js ];then
         install_Bot
@@ -743,8 +753,12 @@ fi
 }
 
 function BOT_INSTALL(){
-
-
+if ! bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT_INSTALL.sh)
+    then
+        echo -e ${red}软件包安装出错${background}
+        exit
+fi
+Git_BOT
 }
 
 function Bot_Path(){
@@ -824,10 +838,10 @@ elif [[ ${Number} == "3" ]];then
     export Github=https://github.com/TimeRainStarSky/Yunzai.git
     Bot_Path
 elif [[ ${Number} == "4" ]];then
-    URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/QSignServer3.0.sh"
+    URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QSignServer3.0.sh"
     bash <(curl -sL ${URL})
 elif [[ ${Number} == "5" ]];then
-    URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/Gocq-Http.sh"
+    URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Gocq-Http.sh"
     bash <(curl -sL ${URL})
 elif [[ ${Number} == "6" ]];then
     echo
