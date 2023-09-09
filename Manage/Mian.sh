@@ -310,7 +310,7 @@ version=`curl -s https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version`
     if [ "$version" != "$ver" ];then
         echo -e ${cyan}正在更新${background}
         rm /usr/local/bin/bh
-        curl -o bh https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/mian.sh
+        curl -o bh https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Mian.sh
         mv bh /usr/local/bin/bh
         chmod +x /usr/local/bin/bh
         echo -en ${cyan}更新完成 回车继续${background};read
