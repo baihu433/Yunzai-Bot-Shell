@@ -71,8 +71,6 @@ elif grep -q -E -i CentOS /etc/os-release && [ -x /usr/bin/dnf ];then
     echo -e ${green}系统效验通过${background}
 elif grep -q -E -i CentOS /etc/os-release && [ -x /usr/bin/yum ];then
     echo -e ${green}系统效验通过${background}
-elif grep -q -E -i OpenSUSE /etc/os-release && [ -x /usr/bin/zypper ];then
-    echo -e ${green}系统效验通过${background}
 elif grep -q -E -i Ubuntu /etc/os-release && [ -x /usr/bin/apt ];then
     echo -e ${green}系统效验通过${background}
 elif grep -q -E -i Debian /etc/os-release && [ -x /usr/bin/apt ];then
