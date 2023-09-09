@@ -9,7 +9,9 @@ export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
 
-if [ $(command -v apt) ];then
+if [ $(command -v apk) ];then
+    pkg_install="apk add"
+elif [ $(command -v apt) ];then
     pkg_install="apt install -y"
 elif [ $(command -v dnf) ];then
     pkg_install="dnf install -y"

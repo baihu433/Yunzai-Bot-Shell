@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/bash
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -35,4 +35,15 @@ node=armv7l
 echo ${red}您的框架为${yellow}$(uname -m)${red},快让白狐做适配.${background}
 exit
 esac
-bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.sh)
+
+echo -e ${yellow} - ${yellow}正在安装${background}
+    curl -o bh https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/mian.sh
+    mv bh /usr/local/bin/bh
+    chmod +x /usr/local/bin/bh
+    sed 's|#!/bin/bash|
+    if ! bh help > /dev/null 2>&1;then
+        echo -e ${yellow} - ${red}安装失败${background}
+        exit
+    fi
+    echo -e ${yellow} - ${yellow}安装成功${background}
+    echo -e ${yellow} - ${cyan}请使用 ${green}bh ${cyan}命令 打开脚本${background}

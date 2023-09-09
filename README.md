@@ -3,6 +3,7 @@
 <hr/>
 
 #### 适配系统
+- [x] AlpineLinux
 - [x] Android
 - [x] ArchLinux
 - [x] Centos
