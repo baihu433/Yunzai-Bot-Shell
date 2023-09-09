@@ -78,7 +78,7 @@ function Script_Install(){
     mv -f bh /usr/local/bin/bh
     chmod +x /usr/local/bin/bh
     alias bh="bash /usr/local/bin/bh"
-    sed -i '$a\alias bh="/usr/local/bin/bh"' ${file}
+    echo 'alias bh="/usr/local/bin/bh"' >> ${file}
     source /etc/profile
     echo
     if ! bh help > /dev/null 2>&1;then
