@@ -81,6 +81,10 @@ function Script_Install(){
     sed -i '$a\alias bh="/usr/local/bin/bh"' ${file}
     source /etc/profile
     echo
+    if ! bh help > /dev/null 2>&1;then
+        echo -e ${yellow} - ${red}安装失败${background}
+        exit
+    fi
     echo -e ${yellow} - ${yellow}安装成功${background}
     echo -e ${yellow} - ${cyan}请使用 ${green}bh ${cyan}命令 打开脚本${background}
 }

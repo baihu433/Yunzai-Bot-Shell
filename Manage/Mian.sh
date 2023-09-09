@@ -712,6 +712,7 @@ if [ ${Bot_Name} == "Yunzai|Yunzai-Bot" ];then
         install_Bot
     fi
     if [ ! -d ~/${Bot_Name}/node_modules ];then
+        cd ~/${Bot_Name}
         bash <(curl -sL ${PACKAGE})
     fi
     if [ ! -d ~/QSignServer ];then
@@ -726,6 +727,7 @@ elif [ ${Bot_Name} == "Miao-Yunzai" ];then
         install_Miao_Plugin
     fi
     if [ ! -d ~/${Bot_Name}/node_modules ];then
+        cd ~/${Bot_Name}
         bash <(curl -sL ${PACKAGE})
     fi
     if [ ! -d ~/QSignServer ];then
@@ -743,6 +745,7 @@ elif [ ${Bot_Name} == "TRSS-Yunzai" ];then
         install_Genshin
     fi
     if [ ! -d ~/${Bot_Name}/node_modules ];then
+        cd ~/${Bot_Name}
         bash <(curl -sL ${PACKAGE})
     fi
     if [ ! -d ~/QSignServer ];then
