@@ -22,12 +22,25 @@ fi
 export PATH=$PATH:/usr/local/node/bin
 export PATH=$PATH:/root/.local/share/pnpm
 export PNPM_HOME=/root/.local/share/pnpm
+if ! grep -q '#Node.JS' /etc/profile;then
 echo '
 #Node.JS
 export PATH=$PATH:/usr/local/node/bin
 export PATH=$PATH:/root/.local/share/pnpm
 export PNPM_HOME=/root/.local/share/pnpm
 ' >> /etc/profile
+fi
+if [ -e /etc/fish/config.fish ];then
+if ! grep -q '#Node.JS' /etc/fish/config.fish;then
+echo '
+#Node.JS
+export PATH=$PATH:/usr/local/node/bin
+export PATH=$PATH:/root/.local/share/pnpm
+export PNPM_HOME=/root/.local/share/pnpm
+' >> /etc/fish/config.fish
+fi
+source /etc/fish/config.fish
+fi
 source /etc/profile
 rm -rf node node.tar.xz > /dev/null
 rm -rf node node.tar.xz > /dev/null

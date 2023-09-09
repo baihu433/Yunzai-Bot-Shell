@@ -23,6 +23,31 @@ if [ "$(id -u)" != "0" ]; then
     echo -e ${red} 请使用root用户!${background}
     exit 0
 fi
+function whiptail_dialog(){
+install_dialog(){
+echo -e ${green}正在安装必要依赖 dialog${background}
+if [ $(command -v apk) ];then
+    apk add dialog
+elif [ $(command -v apt) ];then
+    apt install -y dialog
+elif [ $(command -v dnf) ];then
+    dnf install -y dialog
+elif [ $(command -v yum) ];then
+    yum install -y dialog
+elif [ $(command -v pacman) ];then
+    pacman -Syy --noconfirm --needed dialog
+fi
+}
+if [ -x "$(command -v whiptail)" ];then
+    dialog_whiptail=whiptail
+elif [ -x "$(command -v dialog)" ];then
+    dialog_whiptail=dialog
+else
+    install_dialog
+fi
+}
+
+
 function system_check(){
 if grep -q -E -i Alpine /etc/issue && [ -x /sbin/apk ];then
     echo -e ${green}系统效验通过${background}
@@ -106,6 +131,7 @@ then
     echo -e ${green}3秒后开始安装${background}
     sleep 2s
     system_check
+    whiptail_dialog
     echo
     Script_Install
 else

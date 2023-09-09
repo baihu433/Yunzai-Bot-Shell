@@ -8,7 +8,7 @@ elif ping -c 1 www.google.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.0.2
+export ver=0.0.3
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -558,8 +558,9 @@ Number=$(${dialog_whiptail} \
 --title "白狐 QQ群:705226976" \
 --menu "${Bot_Name}管理" \
 23 35 15 \
-"1" "降级puppeteer" \
+"1" "降级Puppeteer" \
 "2" "修复浏览器错误" \
+"3" "检测软件包依赖" \
 3>&1 1>&2 2>&3)
 if [[ ${Number} == "1" ]];then
     echo "Y" | pnpm install
@@ -573,6 +574,11 @@ elif [[ ${Number} == "2" ]];then
         return
     fi
     sed -i "s/${old_chromium_path}/${new_chromium_path}/g" ${file}
+elif [[ ${Number} == "3" ]];then
+    if ! bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT_INSTALL.sh);then
+        echo -e ${red}软件包修复出错${background}
+        exit
+    fi
 else
     return
 fi
