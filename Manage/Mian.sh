@@ -8,7 +8,7 @@ elif ping -c 1 www.google.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.0.1
+export ver=0.0.2
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -189,6 +189,9 @@ elif [ -d "/home/lighthouse/debian/${Bot_Name}/node_modules" ];then
     export Bot_Path="/home/lighthouse/debian/${Bot_Name}"
 elif [ -d "/root/TRSS_AllBot/${Bot_Name}/node_modules" ];then
     export Bot_Path="/root/TRSS_AllBot/${Bot_Name}"
+else 
+    echo -e ${red}参数错误${background}
+    exit
 fi
 }
 
