@@ -723,7 +723,7 @@ elif [ ${Bot_Name} == "Miao-Yunzai" ];then
     if [ ! -e ~/${Bot_Name}/package.json ];then
         install_Bot
     fi
-    if [ ! -e ~/${Bot_Name}/miao-plugin/index.js ];then
+    if [ ! -e ~/${Bot_Name}/plugins/miao-plugin/index.js ];then
         install_Miao_Plugin
     fi
     if [ ! -d ~/${Bot_Name}/node_modules ];then
@@ -738,10 +738,10 @@ elif [ ${Bot_Name} == "TRSS-Yunzai" ];then
     if [ ! -e ~/${Bot_Name}/package.json ];then
         install_Bot
     fi
-    if [ ! -e ~/${Bot_Name}/miao-plugin/index.js ];then
+    if [ ! -e ~/${Bot_Name}/plugins/miao-plugin/index.js ];then
         install_Miao_Plugin
     fi
-    if [ ! -e ~/${Bot_Name}/genshin/index.js ];then
+    if [ ! -e ~/${Bot_Name}/plugins/genshin/index.js ];then
         install_Genshin
     fi
     if [ ! -d ~/${Bot_Name}/node_modules ];then
