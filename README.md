@@ -1,19 +1,18 @@
-<h1 align="center">Yunzai-Bot-Shell</h1>
+<h1 align="center">白狐-Script</h1>
 <h6 align="center">QQ群:狐狸窝 705226976</h6>
 <hr/>
 
 #### 适配系统
-- [x] AlpineLinux
+- [x] Alpine
 - [x] Android
-- [x] ArchLinux
+- [x] Arch
 - [x] Centos
 - [x] Debian
 - [x] Ubuntu
+- [x] OpenSUSE
+- [x] Kali
 ###### 下面是正在鸽的系统
-- [ ] Manjaro
 - [ ] Fedora
-- [ ] OpenSUSE
-- [ ] Kali
 #### 特点
 - [x] 一键化部署
 - [x] 多BOT支持

@@ -24,18 +24,39 @@ if [ "$(id -u)" != "0" ]; then
     exit 0
 fi
 function system_check(){
-if grep -q -E Alpine /etc/issue && [ -x /sbin/apk ];then
+if grep -q -E -i Alpine /etc/issue && [ -x /sbin/apk ];then
     echo -e ${green}系统效验通过${background}
-elif grep -q -E Arch /etc/issue && [ -x /usr/bin/pacman ];then
+elif grep -q -E -i Arch /etc/issue && [ -x /usr/bin/pacman ];then
     echo -e ${green}系统效验通过${background}
-elif grep -q -E Kernel /etc/issue && [ -x /usr/bin/dnf ];then
+elif grep -q -E -i Kernel /etc/issue && [ -x /usr/bin/dnf ];then
     echo -e ${green}系统效验通过${background}
-elif grep -q -E Kernel /etc/issue && [ -x /usr/bin/yum ];then
+elif grep -q -E -i Kernel /etc/issue && [ -x /usr/bin/yum ];then
     echo -e ${green}系统效验通过${background}
-elif grep -q -E Ubuntu /etc/issue && [ -x /usr/bin/apt ];then
+elif grep -q -E -i Ubuntu /etc/issue && [ -x /usr/bin/apt ];then
     echo -e ${green}系统效验通过${background}
-elif grep -q -E Debian /etc/issue && [ -x /usr/bin/apt ];then
+elif grep -q -E -i Debian /etc/issue && [ -x /usr/bin/apt ];then
     echo -e ${green}系统效验通过${background}
+elif grep -q -E -i manjaro /etc/issue && [ -x /usr/bin/pacman ];then
+    echo -e ${green}系统效验通过${background}
+elif grep -q -E -i Kali /etc/issue && [ -x /usr/bin/apt ];then
+    echo -e ${green}系统效验通过${background}
+elif grep -q -E -i Alpine /etc/os-release && [ -x /sbin/apk ];then
+    echo -e ${green}系统效验通过${background}
+elif grep -q -E -i Arch /etc/os-release && [ -x /usr/bin/pacman ];then
+    echo -e ${green}系统效验通过${background}
+elif grep -q -E -i CentOS /etc/os-release && [ -x /usr/bin/dnf ];then
+    echo -e ${green}系统效验通过${background}
+elif grep -q -E -i CentOS /etc/os-release && [ -x /usr/bin/yum ];then
+    echo -e ${green}系统效验通过${background}
+elif grep -q -E -i OpenSUSE /etc/os-release && [ -x /usr/bin/zypper ];then
+    echo -e ${green}系统效验通过${background}
+elif grep -q -E -i Ubuntu /etc/os-release && [ -x /usr/bin/apt ];then
+    echo -e ${green}系统效验通过${background}
+elif grep -q -E -i Debian /etc/os-release && [ -x /usr/bin/apt ];then
+    echo -e ${green}系统效验通过${background}
+elif grep -q -E -i Kali /etc/os-release && [ -x /usr/bin/apt ];then
+    echo -e ${green}系统效验通过${background}
+fi
 else
     echo -e ${red}不受支持的系统${background}
     echo -e ${red}程序终止!! 脚本停止运行${background}
