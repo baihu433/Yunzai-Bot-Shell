@@ -8,7 +8,7 @@ elif ping -c 1 www.google.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.0.3
+export ver=0.0.4
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -560,7 +560,7 @@ Number=$(${dialog_whiptail} \
 23 35 15 \
 "1" "降级Puppeteer" \
 "2" "修复浏览器错误" \
-"3" "检测软件包依赖" \
+"3" "检查软件包依赖" \
 3>&1 1>&2 2>&3)
 if [[ ${Number} == "1" ]];then
     echo "Y" | pnpm install

@@ -123,7 +123,8 @@ echo -e ${cyan}白狐 Script ${yellow}不会执行任何恶意命令${background
 echo -e ${cyan}白狐 Script ${yellow}不会执行任何恶意命令${background}
 echo -e ${cyan}如果您同意安装 请输入 ${green}同意安装${background}
 echo -e ${cyan}注意：同意安装即同意本项目的用户协议${background}
-echo -e ${cyan}用户协议链接：https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/Manage/用户协议.txt${background}
+echo -e ${cyan}用户协议链接: ${background}
+echo -e ${cyan}https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/Manage/用户协议.txt${background}
 echo -e ${white}"=========================="${background}
 echo -en ${green}请输入:${background};read yn
 if [  "${yn}" == "同意安装" ]

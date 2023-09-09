@@ -7,7 +7,7 @@ export blue="\033[34m"
 export purple="\033[35m"
 export cyan="\033[36m"
 export white="\033[37m"
-export background="\033[0m" 
+export background="\033[0m"
 if [ ! -d node ];then
     mkdir node
 fi
