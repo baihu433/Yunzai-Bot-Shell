@@ -321,7 +321,7 @@ fi
 
 function BOT(){
 if [[ "$1" == log ]];then
-    if tmux ls | grep ${Bot_Name}
+    if tmux ls | grep -q ${Bot_Name}
     then
         tmux attach -t ${Bot_Name}
         main
@@ -334,7 +334,7 @@ if [[ "$1" == log ]];then
         exit
     fi
 elif [[ "$1" == start ]];then
-    if tmux ls | grep ${Bot_Name}
+    if tmux ls | grep -q ${Bot_Name}
     then
         if (${dialog_whiptail} --yesno "${Bot_Name} [已启动] \n是否打开${Bot_Name}窗口" 8 50);then
             tmux attach -t ${Bot_Name}
@@ -347,7 +347,7 @@ elif [[ "$1" == start ]];then
         exit
     fi
 elif [[ "$1" == stop ]];then
-    if tmux ls | grep ${Bot_Name}
+    if tmux ls | grep -q ${Bot_Name}
     then
         tmux kill-session -t ${Bot_Name}
         main
@@ -358,7 +358,7 @@ elif [[ "$1" == stop ]];then
         exit
     fi
 elif [[ "$1" == restart ]];then
-    if tmux ls | grep ${Bot_Name}
+    if tmux ls | grep -q ${Bot_Name}
     then
         tmux kill-session -t ${Bot_Name}
         tmux new -s ${Bot_Name} "bh ${Bot_Name} n"
