@@ -54,7 +54,6 @@ elif grep -q -E -i Debian /etc/os-release && [ -x /usr/bin/apt ];then
     echo -e ${green}系统效验通过${background}
 elif grep -q -E -i Kali /etc/os-release && [ -x /usr/bin/apt ];then
     echo -e ${green}系统效验通过${background}
-fi
 else
     echo -e ${red}不受支持的系统${background}
     echo -e ${red}程序终止!! 脚本停止运行${background}
