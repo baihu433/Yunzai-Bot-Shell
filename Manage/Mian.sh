@@ -634,9 +634,6 @@ fi
 }
 
 function install_Bot(){
-if [ -e ~/${Bot_Name}/index.js ];then
-    return
-fi
 if (${dialog_whiptail} --title "白狐" \
   --yes-button "Gitee" \
   --no-button "Github" \
@@ -655,9 +652,6 @@ fi
 } #install_Yunzai_Bot
 
 function install_Miao_Plugin(){
-if [ -e ~/${Bot_Name}/plugins/miao-plugin/index.js ];then
-    return
-fi
 if (${dialog_whiptail} --title "白狐" \
 --yes-button "Gitee" \
 --no-button "Github" \
@@ -678,9 +672,6 @@ fi
 } #install_Miao_Plugin
 
 function install_Genshin(){
-if [ -e ~/${Bot_Name}/plugins/genshin/index.js ];then
-    return
-fi
 if (${dialog_whiptail} --title "白狐" \
 --yes-button "Gitee" \
 --no-button "Github" \
@@ -717,7 +708,7 @@ fi
 function Git_BOT(){
 PACKAGE="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PACKAGE.sh"
 if [ ${Bot_Name} == "Yunzai|Yunzai-Bot" ];then
-    if [ ! -e ~/${Bot_Name}/index.js ];then
+    if [ ! -e ~/${Bot_Name}/package.json ];then
         install_Bot
     fi
     if [ ! -d ~/${Bot_Name}/node_modules ];then
@@ -729,7 +720,7 @@ if [ ${Bot_Name} == "Yunzai|Yunzai-Bot" ];then
     fi
     Bot_Path
 elif [ ${Bot_Name} == "Miao-Yunzai" ];then
-    if [ ! -e ~/${Bot_Name}/index.js ];then
+    if [ ! -e ~/${Bot_Name}/package.json ];then
         install_Bot
     fi
     if [ ! -e ~/${Bot_Name}/miao-plugin/index.js ];then
@@ -744,7 +735,7 @@ elif [ ${Bot_Name} == "Miao-Yunzai" ];then
     fi
     Bot_Path
 elif [ ${Bot_Name} == "TRSS-Yunzai" ];then
-    if [ ! -e ~/${Bot_Name}/index.js ];then
+    if [ ! -e ~/${Bot_Name}/package.json ];then
         install_Bot
     fi
     if [ ! -e ~/${Bot_Name}/miao-plugin/index.js ];then
