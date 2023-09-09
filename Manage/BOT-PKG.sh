@@ -92,7 +92,9 @@ if [ ! -x "/usr/local/bin/ffmpeg" ]
     then
         echo -e ${yellow}安装软件 ffmpeg${background}
         source <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh)
-        wget -q --show-progress -O ffmpeg https://cdn.npmmirror.com/binaries/ffmpeg-static/b6.0/ffmpeg-linux-${ARCH}
-        wget -q --show-progress -O ffprobe https://cdn.npmmirror.com/binaries/ffmpeg-static/b6.0/ffprobe-linux-${ARCH}
+        wget -q --show-progress -O ffmpeg -c https://cdn.npmmirror.com/binaries/ffmpeg-static/b6.0/ffmpeg-linux-${ARCH}
+        wget -q --show-progress -O ffprobe -c https://cdn.npmmirror.com/binaries/ffmpeg-static/b6.0/ffprobe-linux-${ARCH}
+        chmod +x ffmpeg ffprobe
+        mv -f ffmpeg ffprobe /usr/local/bin/
 fi
 

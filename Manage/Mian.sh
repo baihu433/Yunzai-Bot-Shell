@@ -634,6 +634,9 @@ fi
 }
 
 function install_Bot(){
+if [ -e ~/${Bot_Name}/index.js ];then
+    return
+fi
 if (${dialog_whiptail} --title "白狐" \
   --yes-button "Gitee" \
   --no-button "Github" \
@@ -652,6 +655,9 @@ fi
 } #install_Yunzai_Bot
 
 function install_Miao_Plugin(){
+if [ -e ~/${Bot_Name}/plugins/miao-plugin/index.js ];then
+    return
+fi
 if (${dialog_whiptail} --title "白狐" \
 --yes-button "Gitee" \
 --no-button "Github" \
@@ -672,6 +678,9 @@ fi
 } #install_Miao_Plugin
 
 function install_Genshin(){
+if [ -e ~/${Bot_Name}/plugins/genshin/index.js ];then
+    return
+fi
 if (${dialog_whiptail} --title "白狐" \
 --yes-button "Gitee" \
 --no-button "Github" \
