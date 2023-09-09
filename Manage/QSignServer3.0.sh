@@ -163,8 +163,10 @@ echo -e ${yellow}您已安装过签名服务器 请使用更新${background}
 exit
 fi
 git clone --depth=1 ${txlib}
-rm -rf txlib/.git txlib/README.md
-rm -rf $HOME/QSignServer/txlib > /dev/null
+rm -rf txlib/.git txlib/README.md > /dev/null 2>&1
+rm -rf txlib/.git txlib/README.md > /dev/null 2>&1
+rm -rf $HOME/QSignServer/txlib > /dev/null 2>&1
+rm -rf $HOME/QSignServer/txlib > /dev/null 2>&1
 mv -f txlib $HOME/QSignServer/txlib
 until wget -q --show-progress -O qsign.zip -c ${QSIGN_URL}
 do
