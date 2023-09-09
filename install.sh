@@ -71,8 +71,8 @@ function Script_Install(){
     echo
     echo -e ${yellow} - ${cyan}正在安装${background}
     file="/etc/profile"
-    if grep -q -E Mian.sh ${file};then
-        sed -i "/*bh*/d" ${file}
+    if grep -q -E bh ${file};then
+        sed -i "/bh*/d" ${file}
     fi
     curl -o bh https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Mian.sh
     mv -f bh /usr/local/bin/bh
@@ -80,10 +80,6 @@ function Script_Install(){
     alias bh="bash /usr/local/bin/bh"
     sed -i '$a\alias bh="/usr/local/bin/bh"' ${file}
     source /etc/profile
-    if ! bh help > /dev/null 2>&1;then
-        echo -e ${yellow} - ${red}安装失败${background}
-        exit
-    fi
     echo
     echo -e ${yellow} - ${yellow}安装成功${background}
     echo -e ${yellow} - ${cyan}请使用 ${green}bh ${cyan}命令 打开脚本${background}
