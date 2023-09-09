@@ -34,9 +34,8 @@ if [ -e /etc/fish/config.fish ];then
 if ! grep -q '#Node.JS' /etc/fish/config.fish;then
 echo '
 #Node.JS
-export PATH=$PATH:/usr/local/node/bin
-export PATH=$PATH:/root/.local/share/pnpm
-export PNPM_HOME=/root/.local/share/pnpm
+set -x PATH /root/.local/share/pnpm /usr/local/node/bin $PATH
+set PNPM_HOME /root/.local/share/pnpm
 ' >> /etc/fish/config.fish
 fi
 source /etc/fish/config.fish
