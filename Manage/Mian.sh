@@ -102,8 +102,8 @@ if [ -d $HOME/QSignServer/qsign${QSIGN_VERSION} ];then
     API="http://"${host}":"${port}"/sign?key="${key}
     API=$(echo ${API})
     echo -e ${cyan}您的本地签名服务器API链接: ${green}${API}${background}
-    file1="$HOME/${Bot_Name}/config/config/bot.yaml"
-    file2="$HOME/${Bot_Name}/config/config/qq.yaml"
+    file1="${Bot_Path}/config/config/bot.yaml"
+    file2="${Bot_Path}/config/config/qq.yaml"
     equipment="platform: 2"
     if [ -e ${file1} ];then
         if ! grep -q "${API}" ${file1};then
@@ -176,6 +176,22 @@ echo -e ${green} QQ群:${cyan}狐狸窝:705226976${background}
 echo -e ${green}=============================${background}
 }
 
+function Bot_Path_Check(){
+if [ -d "/root/${Bot_Name}/node_modules" ];then
+    export Bot_Path="/root/${Bot_Name}"
+elif [ -d "/root/.fox@bot/${Bot_Name}/node_modules" ];then
+    export Bot_Path="/root/.fox@bot/${Bot_Name}"
+elif [ -d "/home/lighthouse/ubuntu/${Bot_Name}/node_modules" ];then
+    export Bot_Path="/home/lighthouse/ubuntu/${Bot_Name}"
+elif [ -d "/home/lighthouse/centos/${Bot_Name}/node_modules" ];then
+    export Bot_Path="/home/lighthouse/centos/${Bot_Name}"
+elif [ -d "/home/lighthouse/debian/${Bot_Name}/node_modules" ];then
+    export Bot_Path="/home/lighthouse/debian/${Bot_Name}"
+elif [ -d "/root/TRSS_AllBot/${Bot_Name}/node_modules" ];then
+    export Bot_Path="/root/TRSS_AllBot/${Bot_Name}"
+fi
+}
+
 case "$1" in
 QS)
 bash <(curl https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/QSignServer3.0.sh)
@@ -183,26 +199,35 @@ exit
 ;;
 YZ|Yunzai|Yunzai-Bot)
 export Bot_Name=Yunzai-Bot
-cd $HOME/Yunzai-Bot
+Bot_Path_Check
+cd ${Bot_Path}
 ;;
 MZ|Miao-Yunzai)
 export Bot_Name=Miao-Yunzai
-cd $HOME/Miao-Yunzai
+Bot_Path_Check
+cd ${Bot_Path}
 ;;
 TZ|TRSS-Yunzai)
 export Bot_Name=TRSS-Yunzai
-cd $HOME/TRSS-Yunzai
+Bot_Path_Check
+cd ${Bot_Path}
 ;;
 yz)
-cd $HOME/Yunzai-Bot && exec bash -i
+export Bot_Name=Yunzai-Bot
+Bot_Path_Check
+cd ${Bot_Path} && exec bash -i
 exit
 ;;
 mz)
-cd  $HOME/Miao-Yunzai && exec bash -i
+export Bot_Name=Miao-Yunzai
+Bot_Path_Check
+cd ${Bot_Path} && exec bash -i
 exit
 ;;
 tz)
-cd $HOME/TRSS-Yunzai && exec bash -i
+export Bot_Name=TRSS-Yunzai
+Bot_Path_Check
+cd ${Bot_Path} && exec bash -i
 exit
 ;;
 help)
@@ -453,7 +478,7 @@ fi
 }
 
 function git_update(){
-cd $HOME/${Bot_Name}
+cd ${Bot_Path}
 git_pull(){
 echo -e ${yellow}正在更新 ${Name}
 if ! git pull
@@ -767,27 +792,27 @@ Git_BOT
 
 function Bot_Path(){
 if [ -d "/root/${Bot_Name}/node_modules" ];then
-    Bot_Path="/root/${Bot_Name}"
+    export Bot_Path="/root/${Bot_Name}"
     cd ${Bot_Path}
     main
 elif [ -d "/root/.fox@bot/${Bot_Name}/node_modules" ];then
-    Bot_Path="/root/.fox@bot/${Bot_Name}"
+    export Bot_Path="/root/.fox@bot/${Bot_Name}"
     cd ${Bot_Path}
     main
 elif [ -d "/home/lighthouse/ubuntu/${Bot_Name}/node_modules" ];then
-    Bot_Path="/home/lighthouse/ubuntu/${Bot_Name}"
+    export Bot_Path="/home/lighthouse/ubuntu/${Bot_Name}"
     cd ${Bot_Path}
     main
 elif [ -d "/home/lighthouse/centos/${Bot_Name}/node_modules" ];then
-    Bot_Path="/home/lighthouse/centos/${Bot_Name}"
+    export Bot_Path="/home/lighthouse/centos/${Bot_Name}"
     cd ${Bot_Path}
     main
 elif [ -d "/home/lighthouse/debian/${Bot_Name}/node_modules" ];then
-    Bot_Path="/home/lighthouse/debian/${Bot_Name}"
+    export Bot_Path="/home/lighthouse/debian/${Bot_Name}"
     cd ${Bot_Path}
     main
 elif [ -d "/root/TRSS_AllBot/${Bot_Name}/node_modules" ];then
-    Bot_Path="/root/TRSS_AllBot/${Bot_Name}"
+    export Bot_Path="/root/TRSS_AllBot/${Bot_Name}"
     cd ${Bot_Path}
     main
 else
