@@ -8,7 +8,7 @@ elif ping -c 1 www.google.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.0.4
+export ver=0.0.5
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -561,6 +561,9 @@ Number=$(${dialog_whiptail} \
 "1" "降级Puppeteer" \
 "2" "修复浏览器错误" \
 "3" "检查软件包依赖" \
+"4" "修复依赖包错误" \
+"5" "修复dpkg被中断" \
+"6" "无法锁定数据库" \
 3>&1 1>&2 2>&3)
 if [[ ${Number} == "1" ]];then
     echo "Y" | pnpm install
@@ -571,13 +574,34 @@ elif [[ ${Number} == "2" ]];then
     new_chromium_path=$(which chrome || which chromium || which chromium-browser)
     if [ -z "${new_chromium_path}" ];then
         echo -en ${red}未安装浏览器${background}
-        return
+        exit
     fi
     sed -i "s/${old_chromium_path}/${new_chromium_path}/g" ${file}
 elif [[ ${Number} == "3" ]];then
     if ! bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT_INSTALL.sh);then
         echo -e ${red}软件包修复出错${background}
         exit
+    fi
+elif [[ ${Number} == "4" ]];then
+    if grep -q -E -i "Debian|Ubuntu|Kali" /etc/os-release && [ -x /usr/bin/apt ];then
+        apt update -y
+        apt --fix-broken -y install
+        dpkg --configure -a
+        apt-get --reinstall install
+    fi
+elif [[ ${Number} == "5" ]];then
+    if grep -q -E -i "Debian|Ubuntu|Kali" /etc/os-release && [ -x /usr/bin/apt ];then
+        rm -rf /var/lib/dpkg/lock
+        rm -rf /var/lib/apt/lists/lock
+        rm -rf /var/cache/apt/archives/lock
+        dpkg –configure -a
+        apt update -y
+        apt-get update -y
+    fi
+elif [[ ${Number} == "6" ]];then
+    if grep -q -E -i Arch /etc/issue && [ -x /usr/bin/pacman ];then
+        rm /var/lib/pacman/db.lck
+        pacman -Syu
     fi
 else
     return
@@ -658,7 +682,7 @@ elif [[ ${Number} == "11" ]];then
     exit
 elif [[ ${Number} == "12" ]];then
     Fix_Error
-    echo -en ${cyan}回车返回${background};read
+    echo -en ${cyan}执行完成 回车返回${background};read
     main
     exit
 elif [[ ${Number} == "A" ]];then

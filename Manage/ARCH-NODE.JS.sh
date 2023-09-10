@@ -9,12 +9,12 @@ export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
 
-pkg_list=("node-gyp" "nodejs" "nodejs-nopt" "npm" "pnpm" "semver")
+pkg_list=("nodejs" "npm" "pnpm" "node-gyp" "nodejs-nopt" "semver")
 for package in ${pkg_list[@]}
 do
     if pacman -Qs "${package}" > /dev/null 2>&1;then
         echo -e ${yellow}安装软件 ${package}${background}
-        pacman -R --noconfirm ${package}
+        pacman -Rs --noconfirm ${package}
     fi
 done
 
