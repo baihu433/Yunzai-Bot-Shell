@@ -82,6 +82,6 @@ rm /usr/local/bin/bh
 
 1. 最后给个star，你的支持是维护本项目的动力<br>
 2. 严禁用于任何商业用途和非法行为<br>
-3. 白狐没有开通爱发电，所以欢迎进群打赏<br>
+3. 白狐没有开通爱发电，所以欢迎通过赞助码打赏<br>
 4. 赞助备注:QQ号+你的QQ名称[阙我跳转赞助码](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/biscuit/779D41D1B7E7E0A8CC53065E303EB8071694325273949.jpeg)<br>
 <hr>
