@@ -1,5 +1,4 @@
 <h1 align="center">白狐-Script</h1>
-<h6 align="center">QQ群:狐狸窝 705226976</h6>
 <hr/>
 
 #### 适配系统
@@ -28,6 +27,14 @@
 
 <hr>
 
+#### QQ群
+
+[阙我跳转QQ(大佬群)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=WtGelvZbOVQ4yYYZswm9ZZ5kPHkD4H8o&authKey=xz1zyGxWG7bz5X%2BgvWunX9qGUsUq%2BDomb4p02FqXIuqXd8hoxTYvdCZozBzLeFOf&noverify=0&group_code=705226976)
+
+[阙我跳转QQ(新手群)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=ttH53_Pw6dBkbBimPfEq1M8LdwvNwOeZ&authKey=BUwoqpgofF27nTz4M6JJ4UPvgv3iFcDzl3Po0PgsQf36oxFT6Xch7DbJ4U24s%2BFn&noverify=0&group_code=596660282)
+
+<hr>
+
 #### 安装方式
 
 ##### 服务器
@@ -39,7 +46,6 @@ sudo -r root
 ```
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.sh)
 ```
-
 ##### 安卓手机
 
 >[☞Termux下载地址](https://github.com/termux/termux-app/releases)<br>
