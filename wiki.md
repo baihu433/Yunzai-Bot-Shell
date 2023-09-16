@@ -46,7 +46,7 @@ bh tz #进入TRSS-Yunzai(时雨崽)文件夹
 <hr>
 <details markdown='1'><summary>操作BOT</summary>
 
-#### 请将下列 `YZ/MZ/TZ` 替换为相应BOT简称[区分大小写]
+##### 请将下列 `YZ/MZ/TZ` 替换为相应BOT简称[区分大小写]
 
 ```sh
 bh YZ/MZ/TZ n #前台启动BOT
@@ -93,3 +93,5 @@ bh YZ/MZ/TZ fix pkg #重新安装NPM依赖包
 ```
 
 </details>
+<hr/>
+<br>
