@@ -1,14 +1,11 @@
 #!/bin/env bash
-if ping -c 1 www.baidu.com > /dev/null 2>&1
+if ping -c 1 gitee.com > /dev/null 2>&1
     then
     up=true
-elif ping -c 1 www.google.com > /dev/null 2>&1
-    then
-    up=false
 else
     up=false
 fi
-export ver=0.1.2
+export ver=0.1.3
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
