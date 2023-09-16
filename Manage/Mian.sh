@@ -8,7 +8,7 @@ elif ping -c 1 www.google.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.0.8
+export ver=0.1.0
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -492,7 +492,7 @@ fi
 function git_update(){
 cd ${Bot_Path}
 git_pull(){
-echo -e ${yellow}正在更新 ${Name}
+echo -e ${yellow}正在更新 ${Name}${background}
 if ! git pull
 then
     echo -e ${red}${Name}更新失败 ${yellow}是否强制更新 [Y/N]${background};read YN
@@ -668,6 +668,7 @@ elif [[ ${Number} == "6" ]];then
     exit
 elif [[ ${Number} == "7" ]];then
     git_update
+    echo -en ${cyan}回车返回${background};read
     main
     exit
 elif [[ ${Number} == "8" ]];then
@@ -886,6 +887,7 @@ Number=$(${dialog_whiptail} \
 "4" "签名服务器管理" \
 "5" "gocq-http管理" \
 "6" "编辑器使用方法" \
+"7" "使用自定义目录" \
 "0" "退出" \
 3>&1 1>&2 2>&3)
 feedback=$?
@@ -933,6 +935,19 @@ elif [[ ${Number} == "6" ]];then
     echo -e ${green} Ctrl + ${yellow}P  ${blue}搜索上一个${background}
     echo -e ${white}==================${background}
     echo -en ${cyan}回车返回${background};read
+elif [[ ${Number} == "7" ]];then
+    export Bot_Path=$(${dialog_whiptail} \
+    --title "白狐-BOT" \
+    --inputbox "请输入您BOT的根目录的绝对路径" \
+    10 50 \
+    3>&1 1>&2 2>&3)
+    if [ ! -e ${Bot_Path}/package.json ];then
+        echo -e ${red} BOT不存在 ${background}
+        exit
+    fi
+    export Bot_Name=$(echo ${Bot_Path} | awk -F/ '{print $NF}')
+    main
+    exit
 elif [[ ${Number} == "0" ]];then
     exit
 else
