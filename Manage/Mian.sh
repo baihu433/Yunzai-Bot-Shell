@@ -5,7 +5,7 @@ if ping -c 1 gitee.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.1.4
+export ver=0.1.5
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"

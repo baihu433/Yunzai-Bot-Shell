@@ -51,7 +51,7 @@ if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
     source <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh)
     until wget -q --show-progress -O node.tar.xz -c https://cdn.npmmirror.com/binaries/node/latest-v18.x/node-v18.17.0-linux-${ARCH}.tar.xz
     do
-        if [ ${i} -eq 3 ]
+        if [[ ${i} -eq 3 ]]
         then
             echo -e ${red}错误次数过多 退出${background}
             exit

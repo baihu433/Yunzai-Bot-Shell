@@ -44,7 +44,7 @@ fi
 function node_install(){
 until wget -q --show-progress -O node.tar.xz -c https://cdn.npmmirror.com/binaries/node/latest-${version1}.x/node-${version2}-linux-${ARCH}.tar.xz
 do
-    if [ ${i} -eq 3 ]
+    if [[ ${i} -eq 3 ]]
     then
         echo -e ${red}错误次数过多 退出${background}
         exit
