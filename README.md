@@ -31,9 +31,9 @@
 
 <details markdown='1'><summary>展开/收起</summary>
 
-![展示1](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/img/展示1.jpg)
+![展示1](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/展示1.jpg)
 
-![展示2](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/img/展示2.jpg)
+![展示2](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/展示2.jpg)
 
 </details>
 <hr/>
