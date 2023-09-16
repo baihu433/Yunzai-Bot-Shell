@@ -320,6 +320,12 @@ exit
 up)
 case $3 in
   bot)
+  remote=$(grep 'remote =' .git/config | sed 's/remote =//g')
+  remote=$(echo ${remote})
+  branch=$(grep branch .git/config | sed "s/\[branch \"//g" | sed 's/"//g' | sed "s/\]//g")
+  branch=$(echo ${branch})
+  git fetch --all
+  git reset --hard ${remote}/${branch}
   git pull
   exit
   ;;
@@ -333,12 +339,6 @@ esac
 fix)
 pkg
 case $3 in
-  bot)
-  git fetch --all
-  git reset --hard origin/master || git reset --hard origin/main
-  git pull
-  exit
-  ;;
   pkg)
   rm -rf node_modules 
   yes "Y" | pnpm install -P
