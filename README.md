@@ -38,7 +38,6 @@
 [戳我跳转QQ(新手群)(③群)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=KxKeK3PMw8i_ql3NH-m_iOfpU1nMkLIz&authKey=zaKN%2BeWsFWbPq6zXgwKNdN%2BSjLH1YSQRo9edHq4T%2B5R7LcG8eHSCQdNfsC%2FhBtKk&noverify=0&group_code=879718035)
 
 </details>
-
 <hr>
 
 #### 安装方式
@@ -73,7 +72,7 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Android/i
 <details markdown='1'><summary>③已安装容器的安装方法</summary>
 
 ##### 已安装容器
-###### 注意:除非你知道您在干什么,否则请不要使用该项!!!
+###### 注意:除非您知道您在干什么,否则请不要使用该项!!!
 
 ```
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.sh)
