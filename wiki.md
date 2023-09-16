@@ -6,7 +6,7 @@
 ### 快捷命令使用方法
 
 <audio id="audio" controls="" preload="none" style="width:100%">
-    <source id="mp3" src="">
+    <source id="mp3" src="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/audio/千本桜.mp3">
 </audio>
 
 ###### 注意: 快捷命令都需要前缀 `bh`

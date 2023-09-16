@@ -59,6 +59,8 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Android/i
 
 ### 注意事项
 
+>[wiki帮助](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/wiki.md)
+
 >打开白狐脚本的命令
 ```
 bh
