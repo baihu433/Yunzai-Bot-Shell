@@ -8,7 +8,7 @@ elif ping -c 1 www.google.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.0.5
+export ver=0.0.6
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -18,11 +18,6 @@ export purple="\033[35m"
 export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
-Alpine_Script="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Alpine/Bot-Install.sh"
-Arch_Script="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Arch/Bot-Install.sh"
-Kernel_Script="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Centos/Bot-Install.sh"
-Ubuntu_Script="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Ubuntu/Bot-Install.sh"
-Debian_Script="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Debian/Bot-Install.sh"
 if [ -d /usr/local/node/bin ];then
     export PATH=$PATH:/usr/local/node/bin
     if [ ! -d $HOME/.local/share/pnpm ];then
@@ -341,6 +336,18 @@ version=`curl -s https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version`
         curl -o bh https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Mian.sh
         mv bh /usr/local/bin/bh
         chmod +x /usr/local/bin/bh
+        if ! bh help > /dev/null 2>&1;then
+            echo -e ${yellow} - ${red}更新失败${background}
+            echo -e ${yellow} - ${cyan}正在尝试解决${background}
+            old_bh_bash='#!/bin/env bash'
+            new_bh_bash=$(which bash)
+            sed -i "s|${old_bh_bash}|#!${new_bh_bash}|g" /usr/local/bin/bh
+            exit
+                if ! bh help > /dev/null 2>&1;then
+                    echo -e ${yellow} - ${red}解决失败${background}
+                    exit
+                fi
+        fi
         echo -en ${cyan}更新完成 回车继续${background};read
         bh
         exit
@@ -504,6 +511,7 @@ for folder in $(ls -I example -I bin -I other -I system plugins)
 do
     if [ -d plugins/${folder}/.git ];then
         cd plugins/${folder}
+        Name=${folder}
         git_pull
         cd ../../
     fi
