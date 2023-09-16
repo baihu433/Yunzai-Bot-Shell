@@ -8,7 +8,7 @@ elif ping -c 1 www.google.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.1.0
+export ver=0.1.1
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -186,6 +186,8 @@ elif [ -d "/home/lighthouse/debian/${Bot_Name}/node_modules" ];then
     export Bot_Path="/home/lighthouse/debian/${Bot_Name}"
 elif [ -d "/root/TRSS_AllBot/${Bot_Name}/node_modules" ];then
     export Bot_Path="/root/TRSS_AllBot/${Bot_Name}"
+elif [ -d "${Bot_Path}" ];then
+    echo -e ${cyan}自定义路径: ${Bot_Path} ${green}判断通过${background}
 else 
     echo -e ${red}参数错误${background}
     exit
@@ -198,34 +200,46 @@ bash <(curl https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/QSignServer3.0.s
 exit
 ;;
 YZ|Yunzai|Yunzai-Bot)
-export Bot_Name=Yunzai-Bot
+if [ -z "${Bot_Name}" ]; then
+    export Bot_Name=Yunzai-Bot
+fi
 Bot_Path_Check
 cd ${Bot_Path}
 ;;
 MZ|Miao-Yunzai)
-export Bot_Name=Miao-Yunzai
+if [ -z "${Bot_Name}" ]; then
+    export Bot_Name=Miao-Yunzai
+fi
 Bot_Path_Check
 cd ${Bot_Path}
 ;;
 TZ|TRSS-Yunzai)
-export Bot_Name=TRSS-Yunzai
+if [ -z "${Bot_Name}" ]; then
+    export Bot_Name=TRSS-Yunzai
+fi
 Bot_Path_Check
 cd ${Bot_Path}
 ;;
 yz)
-export Bot_Name=Yunzai-Bot
+if [ -z "${Bot_Name}" ]; then
+    export Bot_Name=Yunzai-Bot
+fi
 Bot_Path_Check
 cd ${Bot_Path} && exec bash -i
 exit
 ;;
 mz)
-export Bot_Name=Miao-Yunzai
+if [ -z "${Bot_Name}" ]; then
+    export Bot_Name=Miao-Yunzai
+fi
 Bot_Path_Check
 cd ${Bot_Path} && exec bash -i
 exit
 ;;
 tz)
-export Bot_Name=TRSS-Yunzai
+if [ -z "${Bot_Name}" ]; then
+    export Bot_Name=TRSS-Yunzai
+fi
 Bot_Path_Check
 cd ${Bot_Path} && exec bash -i
 exit
