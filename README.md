@@ -27,6 +27,13 @@
 
 <hr>
 
+#### 功能展示
+
+<details markdown='1'><summary>展开/收起</summary>
+![展示1](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/img/展示1.jpg)<br>
+![展示2](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/img/展示2.jpg)<br>
+</details>
+
 #### QQ群
 
 <details markdown='1'><summary>展开/收起</summary>
@@ -84,7 +91,7 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 <hr>
 
-### 注意事项
+#### 注意事项
 
 <details markdown='1'><summary>展开/收起</summary>
 
@@ -116,5 +123,5 @@ rm /usr/local/bin/bh
 1. 最后给个star，你的支持是维护本项目的动力<br>
 2. 严禁用于任何商业用途和非法行为<br>
 3. 白狐没有开通爱发电，所以欢迎通过赞助码打赏<br>
-4. 赞助备注:QQ号+你的QQ名称[阙我跳转赞助码](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/biscuit/赞助码.jpg)<br>
+4. 赞助备注:QQ号+你的QQ名称[阙我跳转赞助码](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/img/赞助码.jpg)<br>
 <hr>
