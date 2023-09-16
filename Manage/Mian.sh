@@ -5,7 +5,7 @@ if ping -c 1 gitee.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.1.3
+export ver=0.1.4
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -384,7 +384,6 @@ if [[ "$1" == log ]];then
     else
         if (${dialog_whiptail} --yesno "${Bot_Name} [未启动] \n是否立刻启动${Bot_Name}" 8 50);then
             tmux new -s ${Bot_Name} "bh ${Bot_Name} n"
-            if [ "${}]
         fi
         main
         exit
