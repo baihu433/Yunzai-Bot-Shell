@@ -29,17 +29,23 @@
 
 #### QQ群
 
+<details markdown='1'><summary>展开/收起</summary>
+
 [戳我跳转QQ(大佬群)(①群)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=WtGelvZbOVQ4yYYZswm9ZZ5kPHkD4H8o&authKey=xz1zyGxWG7bz5X%2BgvWunX9qGUsUq%2BDomb4p02FqXIuqXd8hoxTYvdCZozBzLeFOf&noverify=0&group_code=705226976)
 
 [戳我跳转QQ(新手群)(②群)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=ttH53_Pw6dBkbBimPfEq1M8LdwvNwOeZ&authKey=BUwoqpgofF27nTz4M6JJ4UPvgv3iFcDzl3Po0PgsQf36oxFT6Xch7DbJ4U24s%2BFn&noverify=0&group_code=596660282)
 
 [戳我跳转QQ(新手群)(③群)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=KxKeK3PMw8i_ql3NH-m_iOfpU1nMkLIz&authKey=zaKN%2BeWsFWbPq6zXgwKNdN%2BSjLH1YSQRo9edHq4T%2B5R7LcG8eHSCQdNfsC%2FhBtKk&noverify=0&group_code=879718035)
 
+</details>
+
 <hr>
 
 #### 安装方式
 
-##### 服务器
+<details markdown='1'><summary>①服务器安装方法</summary>
+
+##### 服务器安装命令
 
 ```
 sudo -r root
@@ -49,7 +55,9 @@ sudo -r root
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.sh)
 ```
 
-<hr>
+</details>
+<br/>
+<details markdown='1'><summary>②Android手机安装命令</summary>
 
 ##### 安卓手机
 
@@ -60,7 +68,9 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Android/install.sh)
 ```
 
-<hr>
+</details>
+<br/>
+<details markdown='1'><summary>③已安装容器的安装方法</summary>
 
 ##### 已安装容器
 ###### 注意:除非你知道您在干什么,否则请不要使用该项!!!
@@ -69,9 +79,13 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Android/i
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.sh)
 ```
 
+</details>
+
 <hr>
 
 ### 注意事项
+
+<details markdown='1'><summary>展开/收起</summary>
 
 >[wiki帮助](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/wiki.md)
 
@@ -91,6 +105,8 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 ```
 rm /usr/local/bin/bh
 ```
+
+</details>
 
 <hr>
 
