@@ -52,7 +52,7 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 >选择下载`arm64`版 然后使用下面的命令
 
 ```
-bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Android/Ubuntu.sh)
+bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Android/install.sh)
 ```
 
 <hr>
