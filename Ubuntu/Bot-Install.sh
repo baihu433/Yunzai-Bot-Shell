@@ -53,7 +53,7 @@ do
     echo -e ${red}安装失败 3秒后重试${background}
     sleep 3s
 done
-bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/BOT-NODE.JS.sh)
+bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-NODE.JS.sh)
 }
 
 if [ -x "$(command -v node)" ]
@@ -63,7 +63,7 @@ then
 fi
 
 if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
-    source <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/manage/BOT-ARCH.sh)
+    source <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh)
     if awk '{print $2}' /etc/issue | grep -q -E 22.*
         then
             version1=v18
