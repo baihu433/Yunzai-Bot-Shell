@@ -48,6 +48,9 @@ sudo -r root
 ```
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.sh)
 ```
+
+<hr>
+
 ##### 安卓手机
 
 >[☞Termux下载地址](https://github.com/termux/termux-app/releases)<br>
@@ -55,6 +58,15 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 ```
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Android/install.sh)
+```
+
+<hr>
+
+##### 已安装容器
+###### 注意:除非你知道您在干什么,否则请不要使用该项!!!
+
+```
+bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.sh)
 ```
 
 <hr>
