@@ -8,7 +8,7 @@ elif ping -c 1 www.google.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.1.1
+export ver=0.1.2
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -149,6 +149,12 @@ function run(){
 if pnpm pm2 list | grep -q ${Bot_Name};then
     pnpm pm2 stop ${Bot_Name}
     pnpm pm2 delete ${Bot_Name}
+    echo -e ${red}进程停止 ${cyan}正在重启${background}
+    bash ${Bot_Name} n
+fi
+if [ "${Bot_Path_check}" == "true" ];then
+    pnpm run stop
+    echo -e ${red}进程停止 ${cyan}正在重启${background}
     bash ${Bot_Name} n
 fi
 }
@@ -363,6 +369,7 @@ version=`curl -s https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version`
                     echo -e ${yellow} - ${red}解决失败${background}
                     exit
                 fi
+            echo -e ${yellow} - ${green}解决成功${background}
         fi
         echo -en ${cyan}更新完成 回车继续${background};read
         bh
@@ -380,6 +387,7 @@ if [[ "$1" == log ]];then
     else
         if (${dialog_whiptail} --yesno "${Bot_Name} [未启动] \n是否立刻启动${Bot_Name}" 8 50);then
             tmux new -s ${Bot_Name} "bh ${Bot_Name} n"
+            if [ "${}]
         fi
         main
         exit
@@ -959,6 +967,7 @@ elif [[ ${Number} == "7" ]];then
         echo -e ${red} BOT不存在 ${background}
         exit
     fi
+    export Bot_Path_check=true
     export Bot_Name=$(echo ${Bot_Path} | awk -F/ '{print $NF}')
     main
     exit
