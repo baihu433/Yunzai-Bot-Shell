@@ -8,7 +8,7 @@ elif ping -c 1 www.google.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.0.6
+export ver=0.0.8
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -102,10 +102,12 @@ if [ -d $HOME/QSignServer/qsign${QSIGN_VERSION} ];then
     equipment="platform: 2"
     if [ -e ${file1} ];then
         if ! grep -q "${API}" ${file1};then
-            sed -i "/ver*/d" ${file1}
-            sed -i "/sign_api_addr*/d" ${file1}
-            sed -i "\$a\sign_api_addr: ${API}" ${file1}
-            sed -i "\$a\ver: ${version}" ${file1}
+            old_ver=$(grep ver ${file1})
+            old_sign_api_addr=$(grep sign_api_addr)
+            new_ver="ver: ${version}"
+            new_sign_api_addr="sign_api_addr: ${API}"
+            sed -i "s|ver*|${new_ver}|g" ${file1}
+            sed -i "s|sign_api_addr*|${new_sign_api_addr}|g" ${file1}
         fi
     #cd && sed -i '/sign_api_addr/d' M*/con*/con*/bot* && sed -i '$a\sign_api_addr: 127.0.0.1:6666/sign?key=fox' M*/con*/con*/bot*
     fi
@@ -147,7 +149,7 @@ function run(){
 if pnpm pm2 list | grep -q ${Bot_Name};then
     pnpm pm2 stop ${Bot_Name}
     pnpm pm2 delete ${Bot_Name}
-    node app
+    bash ${Bot_Name} n
 fi
 }
 function help(){
