@@ -42,6 +42,8 @@
 
 #### 安装方式
 
+安装即`同意`[用户协议](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/Manage/用户协议.txt)
+
 <details markdown='1'><summary>①服务器安装方法</summary>
 
 ##### 服务器安装命令
