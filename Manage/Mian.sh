@@ -5,7 +5,7 @@ if ping -c 1 gitee.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.1.8
+export ver=0.1.9
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -599,8 +599,8 @@ Number=$(${dialog_whiptail} \
 "1" "降级Puppeteer" \
 "2" "修复浏览器错误" \
 "3" "检查软件包依赖" \
-"4" "修复依赖包错误" \
-"5" "修复dpkg被中断" \
+"4" "dpkg依赖包错误" \
+"5" "dpkg安装被中断" \
 "6" "无法锁定数据库" \
 3>&1 1>&2 2>&3)
 if [[ ${Number} == "1" ]];then
@@ -609,37 +609,49 @@ if [[ ${Number} == "1" ]];then
 elif [[ ${Number} == "2" ]];then
     file="config/config/bot.yaml"
     old_chromium_path=$(grep chromium_path ${file})
-    new_chromium_path=$(which chrome || which chromium || which chromium-browser)
+    new_chromium_path=$(which chromium || which chromium-browser)
     if [ -z "${new_chromium_path}" ];then
         echo -en ${red}未安装浏览器${background}
         exit
     fi
-    sed -i "s/${old_chromium_path}/${new_chromium_path}/g" ${file}
+    sed -i "s|${old_chromium_path}|${new_chromium_path}|g" ${file}
 elif [[ ${Number} == "3" ]];then
     if ! bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT_INSTALL.sh);then
         echo -e ${red}软件包修复出错${background}
         exit
     fi
 elif [[ ${Number} == "4" ]];then
-    if grep -q -E -i "Debian|Ubuntu|Kali" /etc/os-release && [ -x /usr/bin/apt ];then
+    if grep -q -E -i "Debian|Ubuntu|Kali" /etc/os-release && [ -x /usr/bin/apt ]
+    then
         apt update -y
         apt --fix-broken -y install
         dpkg --configure -a
         apt-get --reinstall install
+    else
+        echo -e ${red}您不是debian系Linux发行版${background}
+        exit
     fi
 elif [[ ${Number} == "5" ]];then
-    if grep -q -E -i "Debian|Ubuntu|Kali" /etc/os-release && [ -x /usr/bin/apt ];then
+    if grep -q -E -i "Debian|Ubuntu|Kali" /etc/os-release && [ -x /usr/bin/apt ]
+    then
         rm -rf /var/lib/dpkg/lock
         rm -rf /var/lib/apt/lists/lock
         rm -rf /var/cache/apt/archives/lock
         dpkg –configure -a
         apt update -y
         apt-get update -y
+    else
+        echo -e ${red}您不是debian系Linux发行版${background}
+        exit
     fi
 elif [[ ${Number} == "6" ]];then
-    if grep -q -E -i Arch /etc/issue && [ -x /usr/bin/pacman ];then
+    if grep -q -E -i Arch /etc/issue && [ -x /usr/bin/pacman ]
+    then
         rm /var/lib/pacman/db.lck
-        pacman -Syu
+        pacman -Syu --noconfirm
+    else
+        echo -e ${red}您不是ArchLinux发行版${background}
+        exit
     fi
 else
     return
