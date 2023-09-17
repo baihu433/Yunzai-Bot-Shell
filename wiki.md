@@ -46,50 +46,50 @@ bh tz #进入TRSS-Yunzai(时雨崽)文件夹
 <hr>
 <details markdown='1'><summary>操作BOT</summary>
 
-##### 请将下列 `YZ/MZ/TZ` 替换为相应BOT简称[区分大小写]
+##### 请将下列 `YZ/MZ/TZ/路径` 替换为相应BOT简称或者路径[区分大小写]
 
 ```sh
-bh YZ/MZ/TZ n #前台启动BOT
+bh YZ/MZ/TZ/路径 n #前台启动BOT
 ```
 
 ```sh
-bh YZ/MZ/TZ start #后台启动BOT
+bh YZ/MZ/TZ/路径 start #后台启动BOT
 ```
 
 ```sh
-bh YZ/MZ/TZ log #打开BOT后台日志
+bh YZ/MZ/TZ/路径 log #打开BOT后台日志
 ```
 
 ```sh
-bh YZ/MZ/TZ stop #停止BOT后台运行
+bh YZ/MZ/TZ/路径 stop #停止BOT后台运行
 ```
 
 ```sh
-bh YZ/MZ/TZ login #重新配置BOT账号
+bh YZ/MZ/TZ/路径 login #重新配置BOT账号
 ```
 
 ```sh
-bh YZ/MZ/TZ pi #打开插件安装脚本
+bh YZ/MZ/TZ/路径 pi #打开插件安装脚本
 ```
 
 ```sh
-bh YZ/MZ/TZ install [依赖名] #安装NPM依赖包
+bh YZ/MZ/TZ/路径 install [依赖名] #安装NPM依赖包
 ```
 
 ```sh
-bh YZ/MZ/TZ qsign [签名服务器链接] #填写签名服务器链接
+bh YZ/MZ/TZ/路径 qsign [签名服务器链接] #填写签名服务器链接
 ```
 
 ```sh
-bh YZ/MZ/TZ up bot #更新BOT
+bh YZ/MZ/TZ/路径 up bot #更新BOT
 ```
 
 ```sh
-bh YZ/MZ/TZ up pkg #更新NPM依赖包
+bh YZ/MZ/TZ/路径 up pkg #更新NPM依赖包
 ```
 
 ```sh
-bh YZ/MZ/TZ fix pkg #重新安装NPM依赖包
+bh YZ/MZ/TZ/路径 fix pkg #重新安装NPM依赖包
 ```
 
 </details>
