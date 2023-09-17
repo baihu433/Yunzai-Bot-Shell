@@ -23,6 +23,10 @@ bh QS #打开签名服务器管理脚本
 bh unup #不更新脚本并打开脚本
 ```
 
+```sh
+bh PI #打开插件安装脚本
+```
+
 <hr/>
 
 <details markdown='2'><summary>进入BOT文件夹</summary>
@@ -66,10 +70,6 @@ bh YZ/MZ/TZ/路径 stop #停止BOT后台运行
 
 ```sh
 bh YZ/MZ/TZ/路径 login #重新配置BOT账号
-```
-
-```sh
-bh YZ/MZ/TZ/路径 pi #打开插件安装脚本
 ```
 
 ```sh
