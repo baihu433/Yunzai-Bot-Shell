@@ -29,7 +29,7 @@ bh PI #打开插件安装脚本
 
 <hr/>
 
-<details markdown='2'><summary>进入BOT文件夹</summary>
+#### 进入BOT文件夹
 
 ```sh
 bh yz #进入Yunzai-Bot(云崽)文件夹
@@ -40,16 +40,10 @@ bh mz #进入Miao-Yunzai(喵崽)文件夹
 ```sh
 bh tz #进入TRSS-Yunzai(时雨崽)文件夹
 ```
-<details markdown='2'><summary>报错提示: 参数错误</summary>
- - 是否已安装相应BOT<br>
- - 名称是否拼写错误<br>
- - 大小写是否混用<br>
- - 是否更改过文件夹路径或名称<br>
-</details>
-</details>
-<hr>
-<details markdown='1'><summary>操作BOT</summary>
 
+<hr>
+
+#### 操作BOT
 ##### 请将下列 `YZ/MZ/TZ/路径` 替换为相应BOT简称或者路径[区分大小写]
 
 ```sh
@@ -92,6 +86,13 @@ bh YZ/MZ/TZ/路径 up pkg #更新NPM依赖包
 bh YZ/MZ/TZ/路径 fix pkg #重新安装NPM依赖包
 ```
 
-</details>
 <hr/>
+
+<details markdown='2'><summary>报错提示: 参数错误</summary>
+ - 是否已安装相应BOT<br>
+ - 名称是否拼写错误<br>
+ - 大小写是否混用<br>
+ - 是否更改过文件夹路径或名称<br>
+<hr/>
+</details>
 <br>

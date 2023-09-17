@@ -93,13 +93,13 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 </details>
 
+> #### [wiki帮助](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/wiki.md)
+
 <hr>
 
 #### 注意事项
 
 <details markdown='1'><summary>展开/收起</summary>
-
->[wiki帮助](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/wiki.md)
 
 >打开白狐脚本的命令
 ```
@@ -127,5 +127,5 @@ rm /usr/local/bin/bh
 1. 最后给个star，你的支持是维护本项目的动力<br>
 2. 严禁用于任何商业用途和非法行为<br>
 3. 白狐没有开通爱发电，所以欢迎通过赞助码打赏<br>
-4. 赞助备注:QQ号+你的QQ名称[阙我跳转赞助码](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/img/赞助码.jpg)<br>
+4. 赞助备注:QQ号+你的QQ名称[戳我跳转赞助码](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/img/赞助码.jpg)<br>
 <hr>
