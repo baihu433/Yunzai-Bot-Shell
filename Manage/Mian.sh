@@ -5,7 +5,7 @@ if ping -c 1 gitee.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.1.6
+export ver=0.1.7
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -138,8 +138,8 @@ fi
 }
 function pkg(){
 if [ ! -e package.json ];then
-echo -e ${red}参数错误${background}
-exit
+    echo -e ${red}参数错误${background}
+    exit
 fi
 }
 function run(){
@@ -258,6 +258,16 @@ pi)
 bash <(curl -sL https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/plug-in.sh)
 ;;
 esac
+
+if echo "$1" | grep -q -E "/" ;then
+    if [ -d "$1" ]
+    then
+        cd "$1"
+    else
+        echo -e ${red}参数错误${background}
+        exit
+    fi
+fi
 
 case "$2" in
 n)
