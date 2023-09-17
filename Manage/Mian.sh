@@ -5,7 +5,7 @@ if ping -c 1 gitee.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.2.1
+export ver=0.2.2
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -617,7 +617,7 @@ elif [[ ${Number} == "2" ]];then
         echo -en ${red}未安装浏览器${background}
         exit
     fi
-    sed -i "s|${old_chromium_path}|${new_chromium_path}|g" ${file}
+    sed -i "s|${old_chromium_path}|chromium_path: ${new_chromium_path}|g" ${file}
     echo -e ${cyan}写入完成${background}
 elif [[ ${Number} == "3" ]];then
     echo -e ${yellow}正在修复${background}
