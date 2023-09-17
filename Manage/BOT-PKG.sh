@@ -23,7 +23,8 @@ fi
 
 function pkg_install(){
 i=0
-until ${pkg_install} $1
+echo -e ${yellow}安装软件 ${pkg}${background}
+until ${pkg_install} ${pkg}
 do
     if [ ${i} -eq 3 ]
         then
@@ -52,27 +53,22 @@ for package in ${pkg_list[@]}
 do
     if [ -x "$(command -v apk)" ];then
         if ! apk info -e "${package}" > /dev/null 2>&1;then
-            echo -e ${yellow}安装软件 ${package}${background}
             pkg="${package} ${pkg}"
         fi
     elif [ -x "$(command -v pacman)" ];then
         if ! pacman -Qs "${package}" > /dev/null 2>&1;then
-            echo -e ${yellow}安装软件 ${package}${background}
             pkg="${package} ${pkg}" 
         fi
     elif [ -x "$(command -v apt)" ];then
         if ! dpkg -s "${package}" > /dev/null 2>&1;then
-            echo -e ${yellow}安装软件 ${package}${background}
             pkg="${package} ${pkg}"
         fi
     elif [ -x "$(command -v yum)" ];then
         if ! yum list installed "${package}" > /dev/null 2>&1;then
-            echo -e ${yellow}安装软件 ${package}${background}
             pkg="${package} ${pkg}"
         fi
     elif [ -x "$(command -v dnf)" ];then
         if ! dnf list installed "${package}" > /dev/null 2>&1;then
-            echo -e ${yellow}安装软件 ${package}${background}
             pkg="${package} ${pkg}"
         fi
     fi
@@ -81,28 +77,23 @@ done
 if [ ! -z "${pkg}" ]; then
     if [ -x "$(command -v apk)" ];then
         if ! apk info -e "${package}" > /dev/null 2>&1;then
-            echo -e ${yellow}安装软件 ${package}${background}
-            pkg_install ${pkg}
+            pkg_install
         fi
     elif [ -x "$(command -v pacman)" ];then
         if ! pacman -Qs "${package}" > /dev/null 2>&1;then
-            echo -e ${yellow}安装软件 ${package}${background}
-            pkg_install ${pkg} 
+            pkg_install
         fi
     elif [ -x "$(command -v apt)" ];then
         if ! dpkg -s "${package}" > /dev/null 2>&1;then
-            echo -e ${yellow}安装软件 ${package}${background}
-            pkg_install ${pkg}
+            pkg_install
         fi
     elif [ -x "$(command -v yum)" ];then
         if ! yum list installed "${package}" > /dev/null 2>&1;then
-            echo -e ${yellow}安装软件 ${package}${background}
-            pkg_install ${pkg}
+            pkg_install
         fi
     elif [ -x "$(command -v dnf)" ];then
         if ! dnf list installed "${package}" > /dev/null 2>&1;then
-            echo -e ${yellow}安装软件 ${package}${background}
-            pkg_install ${pkg}
+            pkg_install
         fi
     fi
 fi
