@@ -10,11 +10,11 @@ export white="\033[37m"
 export background="\033[0m"
 
 if [ $(command -v apk) ];then
-    pkg_install="apk update && apk add"
+    pkg_install="apk add"
 elif [ $(command -v apt) ];then
-    pkg_install="apt update -y && apt install -y"
+    pkg_install="apt install -y"
 elif [ $(command -v yum) ];then
-    pkg_install="yum update -y && yum install -y"
+    pkg_install="yum install -y"
 elif [ $(command -v dnf) ];then
     pkg_install="dnf install -y"
 elif [ $(command -v pacman) ];then
@@ -77,6 +77,7 @@ done
 if [ ! -z "${pkg}" ]; then
     if [ -x "$(command -v apk)" ];then
         if ! apk info -e "${package}" > /dev/null 2>&1;then
+            apk update
             pkg_install
         fi
     elif [ -x "$(command -v pacman)" ];then
@@ -85,10 +86,12 @@ if [ ! -z "${pkg}" ]; then
         fi
     elif [ -x "$(command -v apt)" ];then
         if ! dpkg -s "${package}" > /dev/null 2>&1;then
+            apt update
             pkg_install
         fi
     elif [ -x "$(command -v yum)" ];then
         if ! yum list installed "${package}" > /dev/null 2>&1;then
+            yum update
             pkg_install
         fi
     elif [ -x "$(command -v dnf)" ];then
