@@ -13,10 +13,10 @@ if [ $(command -v apk) ];then
     pkg_install="apk update && apk add"
 elif [ $(command -v apt) ];then
     pkg_install="apt update -y && apt install -y"
-elif [ $(command -v dnf) ];then
-    pkg_install="dnf install -y"
 elif [ $(command -v yum) ];then
     pkg_install="yum update -y && yum install -y"
+elif [ $(command -v dnf) ];then
+    pkg_install="dnf install -y"
 elif [ $(command -v pacman) ];then
     pkg_install="pacman -Syy --noconfirm --needed"
 fi
@@ -47,35 +47,63 @@ pkg_list=("tar" \
 "unzip" \
 "git" \
 "tmux")
+
 for package in ${pkg_list[@]}
 do
-    pkg="${package} ${pkg}"
+    if [ -x "$(command -v apk)" ];then
+        if ! apk info -e "${package}" > /dev/null 2>&1;then
+            echo -e ${yellow}安装软件 ${package}${background}
+            pkg="${package} ${pkg}"
+        fi
+    elif [ -x "$(command -v pacman)" ];then
+        if ! pacman -Qs "${package}" > /dev/null 2>&1;then
+            echo -e ${yellow}安装软件 ${package}${background}
+            pkg="${package} ${pkg}" 
+        fi
+    elif [ -x "$(command -v apt)" ];then
+        if ! dpkg -s "${package}" > /dev/null 2>&1;then
+            echo -e ${yellow}安装软件 ${package}${background}
+            pkg="${package} ${pkg}"
+        fi
+    elif [ -x "$(command -v yum)" ];then
+        if ! yum list installed "${package}" > /dev/null 2>&1;then
+            echo -e ${yellow}安装软件 ${package}${background}
+            pkg="${package} ${pkg}"
+        fi
+    elif [ -x "$(command -v dnf)" ];then
+        if ! dnf list installed "${package}" > /dev/null 2>&1;then
+            echo -e ${yellow}安装软件 ${package}${background}
+            pkg="${package} ${pkg}"
+        fi
+    fi
 done
 
-if [ -x "$(command -v apk)" ];then
-    if ! apk info -e "${package}" > /dev/null 2>&1;then
-        echo -e ${yellow}安装软件 ${package}${background}
-        pkg_install ${pkg}
-    fi
-elif [ -x "$(command -v pacman)" ];then
-    if ! pacman -Qs "${package}" > /dev/null 2>&1;then
-        echo -e ${yellow}安装软件 ${package}${background}
-        pkg_install ${pkg} 
-    fi
-elif [ -x "$(command -v apt)" ];then
-    if ! dpkg -s "${package}" > /dev/null 2>&1;then
-        echo -e ${yellow}安装软件 ${package}${background}
-        pkg_install ${pkg}
-    fi
-elif [ -x "$(command -v yum)" ];then
-    if ! yum list installed "${package}" > /dev/null 2>&1;then
-        echo -e ${yellow}安装软件 ${package}${background}
-        pkg_install ${pkg}
-    fi
-elif [ -x "$(command -v dnf)" ];then
-    if ! dnf list installed "${package}" > /dev/null 2>&1;then
-        echo -e ${yellow}安装软件 ${package}${background}
-        pkg_install ${pkg}
+if [ ! -z "${pkg}" ]; then
+    if [ -x "$(command -v apk)" ];then
+        if ! apk info -e "${package}" > /dev/null 2>&1;then
+            echo -e ${yellow}安装软件 ${package}${background}
+            pkg_install ${pkg}
+        fi
+    elif [ -x "$(command -v pacman)" ];then
+        if ! pacman -Qs "${package}" > /dev/null 2>&1;then
+            echo -e ${yellow}安装软件 ${package}${background}
+            pkg_install ${pkg} 
+        fi
+    elif [ -x "$(command -v apt)" ];then
+        if ! dpkg -s "${package}" > /dev/null 2>&1;then
+            echo -e ${yellow}安装软件 ${package}${background}
+            pkg_install ${pkg}
+        fi
+    elif [ -x "$(command -v yum)" ];then
+        if ! yum list installed "${package}" > /dev/null 2>&1;then
+            echo -e ${yellow}安装软件 ${package}${background}
+            pkg_install ${pkg}
+        fi
+    elif [ -x "$(command -v dnf)" ];then
+        if ! dnf list installed "${package}" > /dev/null 2>&1;then
+            echo -e ${yellow}安装软件 ${package}${background}
+            pkg_install ${pkg}
+        fi
     fi
 fi
 
