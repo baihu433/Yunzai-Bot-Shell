@@ -5,7 +5,7 @@ if ping -c 1 gitee.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.2.0
+export ver=0.2.1
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -100,11 +100,13 @@ if [ -d $HOME/QSignServer/qsign${QSIGN_VERSION} ];then
     if [ -e ${file1} ];then
         if ! grep -q "${API}" ${file1};then
             old_ver=$(grep ver ${file1})
-            old_sign_api_addr=$(grep sign_api_addr)
+            old_sign_api_addr=$(grep sign_api_addr ${file1})
             new_ver="ver: ${version}"
             new_sign_api_addr="sign_api_addr: ${API}"
-            sed -i "s|ver*|${new_ver}|g" ${file1}
-            sed -i "s|sign_api_addr*|${new_sign_api_addr}|g" ${file1}
+            if [ ! -z ${old_ver} ];then
+                sed -i "s|${old_ver}|${new_ver}|g" ${file1}
+            fi
+            sed -i "s|${old_sign_api_addr}|${new_sign_api_addr}|g" ${file1}
         fi
     #cd && sed -i '/sign_api_addr/d' M*/con*/con*/bot* && sed -i '$a\sign_api_addr: 127.0.0.1:6666/sign?key=fox' M*/con*/con*/bot*
     fi
