@@ -5,7 +5,7 @@ if ping -c 1 gitee.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.1.9
+export ver=0.2.0
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -604,6 +604,7 @@ Number=$(${dialog_whiptail} \
 "6" "无法锁定数据库" \
 3>&1 1>&2 2>&3)
 if [[ ${Number} == "1" ]];then
+    echo -e ${yellow}正在修复${background}
     echo "Y" | pnpm install
     echo "Y" | pnpm install puppeteer@19.0.0 -w
 elif [[ ${Number} == "2" ]];then
@@ -615,7 +616,9 @@ elif [[ ${Number} == "2" ]];then
         exit
     fi
     sed -i "s|${old_chromium_path}|${new_chromium_path}|g" ${file}
+    echo -e ${cyan}写入完成${background}
 elif [[ ${Number} == "3" ]];then
+    echo -e ${yellow}正在修复${background}
     if ! bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT_INSTALL.sh);then
         echo -e ${red}软件包修复出错${background}
         exit
@@ -623,6 +626,7 @@ elif [[ ${Number} == "3" ]];then
 elif [[ ${Number} == "4" ]];then
     if grep -q -E -i "Debian|Ubuntu|Kali" /etc/os-release && [ -x /usr/bin/apt ]
     then
+        echo -e ${yellow}正在修复${background}
         apt update -y
         apt --fix-broken -y install
         dpkg --configure -a
@@ -634,6 +638,7 @@ elif [[ ${Number} == "4" ]];then
 elif [[ ${Number} == "5" ]];then
     if grep -q -E -i "Debian|Ubuntu|Kali" /etc/os-release && [ -x /usr/bin/apt ]
     then
+        echo -e ${yellow}正在修复${background}
         rm -rf /var/lib/dpkg/lock
         rm -rf /var/lib/apt/lists/lock
         rm -rf /var/cache/apt/archives/lock
@@ -645,6 +650,7 @@ elif [[ ${Number} == "5" ]];then
         exit
     fi
 elif [[ ${Number} == "6" ]];then
+    echo -e ${yellow}正在修复${background}
     if grep -q -E -i Arch /etc/issue && [ -x /usr/bin/pacman ]
     then
         rm /var/lib/pacman/db.lck
