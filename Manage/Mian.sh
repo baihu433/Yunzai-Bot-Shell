@@ -1,11 +1,5 @@
 #!/bin/env bash
-if ping -c 1 gitee.com > /dev/null 2>&1
-    then
-    up=true
-else
-    up=false
-fi
-export ver=0.2.3
+export ver=0.2.4
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -149,12 +143,12 @@ if pnpm pm2 list | grep -q ${Bot_Name};then
     pnpm pm2 stop ${Bot_Name}
     pnpm pm2 delete ${Bot_Name}
     echo -e ${red}进程停止 ${cyan}正在重启${background}
-    bash ${Bot_Name} n
+    bh ${Bot_Name} n
 fi
 if [ "${Bot_Path_check}" == "true" ];then
     pnpm run stop
     echo -e ${red}进程停止 ${cyan}正在重启${background}
-    bash ${Bot_Name} n
+    bh ${Bot_Name} n
 fi
 }
 function help(){
@@ -193,7 +187,7 @@ elif [ -d "/root/TRSS_AllBot/${Bot_Name}/node_modules" ];then
     export Bot_Path="/root/TRSS_AllBot/${Bot_Name}"
 elif [ -d "${Bot_Path}" ];then
     echo -e ${cyan}自定义路径: ${Bot_Path} ${green}判断通过${background}
-else 
+else
     echo -e ${red}参数错误${background}
     exit
 fi
@@ -358,6 +352,13 @@ case $3 in
 esac
 ;;
 esac
+
+if ping -c 1 gitee.com > /dev/null 2>&1
+    then
+    up=true
+else
+    up=false
+fi
 
 if [ ! "${up}" = "false" ];then
 version=`curl -s https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version`
