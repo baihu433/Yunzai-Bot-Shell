@@ -49,33 +49,33 @@ fi
 
 function system_check(){
 if grep -q -E -i Alpine /etc/issue && [ -x /sbin/apk ];then
-    echo -e ${green}系统效验通过${background}
+    echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Arch /etc/issue && [ -x /usr/bin/pacman ];then
-    echo -e ${green}系统效验通过${background}
+    echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Kernel /etc/issue && [ -x /usr/bin/dnf ];then
-    echo -e ${green}系统效验通过${background}
+    echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Kernel /etc/issue && [ -x /usr/bin/yum ];then
-    echo -e ${green}系统效验通过${background}
+    echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Ubuntu /etc/issue && [ -x /usr/bin/apt ];then
-    echo -e ${green}系统效验通过${background}
+    echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Debian /etc/issue && [ -x /usr/bin/apt ];then
-    echo -e ${green}系统效验通过${background}
+    echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Kali /etc/issue && [ -x /usr/bin/apt ];then
-    echo -e ${green}系统效验通过${background}
+    echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Alpine /etc/os-release && [ -x /sbin/apk ];then
-    echo -e ${green}系统效验通过${background}
+    echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Arch /etc/os-release && [ -x /usr/bin/pacman ];then
-    echo -e ${green}系统效验通过${background}
+    echo -e ${green}系统校验通过${background}
 elif grep -q -E -i CentOS /etc/os-release && [ -x /usr/bin/dnf ];then
-    echo -e ${green}系统效验通过${background}
+    echo -e ${green}系统校验通过${background}
 elif grep -q -E -i CentOS /etc/os-release && [ -x /usr/bin/yum ];then
-    echo -e ${green}系统效验通过${background}
+    echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Ubuntu /etc/os-release && [ -x /usr/bin/apt ];then
-    echo -e ${green}系统效验通过${background}
+    echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Debian /etc/os-release && [ -x /usr/bin/apt ];then
-    echo -e ${green}系统效验通过${background}
+    echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Kali /etc/os-release && [ -x /usr/bin/apt ];then
-    echo -e ${green}系统效验通过${background}
+    echo -e ${green}系统校验通过${background}
 else
     echo -e ${red}不受支持的系统${background}
     echo -e ${red}程序终止!! 脚本停止运行${background}

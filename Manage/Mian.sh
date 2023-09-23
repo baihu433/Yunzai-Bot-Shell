@@ -5,7 +5,7 @@ if ping -c 1 gitee.com > /dev/null 2>&1
 else
     up=false
 fi
-export ver=0.2.2
+export ver=0.2.3
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -941,6 +941,7 @@ Number=$(${dialog_whiptail} \
 feedback=$?
 feedback
 if [[ ${Number} == "1" ]];then
+    export Bot_Path_check=false
     if [ -d /root/TRSS_AllBot ];then
         export Bot_Name=Yunzai
     else
@@ -950,11 +951,13 @@ if [[ ${Number} == "1" ]];then
     export Github=https://github.com/yoimiya-kokomi/Yunzai-Bot.git
     Bot_Path
 elif [[ ${Number} == "2" ]];then
+    export Bot_Path_check=false
     export Bot_Name=Miao-Yunzai
     export Gitee=https://gitee.com/yoimiya-kokomi/Miao-Yunzai.git
     export Github=https://github.com/yoimiya-kokomi/Miao-Yunzai.git
     Bot_Path
 elif [[ ${Number} == "3" ]];then
+    export Bot_Path_check=false
     export Bot_Name=TRSS-Yunzai
     export Gitee=https://gitee.com/TimeRainStarSky/Yunzai.git
     export Github=https://github.com/TimeRainStarSky/Yunzai.git
