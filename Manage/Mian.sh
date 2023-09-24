@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=0.2.4
+export ver=0.2.5
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -527,7 +527,8 @@ echo -e ${yellow}正在更新 ${Name}${background}
 if ! git pull
 then
     echo -e ${red}${Name}更新失败 ${yellow}是否强制更新 [Y/N]${background};read YN
-    if [[ ${YN} == "Y|y" ]];then
+    case ${YN} in
+    Y|y)
         remote=$(grep 'remote =' .git/config | sed 's/remote =//g')
         remote=$(echo ${remote})
         branch=$(grep branch .git/config | sed "s/\[branch \"//g" | sed 's/"//g' | sed "s/\]//g")
@@ -535,7 +536,7 @@ then
         git fetch --all
         git reset --hard ${remote}/${branch}
         git_pull
-    fi
+    esac
 fi
 }
 Name=${Bot_Name}
