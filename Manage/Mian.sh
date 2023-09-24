@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=0.2.6
+export ver=0.2.7
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -329,7 +329,7 @@ case $3 in
   branch=$(echo ${branch})
   git fetch --all
   git reset --hard ${remote}/${branch}
-  git pull
+  git pull -f
   exit
   ;;
   pkg)

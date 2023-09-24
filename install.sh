@@ -87,7 +87,7 @@ function Script_Install(){
     echo -e ${white}=========================${background}
     echo -e ${red}" "白狐 ${yellow}BOT ${green}Install ${cyan}Script ${background}
     echo -e "  "————"  "————"  "————"  "————"  "
-    echo -e ${green}" "版本:" "v0.2.6 ${cyan}\(20230924\) ${background}
+    echo -e ${green}" "版本:" "v0.2.7 ${cyan}\(20230924\) ${background}
     echo -e ${green}" "作者:" "${cyan}白狐"   "\(baihu433\) ${background}
     echo -e ${white}=========================${background}
     echo
@@ -103,7 +103,10 @@ function Script_Install(){
         old_bh_bash='#!/bin/env bash'
         new_bh_bash=$(which bash)
         sed -i "s|${old_bh_bash}|#!${new_bh_bash}|g" /usr/local/bin/bh
-        exit
+        if ! bh help > /dev/null 2>&1;then
+            echo -e ${yellow} - ${yellow}解决成功${background}
+            echo -e ${yellow} - ${cyan}请使用 ${green}bh ${cyan}命令 打开脚本${background}
+        fi
     fi
     echo -e ${yellow} - ${yellow}安装成功${background}
     echo -e ${yellow} - ${cyan}请使用 ${green}bh ${cyan}命令 打开脚本${background}
