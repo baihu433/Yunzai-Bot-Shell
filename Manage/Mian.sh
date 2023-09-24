@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=0.2.5
+export ver=0.2.6
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -524,9 +524,9 @@ function git_update(){
 cd ${Bot_Path}
 git_pull(){
 echo -e ${yellow}正在更新 ${Name}${background}
-if ! git pull
+if ! git pull -f
 then
-    echo -e ${red}${Name}更新失败 ${yellow}是否强制更新 [Y/N]${background};read YN
+    echo -en ${red}${Name}更新失败 ${yellow}是否强制更新 [Y/N]${background};read YN
     case ${YN} in
     Y|y)
         remote=$(grep 'remote =' .git/config | sed 's/remote =//g')
@@ -541,7 +541,7 @@ fi
 }
 Name=${Bot_Name}
 git_pull
-for folder in $(ls -I example -I bin -I other -I system plugins)
+for folder in $(ls plugins)
 do
     if [ -d plugins/${folder}/.git ];then
         cd plugins/${folder}
