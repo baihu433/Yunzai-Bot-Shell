@@ -29,17 +29,7 @@ done
 
 echo -e ${yellow}安装软件 Node.JS${background}
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh)
-until wget -q --show-progress -O node.tar.xz -c https://cdn.npmmirror.com/binaries/node/latest-v18.x/node-v18.17.0-linux-${ARCH}.tar.xz
-do
-    if [ ${i} -eq 3 ]
-    then
-        echo -e ${red}错误次数过多 退出${background}
-        exit
-    fi
-    i=$((${i}+1))
-    echo -e ${red}安装失败 3秒后重试${background}
-    sleep 3s
-done
+wget -q --show-progress -O node.tar.xz -c https://cdn.npmmirror.com/binaries/node/latest-v18.x/node-v18.17.0-linux-${ARCH}.tar.xz
 
 if [ ! -d node ];then
     mkdir node
