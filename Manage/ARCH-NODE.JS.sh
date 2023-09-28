@@ -28,7 +28,18 @@ do
 done
 
 echo -e ${yellow}安装软件 Node.JS${background}
-bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh)
+case $(uname -m) in
+    x86_64|amd64)
+    export ARCH=x64
+;;
+    arm64|aarch64)
+    export ARCH=arm64
+;;
+*)
+    echo ${red}您的框架为${yellow}$(uname -m)${red},快让白狐做适配.${background}
+    exit
+;;
+esac
 wget -q --show-progress -O node.tar.xz -c https://cdn.npmmirror.com/binaries/node/latest-v18.x/node-v18.17.0-linux-${ARCH}.tar.xz
 
 if [ ! -d node ];then
