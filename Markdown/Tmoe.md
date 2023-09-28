@@ -2,9 +2,10 @@
 <hr/>
 
 #### 准备工作
+
 | Termux | [下载链接](https://f-droid.org/repo/com.termux_118.apk) |
 
-| MT管理器 | [下载链接](https://mt2.cn/download/)
+| MT管理器 | [下载链接](https://mt2.cn/download/) |
 
 <hr/>
 
@@ -332,4 +333,7 @@ apt install git curl wget -y
 ```sh
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Android/install.sh)
 ```
+
+![bh.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/bh.png)
+
 <hr/>
