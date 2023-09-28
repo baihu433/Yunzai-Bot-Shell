@@ -23,7 +23,7 @@ fi
 
 if ! apk info -e chromium >/dev/null 2>&1
     then
-        echo -e ${yellow}安装xz解压工具${background}
+        echo -e ${yellow}安装chromium浏览器${background}
         until apk add chromium
         do
             echo -e ${red}安装失败 3秒后重试${background}
