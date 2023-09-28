@@ -318,6 +318,14 @@ bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 
 <hr/>
 
+`如果` 出现这个界面
+
+![tmoetool.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/tmoetool.png)
+
+请选择最下面的那一个选项 `退出`
+
+<hr/>
+
 然后用下面的命令更新一下ubuntu
 ```sh
 apt update && apt upgrade -y
