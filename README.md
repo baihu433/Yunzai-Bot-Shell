@@ -73,8 +73,8 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 ##### 安卓手机
 
-按照此文档部署
-![文档地址](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/Markdown/Tmoe.md)
+> ###### 按照此文档部署
+[文档地址](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/Markdown/Tmoe.md)
 
 </details>
 <br/>
