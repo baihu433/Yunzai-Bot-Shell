@@ -85,7 +85,7 @@ function Install_GIT_Plugin(){
         number=$(${dialog_whiptail} \
         --title "白狐-QQ群:705226976" \
         --${checklist_menu} "选择您喜欢的插件吧! ${tips}" \
-        25 60 18 \
+        25 60 20 \
         "1" "miao-plugin                    喵喵插件" ${OFF} \
         "2" "xiaoyao-cvs-plugin             逍遥图鉴" ${OFF} \
         "3" "Guoba-Plugin                   锅巴插件" ${OFF} \
@@ -151,6 +151,11 @@ function Install_GIT_Plugin(){
         "61" "nsfwjs-plugin                  涩图监听插件" ${OFF} \
         "62" "biscuit-plugin                 饼干插件" ${OFF} \
         "63" "xrk-plugin                     向日葵插件" ${OFF} \
+        "64" "WeChat-Web-plugin              微信插件" ${OFF} \
+        "65" "btc-memz-plugin                BTC插件" ${OFF} \
+        "66" "wind-plugin                    风插件" ${OFF} \
+        "67" "ttsapi-yunzai-Plugin           TTS语音合成" ${OFF} \
+        "68" "Xs-plugin                      XS插件" ${OFF} \
         3>&1 1>&2 2>&3)
     }
     
@@ -223,7 +228,12 @@ function Install_GIT_Plugin(){
         echo -e ${green_red}61. ${cyan}nsfwjs-plugin"            "涩图监听插件${background}
         echo -e ${green_red}62. ${cyan}biscuit-plugin"           "饼干插件${background}
         echo -e ${green_red}63. ${cyan}xrk-plugin"               "向日葵插件${background}
-        echo 
+        echo -e ${green_red}64. ${cyan}WeChat-Web-plugin"        "微信插件${background}
+        echo -e ${green_red}65. ${cyan}btc-memz-plugin"          "BTC插件${background}
+        echo -e ${green_red}66. ${cyan}wind-plugin"              "风插件${background}
+        echo -e ${green_red}67. ${cyan}ttsapi-yunzai-Plugin"     "TTS语音合成${background}
+        echo -e ${green_red}68. ${cyan}Xs-plugin"                "XS插件${background}
+        echo
         echo -e ${green}0. ${cyan}返回${background}
         echo "#####################################"
         echo
@@ -598,12 +608,37 @@ function Install_GIT_Plugin(){
            62)
              Name="${Name} 饼干插件"
              Plugin="${Plugin} biscuit-plugin"
-             Git="${Git} https://gitee.com/Yummy-cookie/biscuit-plugin"
+             Git="${Git} https://gitee.com/Yummy-cookie/biscuit-plugin.git"
              ;;
            63)
              Name="${Name} 向日葵插件"
              Plugin="${Plugin} xrk-plugin"
-             Git="${Git} https://gitee.com/xrk114514/xrk-plugin"
+             Git="${Git} https://gitee.com/xrk114514/xrk-plugin.git"
+             ;;
+           64)
+             Name="${Name} 微信插件"
+             Plugin="${Plugin} WeChat-Web-plugin"
+             Git="${Git} https://gitee.com/Zyy955/WeChat-Web-plugin.git"
+             ;;
+           65)
+             Name="${Name} BTC插件"
+             Plugin="${Plugin} btc-memz-plugin"
+             Git="${Git} https://gitee.com/memz2007/btc-memz-plugin.git"
+             ;;
+           66)
+             Name="${Name} 风插件"
+             Plugin="${Plugin} wind-plugin"
+             Git="${Git} https://gitee.com/wind-trace-typ/wind-plugin.git"
+             ;;
+           67)
+             Name="${Name} TTS语音合成"
+             Plugin="${Plugin} ttsapi-yunzai-Plugin"
+             Git="${Git} https://gitee.com/TsaiXingyu/ttsapi-yunzai-Plugin.git"
+             ;;
+           68)
+             Name="${Name} XS插件"
+             Plugin="${Plugin} Xs-plugin"
+             Git="${Git} https://gitee.com/hsxfk/Xs-plugin"
              ;;
            0)
              echo

@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=0.2.8
+export ver=0.2.9
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -391,54 +391,97 @@ version=`curl -s https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version`
 fi
 
 function BOT(){
+function tmux_new(){
+Tmux_Name="$1"
+Shell_Command="$2"
+tmux new -s ${Tmux_Name} -d "${Shell_Command}"
+}
+function tmux_attach(){
+Tmux_Name="$1"
+tmux attach -t ${Tmux_Name}
+}
+function tmux_kill_session(){
+Tmux_Name="$1"
+tmux kill-session -t ${Tmux_Name}
+}
+function tmux_ls(){
+Tmux_Name="$1"
+tmux_windows=$(tmux ls 2>&1)
+if echo ${tmux_windows} | grep -q ${Tmux_Name}
+then
+    return 0
+else
+    return 1
+fi
+}
+function tmux_gauge(){
+i=0
+Tmux_Name="$1"
+tmux_ls > /dev/null 2>&1 &
+{
+until echo ${tmux_windows} | grep -q ${Tmux_Name}
+do
+    i=$((${i}+1))
+    sleep 0.05s
+    echo -e ${i}
+    if [[ ${i} == 100 ]];then
+        echo -e 错误: 启动失败
+        return 1
+    fi
+done
+} | ${dialog_whiptail} --title "白狐-script" --gauge "正在"${Start_Stop_Restart}" ${Tmux_Name}" 8 50 0
+}
+
+bot_tmux_start(){
+tmux_new ${Bot_Name} "bh ${Bot_Name} n"
+tmux_gauge ${Bot_Name}
+}
+bot_tmux_attach(){
+if (${dialog_whiptail} --yesno "${Bot_Name} [已"${Start_Stop_Restart}"] \n是否打开${Bot_Name}窗口" 8 50)
+then
+    tmux attach -t ${Bot_Name}
+fi
+}
+
 if [[ "$1" == log ]];then
-    if tmux ls | grep -q ${Bot_Name} > /dev/null
+    if tmux_ls ${Bot_Name}
     then
         tmux attach -t ${Bot_Name}
-        main
-        exit
     else
-        if (${dialog_whiptail} --yesno "${Bot_Name} [未启动] \n是否立刻启动${Bot_Name}" 8 50);then
-            tmux new -s ${Bot_Name} "bh ${Bot_Name} n"
+        if (${dialog_whiptail} --yesno "${Bot_Name} [未启动] \n是否立刻启动${Bot_Name}" 8 50)
+        then
+            export Start_Stop_Restart="启动"
+            bot_tmux_start
         fi
-        main
-        exit
     fi
+    echo > ${tmux_windows}
 elif [[ "$1" == start ]];then
-    if tmux ls | grep -q ${Bot_Name} > /dev/null
+    if ! tmux_ls ${Bot_Name}
     then
-        if (${dialog_whiptail} --yesno "${Bot_Name} [已启动] \n是否打开${Bot_Name}窗口" 8 50);then
-            tmux attach -t ${Bot_Name}
-        fi
-        main
-        exit
+        export Start_Stop_Restart="启动"
+        bot_tmux_start
+        bot_tmux_attach
     else
-        tmux new -s ${Bot_Name} "bh ${Bot_Name} n"
-        main
-        exit
+        bot_tmux_attach
     fi
+    echo > ${tmux_windows}
 elif [[ "$1" == stop ]];then
-    if tmux ls | grep -q ${Bot_Name} > /dev/null
+    if tmux_ls ${Bot_Name}
     then
-        tmux kill-session -t ${Bot_Name}
-        main
-        exit
+        tmux_kill_session ${Bot_Name}
+        ${dialog_whiptail} --yesno "${Bot_Name} [已停止]${Bot_Name}" 8 50
     else
-        ${dialog_whiptail} --msgbox "${Bot_Name} [未启动]" 8 50
-        main
-        exit
+        ${dialog_whiptail} --yesno "${Bot_Name} [未启动] \n无需停止${Bot_Name}" 8 50
     fi
 elif [[ "$1" == restart ]];then
-    if tmux ls | grep -q ${Bot_Name} > /dev/null
+    if tmux_ls ${Bot_Name}
     then
-        tmux kill-session -t ${Bot_Name}
-        tmux new -s ${Bot_Name} "bh ${Bot_Name} n"
-        main
-        exit
+        tmux_kill_session ${Bot_Name}
+        export Start_Stop_Restart="重启"
+        bot_tmux_start
+        bot_tmux_attach
     else
         ${dialog_whiptail} --msgbox "${Bot_Name} [未启动]" 8 50
-        main
-        exit
     fi
 elif [[ "$1" == login ]];then
     QQ=$(${dialog_whiptail} --title "白狐-BOT" --inputbox "请输入您的机器人QQ号" 10 30 3>&1 1>&2 2>&3)
