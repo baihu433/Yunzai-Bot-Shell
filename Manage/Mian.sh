@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=0.2.9
+export ver=0.3.0
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -424,8 +424,15 @@ do
     i=$((${i}+1))
     sleep 0.05s
     echo -e ${i}
+    if [[ ${i} == 50 ]];then
+        if echo ${tmux_windows} | grep -q 'open terminal failed: not a terminal'
+        then
+            echo -e "${Tmux_Name}启动错误!! '\n'错误原因: open terminal failed: not a terminal"
+        fi
+        return 1
+    fi
     if [[ ${i} == 100 ]];then
-        echo -e 错误: 启动失败
+        echo -e "错误: 启动失败'
         return 1
     fi
 done
@@ -454,7 +461,6 @@ if [[ "$1" == log ]];then
             bot_tmux_start
         fi
     fi
-    echo > ${tmux_windows}
 elif [[ "$1" == start ]];then
     if ! tmux_ls ${Bot_Name}
     then
@@ -464,7 +470,6 @@ elif [[ "$1" == start ]];then
     else
         bot_tmux_attach
     fi
-    echo > ${tmux_windows}
 elif [[ "$1" == stop ]];then
     if tmux_ls ${Bot_Name}
     then
