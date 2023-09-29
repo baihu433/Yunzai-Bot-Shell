@@ -116,6 +116,12 @@ rm /usr/local/bin/bh
 
 </details>
 
+##### 下面是不要安装主脚本就可以使用的脚本
+
+```sh
+bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PlugIn.sh)
+```
+
 <hr>
 
 #### 其他

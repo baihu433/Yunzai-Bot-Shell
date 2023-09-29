@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=0.2.7
+export ver=0.2.8
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -59,7 +59,10 @@ fi
 if [ -d $HOME/QSignServer/qsign${QSIGN_VERSION} ];then
     ICQQ_VERSION="$(pnpm list icqq | grep icqq | sed "s/icqq //g" )"
     case ${ICQQ_VERSION} in
-    0.5.3|0.5.2|0.5.1|0.5.0|0.4.14|0.4.13|0.4.12)
+    0.5.3)
+    export version=8.9.73
+    ;;
+    0.5.2|0.5.1|0.5.0|0.4.14|0.4.13|0.4.12)
     export version=8.9.70
     ;;
     0.4.11)
@@ -713,7 +716,7 @@ elif [[ ${Number} == "5" ]];then
     main
     exit
 elif [[ ${Number} == "6" ]];then
-    bash <(curl -sL https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/plug-in.sh)
+    bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PlugIn.sh)
     main
     exit
 elif [[ ${Number} == "7" ]];then
