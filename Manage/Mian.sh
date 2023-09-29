@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=0.3.0
+export ver=0.3.1
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -432,7 +432,7 @@ do
         return 1
     fi
     if [[ ${i} == 100 ]];then
-        echo -e "错误: 启动失败'
+        echo -e "错误: 启动失败"
         return 1
     fi
 done
