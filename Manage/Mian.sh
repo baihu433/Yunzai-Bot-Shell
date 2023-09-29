@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=0.3.3
+export ver=0.3.4
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -436,19 +436,21 @@ bot_tmux_start(){
 tmux_new ${Bot_Name} "bh ${Bot_Name} n"
 tmux_gauge ${Bot_Name}
 }
-bot_tmux_attach(){
-if (${dialog_whiptail} --yesno "${Bot_Name} [已"${Start_Stop_Restart}"] \n是否打开${Bot_Name}窗口" 8 50)
-then
-    if ! tmux attach -t ${Bot_Name};then
-        tmux_windows_attach=$(tmux attach -t ${Bot_Name} 2>&1)
-        if echo ${tmux_windows_attach} | grep -q 'open terminal failed: not a terminal'
-        then
-            ${dialog_whiptail} --yesno "${Bot_Name}启动错误 \n错误原因:open terminal failed: not a terminal" 8 50
-        fi
+bot_tmux_attach_log(){
+if ! tmux attach -t ${Bot_Name};then
+    tmux_windows_attach=$(tmux attach -t ${Bot_Name} 2>&1)
+    if echo ${tmux_windows_attach} | grep -q 'open terminal failed: not a terminal'
+    then
+        ${dialog_whiptail} --msgbox "${Bot_Name}打开错误 \n错误原因:open terminal failed: not a terminal" 8 50
     fi
 fi
 }
-
+bot_tmux_attach(){
+if (${dialog_whiptail} --yesno "${Bot_Name} [已"${Start_Stop_Restart}"] \n是否打开${Bot_Name}窗口" 8 50)
+then
+    bot_tmux_attach_log
+fi
+}
 if [[ "$1" == log ]];then
     if tmux_ls ${Bot_Name}
     then
