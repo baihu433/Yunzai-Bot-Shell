@@ -116,18 +116,76 @@ rm /usr/local/bin/bh
 
 </details>
 
-##### 下面是不要安装主脚本就可以使用的脚本
+#### 下面的命令可以脱离主脚本使用:
 
-```sh
+>插件安装脚本: <br>
+>Linux请使用Terminal[终端]执行<br>window请使用Git Bash执行
+```
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PlugIn.sh)
 ```
+>签名服务器部署
+```
+bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QSignServer.sh)
+```
 
-<hr>
+<hr/>
+
+#### 赞助列表
+
+<details markdown='1'><summary>展开/收起</summary>
+
+>说明:赞助之后，找不到人的，均使用`好心人`代替<br>同时，请备注您希望出现在赞助名单上的名字的名字
+
+| 名称 | 金额 |
+|----|----|
+|倾渊|<strong>`100`</strong>元|<br>
+|小云睡大觉|<strong>`45`</strong>元|<br>
+|汾阳|<strong>30</strong>元|<br>
+|笙凉|<strong>20</strong>元|<br>
+|╲ゝ丶瞳少|<strong>20</strong>元|<br>
+|小吉祥草王|<strong>20</strong>元|<br>
+|慕言|<strong>19.05</strong>元|<br>
+|木西|<strong>15</strong>元|<br>
+|摸鱼梦|13.5元|
+|小伟|10元|
+|好耶|10元|
+|千|10元|
+|彭于晏|10元|
+|蛇蛇天下第一|9.99元|
+|鱼|8.66元|
+|(ᗜ ˰ ᗜ)|7.67元|
+|某个萌新的赞助|6.66元|
+|纳西妲|6元|
+|刻晴|6元|
+|冷风|6元|
+|怣忈|6元|
+|胡桃快来吧！|5.4元|
+|晓彬残月|5.21元|
+|丶基控Q | 5.2元|
+|夜|5元|
+|   |5元|
+|受不了了|5元|
+|三水|5元
+|猫耳傲娇小刻晴|3元|
+|梦铃星柠|2.5元|
+|远走高飞|2.5元|
+|小白|2.1元|
+|好心人|2元|
+|想白佬的第N天|1.68元|
+|焦糖白茶.很吉利喵~|1.23|
+|承影|1元|
+|百草(白狐准新郎)|0.52元|
+|宵宫|0.4元|
+|こんにちは|0.1元|
+感谢老板 喵~
+
+</details>
 
 #### 其他
 
 1. 最后给个star，你的支持是维护本项目的动力<br>
-2. 严禁用于任何商业用途和非法行为<br>
-3. 白狐没有开通爱发电，所以欢迎通过赞助码打赏<br>
-4. 赞助备注:QQ号+你的QQ名称[戳我跳转赞助码](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/img/赞助码.jpg)<br>
+2. 严禁用于任何`商业用途`和`非法行为`<br>
+3. 如果你是脚本作者,想外调本仓库内的脚本,请联系白狐<br>
+4. 白狐没有开通爱发电，所以欢迎通过赞助码打赏<br>
+5. 赞助备注:QQ号+你的QQ名称[戳我跳转赞助码](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/img/赞助码.jpg)<br>
 <hr>

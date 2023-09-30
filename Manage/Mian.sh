@@ -1020,7 +1020,7 @@ elif [[ ${Number} == "3" ]];then
     export Github=https://github.com/TimeRainStarSky/Yunzai.git
     Bot_Path
 elif [[ ${Number} == "4" ]];then
-    URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QSignServer3.0.sh"
+    URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QSignServer.sh"
     bash <(curl -sL ${URL})
 elif [[ ${Number} == "5" ]];then
     URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Gocq-Http.sh"
