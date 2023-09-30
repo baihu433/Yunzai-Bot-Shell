@@ -3,8 +3,8 @@
 
 #### 准备工作
 
+|----|----|
 | Termux | [下载链接](https://f-droid.org/repo/com.termux_118.apk) |
-
 | MT管理器 | [下载链接](https://mt2.cn/download/) |
 
 <hr/>
@@ -415,22 +415,37 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Android/i
 
 1.`请输入机器人QQ号(建议用小号)：` <br>
 ↑这一项 填你`机器人`的QQ号
------
+
+<h6><strong>输好之后回车<strong/><h6/>
+<hr/>
+
 2.`请输入登录密码(为空则扫码登录)：`<br>
 ↑这一项 填你`机器人`的密码[注意:密码`不显示`出来]
------
+
+<h6><strong>输好之后回车<strong/><h6/>
+<hr/>
+
 3.`请选择登录端口：`<br>
 ↑这一项 填你`机器人`的登录端口[也称`登录设备`],请选择`aPad`
------
+
+<h6><strong>输好之后回车<strong/><h6/>
+<hr/>
+
 4.`请输入主人QQ号：`<br>
 ↑这一项 填你`机器人的管理员`账号
------
+
+<h6><strong>输好之后回车<strong/><h6/>
+<hr/>
+
 5.`请输入签名API地址（可留空）：`<br>
 ↑这一项 填 `http://0.0.0.0:5200/sign?key=fox`
------
+
+<h6><strong>输好之后回车<strong/><h6/>
+<hr/>
+
 之后机器人就被启动成功了<br>
-赶快去向机器人发送`#帮助`和`#喵喵帮助`<br>
-开始使用吧
+赶快去向机器人分别发送`#帮助`和`#喵喵帮助`<br>
+开始享用吧
 
 <hr/>
 
