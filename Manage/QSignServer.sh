@@ -26,7 +26,7 @@ export JAVA_HOME=$HOME/QSignServer/jdk
 fi
 QSIGN_URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/releases/download/1.2.1/unidbg-fetch-qsign-1.1.9.zip"
 QSIGN_VERSION="119"
-qsign_version="119"
+qsign_version="1.1.9"
 txlib="https://gitee.com/baihu433/txlib"
 case $(uname -m) in
 amd64|x86_64)
