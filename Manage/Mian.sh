@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=0.3.6
+export ver=0.3.7
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -231,7 +231,7 @@ fi
 
 case "$1" in
 QS)
-bash <(curl https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/QSignServer3.0.sh)
+bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QSignServer.sh)
 exit
 ;;
 YZ|Yunzai|Yunzai-Bot)
@@ -287,7 +287,7 @@ unup)
 up=false
 ;;
 PI)
-bash <(curl -sL https://gitee.com/baihu433/Ubuntu-Yunzai/raw/master/plug-in.sh)
+bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PlugIn.sh)
 ;;
 esac
 
