@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=0.3.4
+export ver=0.3.6
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -17,122 +17,155 @@ if [ -d /usr/local/node/bin ];then
     export PATH=$PATH:/root/.local/share/pnpm
     export PNPM_HOME=/root/.local/share/pnpm
 fi
+function tmux_new(){
+Tmux_Name="$1"
+Shell_Command="$2"
+tmux new -s ${Tmux_Name} -d "${Shell_Command}"
+}
+function tmux_attach(){
+Tmux_Name="$1"
+tmux attach -t ${Tmux_Name}
+}
+function tmux_kill_session(){
+Tmux_Name="$1"
+tmux kill-session -t ${Tmux_Name}
+}
+function tmux_ls(){
+Tmux_Name="$1"
+tmux_windows=$(tmux ls 2>&1)
+if echo ${tmux_windows} | grep -q ${Tmux_Name}
+then
+    return 0
+else
+    return 1
+fi
+}
 function QSIGN(){
-if [ -d $HOME/QSignServer/qsign117e ]
-then
-export QSIGN_VERSION="117e"
-elif [ -d $HOME/QSignServer/qsign119 ]
-then
-export QSIGN_VERSION="119"
-fi
-if [ -d $HOME/QSignServer/jdk ];then
-export PATH=$PATH:$HOME/QSignServer/jdk/bin
-export JAVA_HOME=$HOME/QSignServer/jdk
-fi
-if [ -d /usr/local/node/bin ];then
-    if [ ! -d $HOME/.local/share/pnpm ];then
-        mkdir -p $HOME/.local/share/pnpm
+if [ -d $HOME/QSignServer/qsign119 ];then
+    if [ -d $HOME/QSignServer/jdk ];then
+        export PATH=$PATH:$HOME/QSignServer/jdk/bin
+        export JAVA_HOME=$HOME/QSignServer/jdk
     fi
-    export PATH=$PATH:$HOME/.local/share/pnpm
-    export PNPM_HOME=$HOME/.local/share/pnpm
-elif [ -d $HOME/QSignServer/node/bin ];then
-    export PATH=$PATH:$HOME/QSignServer/node/bin
-    export PNPM_HOME=$HOME/QSignServer/node/bin
-elif [ -d /usr/lib/node_modules/pnpm/bin ];then
-    if [ ! -d $HOME/.local/share/pnpm ];then
-        mkdir -p $HOME/.local/share/pnpm
+QSIGN_VERSION="119"
+function qsign_curl(){
+for folder in $(ls -d $HOME/QSignServer/txlib/*)
+do
+    file="${folder}/config.json"
+    port_="$(grep port ${file} | awk '{print $2}')"
+done
+if curl -sL 127.0.0.1:${port_} > /dev/null 2>&1
+then
+    return 0
+else
+    return 1
+fi
+}
+function tmux_gauge(){
+i=0
+Tmux_Name="$1"
+tmux_ls ${Tmux_Name} & > /dev/null 2>&1
+until qsign_curl
+do
+    i=$((${i}+1))
+    a="${a}#"
+    echo -ne "\r${i}% ${a}"
+    if [[ ${i} == 100 ]];then
+        echo
+        return 1
     fi
-    export PATH=$PATH:$HOME/.local/share/pnpm
-    export PNPM_HOME=$HOME/.local/share/pnpm
+done
+echo
+}
+ICQQ_VERSION="$(pnpm list icqq | grep icqq | awk '{print $2}')"
+case ${ICQQ_VERSION} in
+0.5.3|0.5.2|0.5.1|0.5.0|0.4.14|0.4.13|0.4.12)
+export version=8.9.70
+;;
+0.4.11)
+export version=8.9.68
+;;
+0.4.10)
+export version=8.9.63
+;;
+0.3.*)
+echo -e ${yellow}请更新icqq${background}
+export version=8.9.70
+;;
+*)
+echo -e ${yellow}读取失败 请更新icqq${background}
+export version=8.9.70
+;;
+esac
+if [ ! -e $HOME/QSignServer/txlib/${version}/config.json ];then
+    echo -e ${red}文件不存在 请确认您已经部署签名服务器${background}
+    exit
 fi
-if ! [ -x "$(command -v pm2)" ];then
-    echo -e ${yellow}正在使用pnpm安装pm2${background}
-    pnpm config set registry https://registry.npmmirror.com
-    pnpm config set registry https://registry.npmmirror.com
-    until pnpm install -g pm2@latest
-    do
-      echo -e ${red}pm2安装失败 ${green}正在重试${background}
-      pnpm setup
-    done
-    echo
+file="$HOME/QSignServer/txlib/${version}/config.json"
+port="$(grep -E port ${file} | awk '{print $2}' )"
+key="$(grep -E key ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
+host="$(grep -E host ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
+API="http://"${host}":"${port}"/sign?key="${key}
+API=$(echo ${API})
+echo -e ${cyan}您的本地签名服务器API链接: ${green}${API}${background}
+file1="${Bot_Path}/config/config/bot.yaml"
+file2="${Bot_Path}/config/config/qq.yaml"
+equipment="platform: 2"
+if [ -e ${file1} ];then
+    if ! grep -q "${API}" ${file1};then
+        old_ver=$(grep ver ${file1})
+        old_sign_api_addr=$(grep sign_api_addr ${file1})
+        new_ver="ver: ${version}"
+        new_sign_api_addr="sign_api_addr: ${API}"
+        if [[ ! -z ${old_ver} ]];then
+            sed -i "s|${old_ver}|${new_ver}|g" ${file1}
+        fi
+        sed -i "s|${old_sign_api_addr}|${new_sign_api_addr}|g" ${file1}
+    fi
 fi
-if [ -d $HOME/QSignServer/qsign${QSIGN_VERSION} ];then
-    ICQQ_VERSION="$(pnpm list icqq | grep icqq | sed "s/icqq //g" )"
-    case ${ICQQ_VERSION} in
-    0.5.3)
-    export version=8.9.73
-    ;;
-    0.5.2|0.5.1|0.5.0|0.4.14|0.4.13|0.4.12)
-    export version=8.9.70
-    ;;
-    0.4.11)
-    export version=8.9.68
-    ;;
-    0.4.10)
-    export version=8.9.63
-    ;;
-    0.3.*)
-    echo -e ${yellow}请更新icqq${background}
-    export version=8.9.70
-    ;;
-    *)
-    echo -e ${yellow}读取失败 请更新icqq${background}
-    export version=8.9.70
-    ;;
-    esac
-    if [ ! -e $HOME/QSignServer/txlib/${version}/config.json ];then
-        echo -e ${red}文件不存在 请确认您已经部署签名服务器${background}
+if [ -e ${file2} ];then
+    if ! grep -q "${equipment}" ${file2};then
+        sed -i "s/$(grep platform ${file2})/${equipment}/g" ${file2}
+        sed -i "s/$(grep ver ${file2})//g" ${file2}
+    fi
+fi
+API=$(echo ${API} | sed "s#/sign?key=${key}##g")
+if curl -sL ${API} > /dev/null 2>&1
+then
+    echo -e ${green}签名服务器 ${cyan}已启动${background}
+    if curl -sL ${API} | grep -q ${version}
+    then
+        echo -e ${cyan}签名服务器的共享库版本 ${green}正确${background}
+    else
+        echo -e ${cyan}签名服务器的共享库版本 ${red}错误${background}
+        echo -e ${yellow}正在重启签名服务器${background}
+        Start_Stop_Restart="重启"
+        tmux_kill_session qsignserver
+        tmux_new qsignserver "bash $HOME/QSignServer/qsign${QSIGN_VERSION}/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${version}"
+        if tmux_gauge qsignserver
+        then
+            echo -en ${green}${Start_Stop_Restart}成功${background}
+        else
+            echo -en ${red}${Start_Stop_Restart}失败 回车返回${background}
+            read
+            exit
+        fi
+    fi
+else
+    echo -e ${green}签名服务器 ${red}未启动${background}
+    echo -e ${green}签名服务器 ${cyan}正在启动${background}
+    Start_Stop_Restart="启动"
+    tmux_new qsignserver "bash $HOME/QSignServer/qsign${QSIGN_VERSION}/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${version}"
+    if tmux_gauge qsignserver
+    then
+        echo
+        echo -e ${green}${Start_Stop_Restart}成功${background}
+        echo -e ${green}正在启动 ${cyan}${Bot_Name}${background}
+    else
+        echo -en ${red}${Start_Stop_Restart}失败 回车返回${background}
+        read
         exit
     fi
-    file="$HOME/QSignServer/txlib/${version}/config.json"
-    port="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
-    key="$(grep -E key ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
-    host="$(grep -E host ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
-    API="http://"${host}":"${port}"/sign?key="${key}
-    API=$(echo ${API})
-    echo -e ${cyan}您的本地签名服务器API链接: ${green}${API}${background}
-    file1="${Bot_Path}/config/config/bot.yaml"
-    file2="${Bot_Path}/config/config/qq.yaml"
-    equipment="platform: 2"
-    if [ -e ${file1} ];then
-        if ! grep -q "${API}" ${file1};then
-            old_ver=$(grep ver ${file1})
-            old_sign_api_addr=$(grep sign_api_addr ${file1})
-            new_ver="ver: ${version}"
-            new_sign_api_addr="sign_api_addr: ${API}"
-            if [ ! -z ${old_ver} ];then
-                sed -i "s|${old_ver}|${new_ver}|g" ${file1}
-            fi
-            sed -i "s|${old_sign_api_addr}|${new_sign_api_addr}|g" ${file1}
-        fi
-    #cd && sed -i '/sign_api_addr/d' M*/con*/con*/bot* && sed -i '$a\sign_api_addr: 127.0.0.1:6666/sign?key=fox' M*/con*/con*/bot*
-    fi
-    if [ -e ${file2} ];then
-        if ! grep -q "${equipment}" ${file2};then
-            sed -i "s/$(grep platform ${file2})/${equipment}/g" ${file2}
-            sed -i "s/$(grep ver ${file2})//g" ${file2}
-        fi
-    fi
-    API=$(echo ${API} | sed "s#/sign?key=${key}##g" )
-    if pm2 list qsign${QSIGN_VERSION} | grep -q online
-    then
-        echo -e ${green}签名服务器 ${cyan}已启动${background}
-            if curl -sL ${API} | grep -q ${version}
-              then
-                echo -e ${cyan}签名服务器的共享库版本 ${green}正确${background}
-              else
-                echo -e ${cyan}签名服务器的共享库版本 ${red}错误${background}
-                echo -e ${yellow}正在重启签名服务器${background}
-                pm2 delete qsign${QSIGN_VERSION}
-                pm2 start --name qsign${QSIGN_VERSION} "bash $HOME/QSignServer/qsign${QSIGN_VERSION}/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${version}"
-                sleep 5s
-            fi
-    else
-        echo -e ${green}签名服务器 ${red}未启动${background}
-        echo -e ${yellow}正在尝试启动签名服务器${background}
-        pm2 start --name qsign${QSIGN_VERSION} "bash $HOME/QSignServer/qsign${QSIGN_VERSION}/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${version}"
-        sleep 5s
-    fi
+fi
 fi
 }
 function pkg(){
@@ -391,33 +424,10 @@ version=`curl -s https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version`
 fi
 
 function BOT(){
-function tmux_new(){
-Tmux_Name="$1"
-Shell_Command="$2"
-tmux new -s ${Tmux_Name} -d "${Shell_Command}"
-}
-function tmux_attach(){
-Tmux_Name="$1"
-tmux attach -t ${Tmux_Name}
-}
-function tmux_kill_session(){
-Tmux_Name="$1"
-tmux kill-session -t ${Tmux_Name}
-}
-function tmux_ls(){
-Tmux_Name="$1"
-tmux_windows=$(tmux ls 2>&1)
-if echo ${tmux_windows} | grep -q ${Tmux_Name}
-then
-    return 0
-else
-    return 1
-fi
-}
 function tmux_gauge(){
 i=0
 Tmux_Name="$1"
-tmux_ls > /dev/null 2>&1 &
+tmux_ls ${Tmux_Name} > /dev/null 2>&1 &
 {
 until echo ${tmux_windows} | grep -q ${Tmux_Name}
 do
@@ -439,10 +449,7 @@ tmux_gauge ${Bot_Name}
 bot_tmux_attach_log(){
 if ! tmux attach -t ${Bot_Name};then
     tmux_windows_attach=$(tmux attach -t ${Bot_Name} 2>&1)
-    if echo ${tmux_windows_attach} | grep -q 'open terminal failed: not a terminal'
-    then
-        ${dialog_whiptail} --msgbox "${Bot_Name}打开错误 \n错误原因:open terminal failed: not a terminal" 8 50
-    fi
+    ${dialog_whiptail} --msgbox "${Bot_Name}打开错误 \n错误原因:${tmux_windows_attach}" 8 50
 fi
 }
 bot_tmux_attach(){
@@ -475,7 +482,7 @@ elif [[ "$1" == stop ]];then
     if tmux_ls ${Bot_Name}
     then
         tmux_kill_session ${Bot_Name}
-        ${dialog_whiptail} --yesno "${Bot_Name} [已停止]${Bot_Name}" 8 50
+        ${dialog_whiptail} --yesno "${Bot_Name} [已停止]" 8 50
     else
         ${dialog_whiptail} --yesno "${Bot_Name} [未启动] \n无需停止${Bot_Name}" 8 50
     fi
@@ -742,22 +749,18 @@ Number=$(${dialog_whiptail} \
 3>&1 1>&2 2>&3)
 if [[ ${Number} == "1" ]];then
     BOT log
-    echo -en ${cyan}回车返回${background};read
     main
     exit
 elif [[ ${Number} == "2" ]];then
     BOT start
-    echo -en ${cyan}回车返回${background};read
     main
     exit
 elif [[ ${Number} == "3" ]];then
     BOT stop
-    echo -en ${cyan}回车返回${background};read
     main
     exit
 elif [[ ${Number} == "4" ]];then
     BOT restart
-    echo -en ${cyan}回车返回${background};read
     main
     exit
 elif [[ ${Number} == "5" ]];then
