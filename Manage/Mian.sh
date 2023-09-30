@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=0.3.9
+export ver=0.4.0
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -143,7 +143,7 @@ then
         tmux_new qsignserver "bash $HOME/QSignServer/qsign${QSIGN_VERSION}/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${version}"
         if tmux_gauge qsignserver
         then
-            echo -en ${green}${Start_Stop_Restart}成功${background}
+            echo -e ${green}${Start_Stop_Restart}成功${background}
         else
             echo -en ${red}${Start_Stop_Restart}失败 回车返回${background}
             read
