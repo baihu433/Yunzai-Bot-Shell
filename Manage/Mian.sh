@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=0.3.7
+export ver=0.3.8
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -670,6 +670,7 @@ if [[ ${Number} == "1" ]];then
     echo -e ${yellow}正在修复${background}
     echo "Y" | pnpm install
     echo "Y" | pnpm install puppeteer@19.0.0 -w
+    echo -en ${cyan}回车返回${background};read
 elif [[ ${Number} == "2" ]];then
     file="config/config/bot.yaml"
     old_chromium_path=$(grep chromium_path ${file})
@@ -680,12 +681,14 @@ elif [[ ${Number} == "2" ]];then
     fi
     sed -i "s|${old_chromium_path}|chromium_path: ${new_chromium_path}|g" ${file}
     echo -e ${cyan}写入完成${background}
+    echo -en ${cyan}回车返回${background};read
 elif [[ ${Number} == "3" ]];then
     echo -e ${yellow}正在修复${background}
     if ! bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT_INSTALL.sh);then
         echo -e ${red}软件包修复出错${background}
         exit
     fi
+    echo -en ${cyan}回车返回${background};read
 elif [[ ${Number} == "4" ]];then
     if grep -q -E -i "Debian|Ubuntu|Kali" /etc/os-release && [ -x /usr/bin/apt ]
     then
@@ -698,6 +701,7 @@ elif [[ ${Number} == "4" ]];then
         echo -e ${red}您不是debian系Linux发行版${background}
         exit
     fi
+    echo -en ${cyan}回车返回${background};read
 elif [[ ${Number} == "5" ]];then
     if grep -q -E -i "Debian|Ubuntu|Kali" /etc/os-release && [ -x /usr/bin/apt ]
     then
@@ -712,6 +716,7 @@ elif [[ ${Number} == "5" ]];then
         echo -e ${red}您不是debian系Linux发行版${background}
         exit
     fi
+    echo -en ${cyan}回车返回${background};read
 elif [[ ${Number} == "6" ]];then
     echo -e ${yellow}正在修复${background}
     if grep -q -E -i Arch /etc/issue && [ -x /usr/bin/pacman ]
@@ -722,6 +727,7 @@ elif [[ ${Number} == "6" ]];then
         echo -e ${red}您不是ArchLinux发行版${background}
         exit
     fi
+    echo -en ${cyan}回车返回${background};read
 else
     return
 fi
@@ -798,7 +804,6 @@ elif [[ ${Number} == "11" ]];then
     exit
 elif [[ ${Number} == "12" ]];then
     Fix_Error
-    echo -en ${cyan}执行完成 回车返回${background};read
     main
     exit
 elif [[ ${Number} == "A" ]];then
