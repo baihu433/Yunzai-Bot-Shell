@@ -87,7 +87,7 @@ function Script_Install(){
     echo -e ${white}=========================${background}
     echo -e ${red}" "白狐 ${yellow}BOT ${green}Install ${cyan}Script ${background}
     echo -e "  "————"  "————"  "————"  "————"  "
-    echo -e ${green}" "版本:" "v0.2.7 ${cyan}\(20230924\) ${background}
+    echo -e ${green}" "版本:" "v0.3.9 ${cyan}\(20230930\) ${background}
     echo -e ${green}" "作者:" "${cyan}白狐"   "\(baihu433\) ${background}
     echo -e ${white}=========================${background}
     echo

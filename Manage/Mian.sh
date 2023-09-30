@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=0.3.8
+export ver=0.3.9
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -78,7 +78,7 @@ echo
 }
 ICQQ_VERSION="$(pnpm list icqq | grep icqq | awk '{print $2}')"
 case ${ICQQ_VERSION} in
-0.5.3|0.5.2|0.5.1|0.5.0|0.4.14|0.4.13|0.4.12)
+0.5.4|0.5.3|0.5.2|0.5.1|0.5.0|0.4.14|0.4.13|0.4.12)
 export version=8.9.70
 ;;
 0.4.11)
