@@ -879,7 +879,7 @@ if [ ! -d $HOME/QSignServer ];then
        --yesno "是否部署本地签名服务器?" 10 50)
        then
            export install_QSignServer=true
-           URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QSignServer3.0.sh"
+           URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QSignServer.sh"
            bash <(curl -sL ${URL})
     fi
 fi

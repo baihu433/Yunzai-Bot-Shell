@@ -37,68 +37,6 @@ JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/aarch64/linux/OpenJ
 ;;
 esac
 
-function main(){
-function tmux_new(){
-Tmux_Name="$1"
-Shell_Command="$2"
-tmux new -s ${Tmux_Name} -d "${Shell_Command}"
-}
-function tmux_attach(){
-Tmux_Name="$1"
-tmux attach -t ${Tmux_Name}
-}
-function tmux_kill_session(){
-Tmux_Name="$1"
-tmux kill-session -t ${Tmux_Name}
-}
-function tmux_ls(){
-Tmux_Name="$1"
-tmux_windows=$(tmux ls 2>&1)
-if echo ${tmux_windows} | grep -q ${Tmux_Name}
-then
-    return 0
-else
-    return 1
-fi
-}
-function qsign_curl(){
-for folder in $(ls -d $HOME/QSignServer/txlib/*)
-do
-    file="${folder}/config.json"
-    port_="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
-done
-if curl -sL 127.0.0.1:${port_} > /dev/null 2>&1
-then
-    return 0
-else
-    return 1
-fi
-}
-
-function tmux_gauge(){
-i=0
-Tmux_Name="$1"
-tmux_ls ${Tmux_Name} & > /dev/null 2>&1
-until qsign_curl
-do
-    i=$((${i}+1))
-    a="${a}#"
-    echo -ne "\r${i}% ${a}"
-    if [[ ${i} == 100 ]];then
-        echo
-        return 1
-    fi
-done
-echo
-}
-bot_tmux_attach_log(){
-Tmux_Name="$1"
-if ! tmux attach -t ${Tmux_Name};then
-    tmux_windows_attach_error=$(tmux attach -t ${Tmux_Name} 2>&1)
-    echo -e ${yellow}QSignServer打开错误"\n"错误原因:${red}${tmux_windows_attach_error}${background}
-fi
-}
-
 function install_QSignServer(){
 if [ -d $HOME/QSignServer/txlib ];then
     echo -e ${yellow}您已安装签名服务器${background}
@@ -179,15 +117,75 @@ do
 done
 if [ ! "${install_QSignServer}" == "true" ]
 then
-echo -en ${yellow}安装完成 是否启动?[Y/n]${background};read yn
-case ${yn} in
-Y|y)
-start_QSignServer
-;;
-esac
+    echo -en ${yellow}安装完成 是否启动?[Y/n]${background};read yn
+    case ${yn} in
+    Y|y)
+    start_QSignServer
+    ;;
+    esac
 fi
 }
 
+function main(){
+function tmux_new(){
+Tmux_Name="$1"
+Shell_Command="$2"
+tmux new -s ${Tmux_Name} -d "${Shell_Command}"
+}
+function tmux_attach(){
+Tmux_Name="$1"
+tmux attach -t ${Tmux_Name}
+}
+function tmux_kill_session(){
+Tmux_Name="$1"
+tmux kill-session -t ${Tmux_Name}
+}
+function tmux_ls(){
+Tmux_Name="$1"
+tmux_windows=$(tmux ls 2>&1)
+if echo ${tmux_windows} | grep -q ${Tmux_Name}
+then
+    return 0
+else
+    return 1
+fi
+}
+function qsign_curl(){
+for folder in $(ls -d $HOME/QSignServer/txlib/*)
+do
+    file="${folder}/config.json"
+    port_="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
+done
+if curl -sL 127.0.0.1:${port_} > /dev/null 2>&1
+then
+    return 0
+else
+    return 1
+fi
+}
+function tmux_gauge(){
+i=0
+Tmux_Name="$1"
+tmux_ls ${Tmux_Name} & > /dev/null 2>&1
+until qsign_curl
+do
+    i=$((${i}+1))
+    a="${a}#"
+    echo -ne "\r${i}% ${a}"
+    if [[ ${i} == 100 ]];then
+        echo
+        return 1
+    fi
+done
+echo
+}
+bot_tmux_attach_log(){
+Tmux_Name="$1"
+if ! tmux attach -t ${Tmux_Name};then
+    tmux_windows_attach_error=$(tmux attach -t ${Tmux_Name} 2>&1)
+    echo -e ${yellow}QSignServer打开错误"\n"错误原因:${red}${tmux_windows_attach_error}${background}
+fi
+}
 function start_QSignServer(){
 echo -e ${white}"====="${green}白狐-QSignServer${white}"====="${background}
 echo -e ${cyan}请选择您想让您签名服务器适配的QQ版本${background}
@@ -505,17 +503,17 @@ esac
 }
 if [ "${install_QSignServer}" == "true" ]
 then
-install_QSignServer
+    install_QSignServer
 else
-function mainbak()
-{
-   while true
-   do
-       main
-       mainbak
-   done
-}
-mainbak
+    function mainbak()
+    {
+       while true
+       do
+           main
+           mainbak
+       done
+    }
+    mainbak
 fi
 
 
