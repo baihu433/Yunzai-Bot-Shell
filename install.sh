@@ -92,10 +92,9 @@ function Script_Install(){
     echo -e ${white}=========================${background}
     echo
     echo -e ${yellow} - ${cyan}正在安装${background}
-    curl -o bh https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Mian.sh
+    curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Mian.sh > bh
     mv -f bh /usr/local/bin/bh
     chmod +x /usr/local/bin/bh
-    source /etc/profile
     echo
     if ! bh help > /dev/null 2>&1;then
         echo -e ${yellow} - ${red}安装失败${background}
