@@ -288,16 +288,15 @@ bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 
 ![picture_tmoe28.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe28.jpg)
 
-创建普通用户
+是否创建普通用户
 选 `否` 然后 `回车`
 
 <hr/>
 
-配置zsh
+是否配置zsh
 
 ![picture_tmoe29.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe29.jpg)
 
-配置zsh
 选 `否` 然后 `回车`
 
 <hr/>
@@ -310,11 +309,17 @@ bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 
 <hr/>
 
-启动tmoe tool工具
+是否启动tmoe tool工具
 
-![picture_tmoe30.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe30.jpg)
+![picture_tmoe31.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe31.jpg)
 
 选择 `否` 然后 `回车`
+
+<hr/>
+
+![picture_tmoe31.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe31.jpg)
+
+提示这个就代表 `Ubuntu 22.04` 已经安装完毕了
 
 <hr/>
 
@@ -328,20 +333,126 @@ bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 
 然后用下面的命令更新一下ubuntu
 ```sh
-apt update && apt upgrade -y
+apt update && apt -y upgrade && apt -y dist-upgrade
 ```
 
-再安装基本软件
+然后安装基本软件
 ```sh
 apt install git curl wget -y
 ```
 
-最后安装白狐脚本
+<hr/>
+
+然后安装白狐脚本
+![bh.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/bh.png)
 
 ```sh
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Android/install.sh)
 ```
 
-![bh.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/bh.png)
+请阅读\[[用户协议](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/Manage/用户协议.txt)\]
+填入 `同意安装` 以开始安装
+
+<hr>
+
+安装完成后
+
+使用 `bh` 命令打开白狐脚本
 
 <hr/>
+
+然后会出现以下界面
+
+![mz1.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/mz1.png)
+
+选择第二个 `2 Miao-Yunzai` 并 `回车` 来安装喵崽
+
+<hr/>
+
+然后会出现以下界面
+询问是否安装喵崽
+
+![mz2.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/mz2.png)
+
+选择 `安装` 并 `回车` 来确定安装喵崽
+
+<hr/>
+
+等他跑完后，会出现以下界面
+询问下载喵崽的地址
+
+![mz3.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/mz3.png)
+
+选择 `Gitee` 并 `回车` 
+
+等他跑完后，会出现以下界面
+询问下载喵喵插件的地址
+
+![mp.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/mp.png)
+
+同样是选择 `Gitee` 并 `回车`
+
+<hr/>
+
+等他跑完后，会出现以下界面
+询问是否部署签名服务器
+
+![qs.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qs.png)
+
+选择 `马上部署` 并 `回车`
+
+<hr/>
+
+等他跑完后，会出现以下界面
+
+![bhmain.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/bhmain.png)
+
+手机用户请选择 `9  前台启动` 
+
+<hr>
+
+随后 机器人就开始启动了
+
+`请输入机器人QQ号(建议用小号)：` <br>
+↑这一项 填你`机器人`的QQ号
+
+`请输入登录密码(为空则扫码登录)：`
+↑这一项 填你`机器人`的密码[注意:密码`不显示`出来]<br>
+
+`请选择登录端口：`<br>
+↑这一项 填你`机器人`的登录端口[也称`登录设备`],请选择`aPad`
+
+`请输入主人QQ号：`<br>
+↑这一项 填你`机器人的管理员`账号
+
+`请输入签名API地址（可留空）：`<br>
+↑这一项 填 `http://0.0.0.0:5200/sign?key=fox`
+
+之后机器人就被启动成功了<br>
+赶快去向机器人发送`#帮助`和`#喵喵帮助`<br>
+开始使用吧
+
+<hr/>
+
+注意事项:
+
+1.大退termux之后 请使用下面的命令来启动
+
+启动容器:
+```sh
+tmoe proot ubuntu jammy arm64
+```
+启动脚本:
+```sh
+bh
+```
+
+<hr/>
+
+如果在安装过程中遇到问题，请添加群聊[q群:879718035] 
+
+有困难大家一起解决，不要硬挺着。
+
+日常闲聊也可以加入，欢迎来玩。
+
+教程到这里就结束了，希望对你有帮助，拜~
