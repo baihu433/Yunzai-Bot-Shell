@@ -74,30 +74,20 @@ do
     fi
 done
 
-if [ ! -z "${pkg}" ]; then
+if [ ! -z "${pkg}" ];then
     if [ -x "$(command -v apk)" ];then
-        if ! apk info -e "${package}" > /dev/null 2>&1;then
-            apk update
-            pkg_install
-        fi
+        apk update
+        pkg_install
     elif [ -x "$(command -v pacman)" ];then
-        if ! pacman -Qs "${package}" > /dev/null 2>&1;then
-            pkg_install
-        fi
+        pkg_install
     elif [ -x "$(command -v apt)" ];then
-        if ! dpkg -s "${package}" > /dev/null 2>&1;then
-            apt update
-            pkg_install
-        fi
+        apt update
+        pkg_install
     elif [ -x "$(command -v yum)" ];then
-        if ! yum list installed "${package}" > /dev/null 2>&1;then
-            yum update
-            pkg_install
-        fi
+        yum update
+        pkg_install
     elif [ -x "$(command -v dnf)" ];then
-        if ! dnf list installed "${package}" > /dev/null 2>&1;then
-            pkg_install
-        fi
+        pkg_install
     fi
 fi
 
