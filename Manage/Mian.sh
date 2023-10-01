@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=0.4.2
+export ver=0.4.3
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -734,10 +734,7 @@ fi
 }
 
 function main(){
-if [ -e "*.log" ];then
-    echo -e ${yellow}正在清理日志${background}
-    rm -rf "*.log"
-fi
+rm -rf *.log > /dev/null 2>&1
 Number=$(${dialog_whiptail} \
 --title "白狐 QQ群:705226976" \
 --menu "${Bot_Name}管理" \
