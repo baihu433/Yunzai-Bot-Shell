@@ -101,6 +101,14 @@ bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 
 <hr/>
 
+然后可能会提示这个
+
+![picture_tmoe_1.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe_1.jpg)
+
+出现这个提示填 `Y` 然后 `回车` [注意是大写 Y ]
+
+<hr/>
+
 然后会弹出这个提示
 
 ![picture_tmoe9.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe9.jpg)
