@@ -1,5 +1,5 @@
 #!/bin/env bash
-export ver=0.4.1
+export ver=0.4.2
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -9,10 +9,6 @@ export purple="\033[35m"
 export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
-if [ -e "*.log" ];then
-    echo -e ${yellow}正在清理日志${background}
-    rm -rf "*.log"
-fi
 if [ -d /usr/local/node/bin ];then
     export PATH=$PATH:/usr/local/node/bin
     if [ ! -d $HOME/.local/share/pnpm ];then
@@ -738,6 +734,10 @@ fi
 }
 
 function main(){
+if [ -e "*.log" ];then
+    echo -e ${yellow}正在清理日志${background}
+    rm -rf "*.log"
+fi
 Number=$(${dialog_whiptail} \
 --title "白狐 QQ群:705226976" \
 --menu "${Bot_Name}管理" \
