@@ -22,12 +22,11 @@ function Install_GIT_Plugin(){
             --yesno "将会为您安装\n[${Name} ]" \
             20 50)
             then
-                main
-                exit
-            else
                 Name=
                 Plugin=
                 Git=
+                main
+                exit
             fi
         }
         function echo_page(){
@@ -38,6 +37,8 @@ function Install_GIT_Plugin(){
                     Name=
                     Plugin=
                     Git=
+                    main
+                    exit
                 ;;
             esac
         }
