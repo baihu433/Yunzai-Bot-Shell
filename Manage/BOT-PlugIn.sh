@@ -24,10 +24,22 @@ function Install_GIT_Plugin(){
             then
                 main
                 exit
+            else
+                Name=
+                Plugin=
+                Git=
             fi
         }
         function echo_page(){
             echo -e ${cyan}将会为您安装"\n"[${Name} ]${background}
+            echo -e ${yellow}是否继续${background};read YN
+            case ${YN} in
+                N|n)
+                    Name=
+                    Plugin=
+                    Git=
+                ;;
+            esac
         }
         choose_page
         for Name_tp in ${Name[@]}
@@ -45,7 +57,7 @@ function Install_GIT_Plugin(){
                         echo 正在安装${Name_tp}, 稍安勿躁～
                         echo "=================================="
                         echo
-                        git clone --depth=1 ${Git_tp} ./plugins/${Plugin}
+                        git clone --depth=1 ${Git_tp} ./plugins/${Plugin_tp}
                         if [ -d plugins/${Plugin_tp} ]
                         then
                             if [ -e plugins/${Plugin_tp}/package.json ];then
