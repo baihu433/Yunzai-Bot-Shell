@@ -89,7 +89,7 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 </details>
 
-> #### [wiki帮助](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/wiki.md)
+> ###### [快捷命令帮助](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/wiki.md)[必看!!]
 
 <hr>
 

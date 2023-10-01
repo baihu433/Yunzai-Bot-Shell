@@ -9,6 +9,12 @@ export white="\033[37m"
 export background="\033[0m"
 export PUPPETEER_SKIP_DOWNLOAD='true'
 echo -e ${yellow}正在使用pnpm安装依赖${background}
+if [ ! -d $HOME/.local/share/pnpm ];then
+    mkdir -p $HOME/.local/share/pnpm
+fi
+export PATH=$PATH:/usr/local/node/bin
+export PATH=$PATH:/root/.local/share/pnpm
+export PNPM_HOME=/root/.local/share/pnpm
 i=0
 until echo "Y" | pnpm install -P && echo "Y" | pnpm install
 do
@@ -31,7 +37,7 @@ pnpm uninstall puppeteer -w
 pnpm install puppeteer@19.0.0 -w
 echo -en ${yellow}正在初始化${background}
 pnpm run start
-sleep 5s
+sleep 3s
 pnpm run stop
 rm -rf ~/.pm2/logs/*.log
 echo -en ${yellow}初始化完成${background}
