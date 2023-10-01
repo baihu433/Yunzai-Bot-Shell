@@ -814,7 +814,7 @@ function Delete_GIT_Plugin(){
         main
         exit
     fi
-    if [ -z ${Name} ];then
+    if [ -z ${Number} ];then
         main
         exit
     fi
@@ -875,6 +875,10 @@ function Delete_JS_Plugin(){
         read Number
     }
     Number=$(echo ${Number} | sed 's|"||g')
+    if [[ ${Number} == "0" ]];then
+        main
+        exit
+    fi
     if [ -z ${Number} ];then
             main
             exit
