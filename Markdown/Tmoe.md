@@ -354,7 +354,7 @@ apt install git curl wget -y
 ![bh.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/bh.png)
 
 ```sh
-bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Android/install.sh)
+bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.sh)
 ```
 
 请阅读\[[用户协议](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/Manage/用户协议.txt)\]
