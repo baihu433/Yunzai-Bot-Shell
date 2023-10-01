@@ -88,6 +88,14 @@ bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 
 <hr/>
 
+然后可能会提示这个
+
+![picture_tmoe_1.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe_1.jpg)
+
+出现这个提示填 `Y` 然后 `回车` [注意是大写 Y ]
+
+<hr/>
+
 然后会提示
 
 ![picture_tmoe8.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe8.jpg)
@@ -98,14 +106,6 @@ bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 
 出现这个界面填 `Y` 并 `回车` [注意是大写 Y]
 这种情况可能有好多次，都是填大写的 Y 然后回车
-
-<hr/>
-
-然后可能会提示这个
-
-![picture_tmoe_1.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe_1.jpg)
-
-出现这个提示填 `Y` 然后 `回车` [注意是大写 Y ]
 
 <hr/>
 
