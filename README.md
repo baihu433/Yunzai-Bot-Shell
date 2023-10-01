@@ -88,6 +88,7 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 ```
 
 </details>
+<br>
 
 > ###### [快捷命令帮助](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/wiki.md)[必看!!]
 
@@ -118,12 +119,13 @@ rm /usr/local/bin/bh
 
 #### 下面的命令可以脱离主脚本使用:
 
->插件安装脚本: <br>
+>插件安装脚本: [适配Linux和Windows]<br>
 >Linux请使用Terminal[终端]执行<br>window请使用Git Bash执行
 ```
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PlugIn.sh)
 ```
->签名服务器部署
+>签名服务器部署: [仅适配Linux]
+>Linux请使用Terminal[终端]执行
 ```
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QSignServer.sh)
 ```
