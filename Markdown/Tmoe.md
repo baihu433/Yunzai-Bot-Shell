@@ -94,17 +94,15 @@ bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 
 出现这个提示填 `Y` 然后 `回车` [注意是大写 Y ]
 
+然后它就会自动更换termux软件包下载源
+
 <hr/>
 
 然后会提示
 
 ![picture_tmoe8.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe8.jpg)
 
-出现这个提示填 `Y` 然后 `回车` [注意是大写 Y ]
-
-它就会开始换源
-
-出现这个界面填 `Y` 并 `回车` [注意是大写 Y]
+出现这个提示 填 `Y` 并 `回车` [注意是大写 Y]
 这种情况可能有好多次，都是填大写的 Y 然后回车
 
 <hr/>
