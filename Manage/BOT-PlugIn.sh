@@ -62,7 +62,7 @@ function Install_GIT_Plugin(){
                         if [ -d plugins/${Plugin_tp} ]
                         then
                             if [ -e plugins/${Plugin_tp}/package.json ];then
-                                echo -en ${cyan}正在为 ${Name_tp} 安装依赖${background}
+                                echo -e ${cyan}正在为 ${Name_tp} 安装依赖${background}
                                 cd plugins/${Plugin_tp}
                                 echo "Y" | pnpm install --registry=https://registry.npmmirror.com
                                 echo "Y" | pnpm install --registry=https://registry.npmmirror.com
