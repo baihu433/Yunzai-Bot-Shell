@@ -938,6 +938,7 @@ function Delete_JS_Plugin(){
         echo -en ${cyan}请输入您要删除的插件序号[多个插件请用空格分开]:${background}
         read Number
     }
+    choose_page
     Number=$(echo ${Number} | sed 's|"||g')
     if [ "${Number}" == "0" ];then
         main
