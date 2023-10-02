@@ -61,45 +61,49 @@ function Install_GIT_Plugin(){
             esac
         }
         choose_page
-        for Name_tp in ${Name[@]}
-        do
-            for Git_tp in ${Git[@]}
+        for num_ in ${Git[@]}
+        done
+            for Name_Variable in ${Name[@]}
             do
-                for Plugin_tp in ${Plugin[@]}
-                do
-                    if [ -d plugins/${Plugin_tp} ]
-                    then
-                        if [ ${checklist_menu} == menu ]
-                        then
-                            if [ plugins/${Plugin_tp} ];then
-                                delete_plugin
-                            fi
-                        else
-                            echo -e ${cyan}${Name_tp} ${green}已安装 ${yellow}跳过${background}
-                            echo
-                        fi
-                    else
-                        echo "=================================="
-                        echo 正在安装${Name_tp}, 稍安勿躁～
-                        echo "=================================="
-                        echo
-                        git clone --depth=1 ${Git_tp} ./plugins/${Plugin_tp}
-                        if [ -d plugins/${Plugin_tp} ]
-                        then
-                            if [ -e plugins/${Plugin_tp}/package.json ];then
-                                echo -e ${cyan}正在为 ${Name_tp} 安装依赖${background}
-                                cd plugins/${Plugin_tp}
-                                echo "Y" | pnpm install --registry=https://registry.npmmirror.com
-                                echo "Y" | pnpm install --registry=https://registry.npmmirror.com
-                                cd ../../
-                            fi
-                            echo -en ${green}${Name_tp} 安装成功${background}
-                        else
-                            echo -en ${yellow}${Name_tp} 安装失败 跳过${background}
-                        fi
-                    fi
-                done
+                Name_tp=${Name_Variable}
             done
+            for Git_Variable in ${Git[@]}
+                Git_tp=${Git_Variable}
+            do
+            for Plugin_Variable in ${Plugin[@]}
+            do
+                Plugin_tp=${Plugin_Variable}
+            done
+            
+            if [ -d plugins/${Plugin_tp} ]
+            then
+                if [ ${Single_Choice} == true ]
+                then
+                    delete_plugin
+                else
+                    echo -e ${cyan}${Name_tp} ${green}已安装 ${yellow}跳过${background}
+                    echo
+                fi
+            else
+                echo "=================================="
+                echo 正在安装${Name_tp}, 稍安勿躁～
+                echo "=================================="
+                echo
+                git clone --depth=1 ${Git_tp} ./plugins/${Plugin_tp}
+                if [ -d plugins/${Plugin_tp} ]
+                then
+                    if [ -e plugins/${Plugin_tp}/package.json ];then
+                        echo -e ${cyan}正在为 ${Name_tp} 安装依赖${background}
+                        cd plugins/${Plugin_tp}
+                        echo "Y" | pnpm install --registry=https://registry.npmmirror.com
+                        echo "Y" | pnpm install --registry=https://registry.npmmirror.com
+                        cd ../../
+                    fi
+                    echo -en ${green}${Name_tp} 安装成功${background}
+                else
+                    echo -en ${yellow}${Name_tp} 安装失败 跳过${background}
+                fi
+            fi
         done
     }
     function dialog_whiptail_page(){
@@ -110,6 +114,7 @@ function Install_GIT_Plugin(){
         --yesno "           请选择Git插件安装方式" \
         10 50)
         then
+            Single_Choice=true
             checklist_menu=menu
             OFF=
             tips=
@@ -287,7 +292,10 @@ function Install_GIT_Plugin(){
         echo -en ${green}请输入您需要安装插件的序号,可以多选,用[空格]分开:${background}
         number=
         read -p " " number
-        if [ -z ${number} ];then
+        if [[ ${Number} == "0" ]];then
+            main
+            exit
+        elif [[ -z ${Number} ]];then
             echo
             echo -en ${red}输入错误 ${cyan}回车返回${background};read
             main
@@ -856,8 +864,9 @@ function Delete_GIT_Plugin(){
     if [[ ${Number} == "0" ]];then
         main
         exit
-    fi
-    if [ -z ${Number} ];then
+    elif [[ -z ${Number} ]];then
+        echo
+        echo -en ${red}输入错误 ${cyan}回车返回${background};read
         main
         exit
     fi
@@ -921,10 +930,11 @@ function Delete_JS_Plugin(){
     if [[ ${Number} == "0" ]];then
         main
         exit
-    fi
-    if [ -z ${Number} ];then
-            main
-            exit
+    elif [[ -z ${Number} ]];then
+        echo
+        echo -en ${red}输入错误 ${cyan}回车返回${background};read
+        main
+        exit
     fi
     for Num in ${Number}
     do
