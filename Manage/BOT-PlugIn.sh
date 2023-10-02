@@ -91,7 +91,7 @@ function Install_GIT_Plugin(){
         else
             export checklist_menu=checklist
             export OFF=OFF
-            export tips="[空格表示选择 回车表示确定]"
+            export tips="[空格选择 回车确定]"
         fi
 
         number=$(${dialog_whiptail} \
