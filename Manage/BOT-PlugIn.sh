@@ -68,8 +68,9 @@ function Install_GIT_Plugin(){
                 Name_tp=${Name_Variable}
             done
             for Git_Variable in ${Git[@]}
-                Git_tp=${Git_Variable}
             do
+                Git_tp=${Git_Variable}
+            done
             for Plugin_Variable in ${Plugin[@]}
             do
                 Plugin_tp=${Plugin_Variable}
