@@ -62,50 +62,53 @@ Git=
             esac
         }
         choose_page
-        for num_ in ${Git[@]}
-        do
-            for Name_Variable in ${Name[@]}
-            do
-                Name_tp=${Name_Variable}
-            done
-            for Git_Variable in ${Git[@]}
-            do
-                Git_tp=${Git_Variable}
-            done
-            for Plugin_Variable in ${Plugin[@]}
-            do
-                Plugin_tp=${Plugin_Variable}
-            done
-            
+        install_(){
+        if [ -d plugins/${Plugin_tp} ]
+        then
+            if [ "${Single_Choice}" == "true" ]
+            then
+                delete_plugin
+            else
+                echo -e ${cyan}${Name_tp} ${green}已安装 ${yellow}跳过${background}
+                echo
+            fi
+        else
+            echo "=================================="
+            echo 正在安装${Name_tp}, 稍安勿躁～
+            echo "=================================="
+            echo
+            git clone --depth=1 ${Git_tp} ./plugins/${Plugin_tp}
             if [ -d plugins/${Plugin_tp} ]
             then
-                if [ "${Single_Choice}" == "true" ]
-                then
-                    delete_plugin
-                else
-                    echo -e ${cyan}${Name_tp} ${green}已安装 ${yellow}跳过${background}
-                    echo
+                if [ -e plugins/${Plugin_tp}/package.json ];then
+                    echo -e ${cyan}正在为 ${Name_tp} 安装依赖${background}
+                    cd plugins/${Plugin_tp}
+                    echo "Y" | pnpm install --registry=https://registry.npmmirror.com
+                    echo "Y" | pnpm install --registry=https://registry.npmmirror.com
+                    cd ../../
                 fi
+                echo -e ${green}${Name_tp} 安装成功${background}
             else
-                echo "=================================="
-                echo 正在安装${Name_tp}, 稍安勿躁～
-                echo "=================================="
-                echo
-                git clone --depth=1 ${Git_tp} ./plugins/${Plugin_tp}
-                if [ -d plugins/${Plugin_tp} ]
-                then
-                    if [ -e plugins/${Plugin_tp}/package.json ];then
-                        echo -e ${cyan}正在为 ${Name_tp} 安装依赖${background}
-                        cd plugins/${Plugin_tp}
-                        echo "Y" | pnpm install --registry=https://registry.npmmirror.com
-                        echo "Y" | pnpm install --registry=https://registry.npmmirror.com
-                        cd ../../
-                    fi
-                    echo -en ${green}${Name_tp} 安装成功${background}
-                else
-                    echo -en ${yellow}${Name_tp} 安装失败 跳过${background}
-                fi
+                echo -e ${yellow}${Name_tp} 安装失败 跳过${background}
             fi
+        fi
+        }
+        for num_ in ${Git[@]}
+        do
+            for Name_tp in ${Name[@]}
+            do
+                Name=$(echo ${Name} | sed "s|${Name_tp}||g")
+                for Git_tp in ${Git[@]}
+                do
+                    Git=$(echo ${Git} | sed "s|${Git_tp}||g")
+                    for Plugin_tp in ${Plugin[@]}
+                    do
+                        Plugin=$(echo ${Plugin} | "s|${Plugin_tp}||g")
+                            install_
+                        break 3
+                    done
+                done
+            done
         done
     }
     function dialog_whiptail_page(){
