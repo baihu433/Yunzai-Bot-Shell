@@ -83,11 +83,13 @@ Git=
                 if [ -e plugins/${Plugin_tp}/package.json ];then
                     echo -e ${cyan}正在为 ${Name_tp} 安装依赖${background}
                     cd plugins/${Plugin_tp}
-                    echo "Y" | pnpm install --registry=https://registry.npmmirror.com
-                    echo "Y" | pnpm install --registry=https://registry.npmmirror.com
+                    if ! echo "Y" | pnpm install --registry=https://registry.npmmirror.com
+                    then
+                        echo ${yellow}${Name_tp} 依赖安装失败 跳过${background}
+                    fi
                     cd ../../
                 fi
-                echo -e ${green}${Name_tp} 安装成功${background}
+                echo -e ${cyan}${Name_tp} ${green}安装成功${background}
             else
                 echo -e ${yellow}${Name_tp} 安装失败 跳过${background}
             fi
@@ -110,6 +112,8 @@ Git=
                 done
             done
         done
+        echo
+        echo -en ${green}插件安装完成 ${cyan}回车返回${background};read
     }
     function dialog_whiptail_page(){
         if (${dialog_whiptail} \
