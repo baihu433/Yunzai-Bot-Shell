@@ -396,7 +396,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.4.5"
+    old_version="0.4.6"
     old_date="20231002"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
@@ -449,7 +449,7 @@ done
 }
 
 bot_tmux_start(){
-tmux_new ${Bot_Name} "bh ${Bot_Name} n"
+tmux_new ${Bot_Name} "bh ${Bot_Name} n" > /dev/null 2>&1
 tmux_gauge ${Bot_Name}
 }
 bot_tmux_attach_log(){
