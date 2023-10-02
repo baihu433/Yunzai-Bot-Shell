@@ -292,10 +292,10 @@ function Install_GIT_Plugin(){
         echo -en ${green}请输入您需要安装插件的序号,可以多选,用[空格]分开:${background}
         number=
         read -p " " number
-        if [[ ${Number} == "0" ]];then
+        if [ "${Number}" == "0" ];then
             main
             exit
-        elif [[ -z ${Number} ]];then
+        elif [ -z "${Number}" ];then
             echo
             echo -en ${red}输入错误 ${cyan}回车返回${background};read
             main
@@ -725,7 +725,7 @@ function Install_JS_Plugin(){
             main
             exit
     fi
-    if [ ${number} == "1" ];then
+    if [ "${number}" == "1" ];then
         echo
         echo -en ${green}请输入链接: ${background};read js
         jsname=`echo $js | awk -F/ '{print $NF}'`
@@ -757,7 +757,7 @@ function Install_JS_Plugin(){
         fi
         cd ../../
         echo -en ${yellow}安装完成 回车返回${background};read
-    elif [ ${number} == 2 ];then
+    elif [ "${number}" == 2 ];then
         if [ -d "/media/sd" ];then
             sdpath=/media/sd
         fi
@@ -861,7 +861,7 @@ function Delete_GIT_Plugin(){
         read Number
     }
     choose_page
-    if [[ ${Number} == "0" ]];then
+    if [ "${Number}" == "0" ];then
         main
         exit
     elif [[ -z ${Number} ]];then
@@ -927,10 +927,10 @@ function Delete_JS_Plugin(){
         read Number
     }
     Number=$(echo ${Number} | sed 's|"||g')
-    if [[ ${Number} == "0" ]];then
+    if [ "${Number}" == "0" ];then
         main
         exit
-    elif [[ -z ${Number} ]];then
+    elif [ -z "${Number}" ];then
         echo
         echo -en ${red}输入错误 ${cyan}回车返回${background};read
         main
@@ -998,17 +998,17 @@ if [ -z ${number} ];then
     main
     exit
 fi
-if [[ ${number} == 1 ]];then
+if [ "${number}" == "1" ];then
     Install_GIT_Plugin
-elif [[ ${number} == 2 ]];then
+elif [ "${number}" == "2" ];then
     Install_JS_Plugin
-elif [[ ${number} == 3 ]];then
+elif [ "${number}" == "3" ];then
     Update_GIT_Plugin
-elif [[ ${number} == 4 ]];then
+elif [ "${number}" == "4" ];then
     Delete_GIT_Plugin
-elif [[ ${number} == 5 ]];then
+elif [ "${number}" == "5" ];then
     Install_JS_Plugin
-elif [[ ${number} == 0 ]];then
+elif [ "${number}" == "0" ];then
     return
 fi
 }
@@ -1034,7 +1034,7 @@ if [ ! -z "$1" ];then
 fi
 until ${pkg_install} ${pkg}
 do
-    if [ ${i} == "3" ]
+    if [ "${i}" == "3" ]
         then
             echo -e ${red}错误次数过多 退出${background}
             exit
@@ -1257,7 +1257,7 @@ fi
 }
 
 function feedback(){
-if [ ! ${feedback} == "0" ];then
+if [ ! "${feedback}" == "0" ];then
     exit
 fi
 }

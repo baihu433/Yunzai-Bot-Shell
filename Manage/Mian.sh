@@ -65,10 +65,10 @@ Tmux_Name="$1"
 tmux_ls ${Tmux_Name} & > /dev/null 2>&1
 until qsign_curl
 do
-    i=$((${i}+1))
+    i="$((${i}+1))"
     a="${a}#"
     echo -ne "\r${i}% ${a}"
-    if [[ ${i} == 100 ]];then
+    if [ "${i}" == "100" ];then
         echo
         return 1
     fi
@@ -440,7 +440,7 @@ do
     i=$((${i}+1))
     sleep 0.05s
     echo -e ${i}
-    if [[ ${i} == 100 ]];then
+    if [[ "${i}" == "100" ]];then
         echo -e "错误: 启动失败"
         return 1
     fi
@@ -464,7 +464,7 @@ then
     bot_tmux_attach_log
 fi
 }
-if [[ "$1" == log ]];then
+if [[ $1 == log ]];then
     if tmux_ls ${Bot_Name}
     then
         tmux attach -t ${Bot_Name}
@@ -475,7 +475,7 @@ if [[ "$1" == log ]];then
             bot_tmux_start
         fi
     fi
-elif [[ "$1" == start ]];then
+elif [[ $1 == start ]];then
     if ! tmux_ls ${Bot_Name}
     then
         export Start_Stop_Restart="启动"
@@ -484,7 +484,7 @@ elif [[ "$1" == start ]];then
     else
         bot_tmux_attach
     fi
-elif [[ "$1" == stop ]];then
+elif [[ $1 == stop ]];then
     if tmux_ls ${Bot_Name}
     then
         tmux_kill_session ${Bot_Name}
@@ -492,7 +492,7 @@ elif [[ "$1" == stop ]];then
     else
         ${dialog_whiptail} --yesno "${Bot_Name} [未启动] \n无需停止${Bot_Name}" 8 50
     fi
-elif [[ "$1" == restart ]];then
+elif [[ $1 == restart ]];then
     if tmux_ls ${Bot_Name}
     then
         tmux_kill_session ${Bot_Name}
@@ -502,7 +502,7 @@ elif [[ "$1" == restart ]];then
     else
         ${dialog_whiptail} --msgbox "${Bot_Name} [未启动]" 8 50
     fi
-elif [[ "$1" == login ]];then
+elif [[ $1 == login ]];then
     QQ=$(${dialog_whiptail} --title "白狐-BOT" --inputbox "请输入您的机器人QQ号" 10 30 3>&1 1>&2 2>&3)
     password=$(${dialog_whiptail} --title "白狐-BOT" --inputbox "请输入您的机器人QQ密码" 10 30 3>&1 1>&2 2>&3)
     ${dialog_whiptail} --title "请确认账号和密码" --yesno "\nQQ号: ${QQ} \n密码: ${password}" 10 30
@@ -533,7 +533,7 @@ elif [[ "$1" == login ]];then
     fi
     old_password=$(echo ${old_password})
     sed -i "s/${old_password}/${password}/g" ${file}
-elif [[ "$1" == qsign ]];then
+elif [[ $1 == qsign ]];then
     API=$(${dialog_whiptail} --title "白狐-BOT" --inputbox "请输入您的签名服务器API" 10 50 3>&1 1>&2 2>&3)
     feedback=$?
     if [[ ${feedback} == "1" ]];then
@@ -556,7 +556,7 @@ elif [[ "$1" == qsign ]];then
     API=$(grep sign_api_addr config/config/bot.yaml)
     API=$(echo ${API} | sed "s/sign_api_addr: //g")
     echo -e ${cyan}您的API链接已修改为 ${green}${API}${background}
-elif [[ "$1" == delete ]];then
+elif [[ $1 == delete ]];then
     echo -e ${yellow}是否删除${red}${Bot_Name}${cyan}[N/y] ${background};read -p "" num
     case $num in
     Y|y)
@@ -640,21 +640,21 @@ Number=$(${dialog_whiptail} \
 "7" "renderer.yaml" \
 "0" "返回" \
 3>&1 1>&2 2>&3)
-if [ ${Number} == "1" ];then
+if [ "${Number}" == "1" ];then
     micro_yaml bot.yaml
-elif [ ${Number} == "2" ];then
+elif [ "${Number}" == "2" ];then
     micro_yaml group.yaml
-elif [ ${Number} == "3" ];then
+elif [ "${Number}" == "3" ];then
     micro_yaml notice.yaml
-elif [ ${Number} == "4" ];then
+elif [ "${Number}" == "4" ];then
     micro_yaml other.yaml
-elif [ ${Number} == "5" ];then
+elif [ "${Number}" == "5" ];then
     micro_yaml qq.yaml
-elif [ ${Number} == "6" ];then
+elif [ "${Number}" == "6" ];then
     micro_yaml redis.yaml
-elif [ ${Number} == "7" ];then
+elif [ "${Number}" == "7" ];then
     micro_yaml renderer.yaml
-elif [ ${Number} == "0" ];then
+elif [ "${Number}" == "0" ];then
     main
     exit
 fi
@@ -672,12 +672,12 @@ Number=$(${dialog_whiptail} \
 "5" "dpkg安装被中断" \
 "6" "无法锁定数据库" \
 3>&1 1>&2 2>&3)
-if [[ ${Number} == "1" ]];then
+if [ "${Number}" == "1" ];then
     echo -e ${yellow}正在修复${background}
     echo "Y" | pnpm install
     echo "Y" | pnpm install puppeteer@19.0.0 -w
     echo -en ${cyan}回车返回${background};read
-elif [[ ${Number} == "2" ]];then
+elif [ "${Number}" == "2" ];then
     file="config/config/bot.yaml"
     old_chromium_path=$(grep chromium_path ${file})
     new_chromium_path=$(which chromium || which chromium-browser)
@@ -688,14 +688,14 @@ elif [[ ${Number} == "2" ]];then
     sed -i "s|${old_chromium_path}|chromium_path: ${new_chromium_path}|g" ${file}
     echo -e ${cyan}写入完成${background}
     echo -en ${cyan}回车返回${background};read
-elif [[ ${Number} == "3" ]];then
+elif [ "${Number}" == "3" ];then
     echo -e ${yellow}正在修复${background}
     if ! bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT_INSTALL.sh);then
         echo -e ${red}软件包修复出错${background}
         exit
     fi
     echo -en ${cyan}回车返回${background};read
-elif [[ ${Number} == "4" ]];then
+elif [ "${Number}" == "4" ];then
     if grep -q -E -i "Debian|Ubuntu|Kali" /etc/os-release && [ -x /usr/bin/apt ]
     then
         echo -e ${yellow}正在修复${background}
@@ -708,7 +708,7 @@ elif [[ ${Number} == "4" ]];then
         exit
     fi
     echo -en ${cyan}回车返回${background};read
-elif [[ ${Number} == "5" ]];then
+elif [ "${Number}" == "5" ];then
     if grep -q -E -i "Debian|Ubuntu|Kali" /etc/os-release && [ -x /usr/bin/apt ]
     then
         echo -e ${yellow}正在修复${background}
@@ -723,7 +723,7 @@ elif [[ ${Number} == "5" ]];then
         exit
     fi
     echo -en ${cyan}回车返回${background};read
-elif [[ ${Number} == "6" ]];then
+elif [ "${Number}" == "6" ];then
     echo -e ${yellow}正在修复${background}
     if grep -q -E -i Arch /etc/issue && [ -x /usr/bin/pacman ]
     then
@@ -760,60 +760,60 @@ Number=$(${dialog_whiptail} \
 "A" "我要卸崽" \
 "0" "返回" \
 3>&1 1>&2 2>&3)
-if [[ ${Number} == "1" ]];then
+if [ "${Number}" == "1" ];then
     BOT log
     main
     exit
-elif [[ ${Number} == "2" ]];then
+elif [ "${Number}" == "2" ];then
     BOT start
     main
     exit
-elif [[ ${Number} == "3" ]];then
+elif [ "${Number}" == "3" ];then
     BOT stop
     main
     exit
-elif [[ ${Number} == "4" ]];then
+elif [ "${Number}" == "4" ];then
     BOT restart
     main
     exit
-elif [[ ${Number} == "5" ]];then
+elif [ "${Number}" == "5" ];then
     pnpm run log
     main
     exit
-elif [[ ${Number} == "6" ]];then
+elif [ "${Number}" == "6" ];then
     bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PlugIn.sh)
     main
     exit
-elif [[ ${Number} == "7" ]];then
+elif [ "${Number}" == "7" ];then
     git_update
     echo -en ${cyan}回车返回${background};read
     main
     exit
-elif [[ ${Number} == "8" ]];then
+elif [ "${Number}" == "8" ];then
     BOT login
     echo -en ${cyan}回车返回${background};read
     main
     exit
-elif [[ ${Number} == "9" ]];then
+elif [ "${Number}" == "9" ];then
     bh ${Bot_Name} n
     echo -en ${cyan}回车返回${background};read
     main
     exit
-elif [[ ${Number} == "10" ]];then
+elif [ "${Number}" == "10" ];then
     BOT qsign
     echo -en ${cyan}回车返回${background};read
     main
     exit
-elif [[ ${Number} == "11" ]];then
+elif [ "${Number}" == "11" ];then
     configure_file
     echo -en ${cyan}回车返回${background};read
     main
     exit
-elif [[ ${Number} == "12" ]];then
+elif [ "${Number}" == "12" ];then
     Fix_Error
     main
     exit
-elif [[ ${Number} == "A" ]];then
+elif [ "${Number}" == "A" ];then
     BOT delete
 else
     return
@@ -894,7 +894,7 @@ fi
 
 function Git_BOT(){
 PACKAGE="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PACKAGE.sh"
-if [ ${Bot_Name} == "Yunzai|Yunzai-Bot" ];then
+if [ "${Bot_Name}" == "Yunzai|Yunzai-Bot" ];then
     if [ ! -e ~/${Bot_Name}/package.json ];then
         install_Bot
     fi
@@ -906,7 +906,7 @@ if [ ${Bot_Name} == "Yunzai|Yunzai-Bot" ];then
         qsign_server
     fi
     Bot_Path
-elif [ ${Bot_Name} == "Miao-Yunzai" ];then
+elif [ "${Bot_Name}" == "Miao-Yunzai" ];then
     if [ ! -e ~/${Bot_Name}/package.json ];then
         install_Bot
     fi
@@ -921,7 +921,7 @@ elif [ ${Bot_Name} == "Miao-Yunzai" ];then
         qsign_server
     fi
     Bot_Path
-elif [ ${Bot_Name} == "TRSS-Yunzai" ];then
+elif [ "${Bot_Name}" == "TRSS-Yunzai" ];then
     if [ ! -e ~/${Bot_Name}/package.json ];then
         install_Bot
     fi
@@ -1009,7 +1009,7 @@ Number=$(${dialog_whiptail} \
 3>&1 1>&2 2>&3)
 feedback=$?
 feedback
-if [[ ${Number} == "1" ]];then
+if [ "${Number}" == "1" ];then
     export Bot_Path_check=false
     if [ -d /root/TRSS_AllBot ];then
         export Bot_Name=Yunzai
@@ -1019,25 +1019,25 @@ if [[ ${Number} == "1" ]];then
     export Gitee=https://gitee.com/yoimiya-kokomi/Yunzai-Bot.git
     export Github=https://github.com/yoimiya-kokomi/Yunzai-Bot.git
     Bot_Path
-elif [[ ${Number} == "2" ]];then
+elif [ "${Number}" == "2" ];then
     export Bot_Path_check=false
     export Bot_Name=Miao-Yunzai
     export Gitee=https://gitee.com/yoimiya-kokomi/Miao-Yunzai.git
     export Github=https://github.com/yoimiya-kokomi/Miao-Yunzai.git
     Bot_Path
-elif [[ ${Number} == "3" ]];then
+elif [ "${Number}" == "3" ];then
     export Bot_Path_check=false
     export Bot_Name=TRSS-Yunzai
     export Gitee=https://gitee.com/TimeRainStarSky/Yunzai.git
     export Github=https://github.com/TimeRainStarSky/Yunzai.git
     Bot_Path
-elif [[ ${Number} == "4" ]];then
+elif [ "${Number}" == "4" ];then
     URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QSignServer.sh"
     bash <(curl -sL ${URL})
-elif [[ ${Number} == "5" ]];then
+elif [ "${Number}" == "5" ];then
     URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Gocq-Http.sh"
     bash <(curl -sL ${URL})
-elif [[ ${Number} == "6" ]];then
+elif [ "${Number}" == "6" ];then
     echo
     echo
     echo -e ${white}==================${background}
@@ -1055,7 +1055,7 @@ elif [[ ${Number} == "6" ]];then
     echo -e ${green} Ctrl + ${yellow}P  ${blue}搜索上一个${background}
     echo -e ${white}==================${background}
     echo -en ${cyan}回车返回${background};read
-elif [[ ${Number} == "7" ]];then
+elif [ "${Number}" == "7" ];then
     export Bot_Path=$(${dialog_whiptail} \
     --title "白狐-BOT" \
     --inputbox "请输入您BOT的根目录的绝对路径" \
@@ -1069,7 +1069,7 @@ elif [[ ${Number} == "7" ]];then
     export Bot_Name=$(echo ${Bot_Path} | awk -F/ '{print $NF}')
     main
     exit
-elif [[ ${Number} == "0" ]];then
+elif [ "${Number}" == "0" ];then
     exit
 else
     exit
