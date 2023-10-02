@@ -9,10 +9,10 @@ export white="\033[37m"
 export background="\033[0m"
 
 function main(){
+function Install_GIT_Plugin(){
 Name=
 Plugin=
 Git=
-function Install_GIT_Plugin(){
     function delete_plugin(){
     case ${YN} in
     Y)
@@ -294,7 +294,7 @@ function Install_GIT_Plugin(){
         echo
         echo -en ${green}请输入您需要安装插件的序号,可以多选,用[空格]分开:${background}
         number=
-        Single_Choice="true"
+        Single_Choice="false"
         read -p " " number
         if [ "${Number}" == "0" ];then
             main
