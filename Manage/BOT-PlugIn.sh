@@ -18,9 +18,9 @@ function Install_GIT_Plugin(){
             exit
         fi
         function dialog_whiptail_page(){
-            if ! (${dialog_whiptail} --title "白狐-Bot-Plugin" \
+            if ! ${dialog_whiptail} --title "白狐-Bot-Plugin" \
             --yesno "将会为您安装\n[${Name} ]" \
-            20 50)
+            20 50
             then
                 Name=
                 Plugin=
