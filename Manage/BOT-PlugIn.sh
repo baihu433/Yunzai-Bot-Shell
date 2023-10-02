@@ -8,6 +8,9 @@ export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
 function main(){
+Name=
+Plugin=
+Git=
 function Install_GIT_Plugin(){
     function delete_plugin(){
     case ${YN} in
@@ -107,16 +110,16 @@ function Install_GIT_Plugin(){
         --yesno "           请选择Git插件安装方式" \
         10 50)
         then
-            export checklist_menu=menu
-            export OFF=
-            export tips=
+            checklist_menu=menu
+            OFF=
+            tips=
         else
-            export checklist_menu=checklist
-            export OFF=OFF
-            export tips="[空格选择 回车确定]"
+            checklist_menu=checklist
+            OFF=OFF
+            tips="[空格选择 回车确定]"
         fi
-
-        number=$(${dialog_whiptail} \
+        number=
+        if ! number=$(${dialog_whiptail} \
         --title "白狐-QQ群:705226976" \
         --${checklist_menu} "选择您喜欢的插件吧! ${tips}" \
         26 60 20 \
@@ -191,6 +194,16 @@ function Install_GIT_Plugin(){
         "67" "ttsapi-yunzai-Plugin           TTS语音合成" ${OFF} \
         "68" "Xs-plugin                      XS插件" ${OFF} \
         3>&1 1>&2 2>&3)
+        then
+            main
+            exit
+        fi
+        if [ -z ${number} ];then
+            echo
+            echo -en ${red}输入错误 ${cyan}回车返回${background};read
+            main
+            exit
+        fi
     }
     
     function echo_page(){
@@ -272,7 +285,14 @@ function Install_GIT_Plugin(){
         echo "#####################################"
         echo
         echo -en ${green}请输入您需要安装插件的序号,可以多选,用[空格]分开:${background}
+        number=
         read -p " " number
+        if [ -z ${number} ];then
+            echo
+            echo -en ${red}输入错误 ${cyan}回车返回${background};read
+            main
+            exit
+        fi
         } #echo_page
         choose_page
         number=$(echo ${number} | sed 's|"||g')
