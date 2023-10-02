@@ -6,7 +6,6 @@
 | 应用 | 下载链接|
 |----|----|
 | Termux | [下载链接](https://f-droid.org/repo/com.termux_118.apk) |
-| MT管理器 | [下载链接](https://mt2.cn/download/) |
 
 <hr/>
 
