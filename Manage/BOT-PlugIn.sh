@@ -103,9 +103,9 @@ Git=
                     Git=$(echo ${Git} | sed "s|${Git_tp}||g")
                     for Plugin_tp in ${Plugin[@]}
                     do
-                        Plugin=$(echo ${Plugin} | "s|${Plugin_tp}||g")
+                        Plugin=$(echo ${Plugin} | sed "s|${Plugin_tp}||g")
                             install_
-                        break 3
+                        break 2
                     done
                 done
             done
