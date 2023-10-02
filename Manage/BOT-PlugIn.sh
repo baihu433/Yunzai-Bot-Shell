@@ -62,7 +62,7 @@ function Install_GIT_Plugin(){
         }
         choose_page
         for num_ in ${Git[@]}
-        done
+        do
             for Name_Variable in ${Name[@]}
             do
                 Name_tp=${Name_Variable}
