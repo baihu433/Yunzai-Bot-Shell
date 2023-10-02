@@ -97,7 +97,7 @@ function Install_GIT_Plugin(){
         number=$(${dialog_whiptail} \
         --title "白狐-QQ群:705226976" \
         --${checklist_menu} "选择您喜欢的插件吧! ${tips}" \
-        28 60 20 \
+        26 60 20 \
         "1" "miao-plugin                    喵喵插件" ${OFF} \
         "2" "xiaoyao-cvs-plugin             逍遥图鉴" ${OFF} \
         "3" "Guoba-Plugin                   锅巴插件" ${OFF} \
@@ -264,8 +264,8 @@ function Install_GIT_Plugin(){
              ;;
            2)
              Name="${Name} 逍遥图鉴"
-             Plugin="${Plugin} xiaoyao-cvs-plugin
-             Git="${Git} https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin.git
+             Plugin="${Plugin} xiaoyao-cvs-plugin"
+             Git="${Git} https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin.git"
              ;;
            3)
              Name="${Name} 锅巴插件"
