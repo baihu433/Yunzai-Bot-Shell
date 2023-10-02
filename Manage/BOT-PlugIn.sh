@@ -28,7 +28,7 @@ function Install_GIT_Plugin(){
     esac
     }
     function Install(){
-        if [ -z ${Name} ];then
+        if [[ -z ${Name} ]];then
             main
             exit
         elif [ "[${Name}]" == "[]" ];then
@@ -198,7 +198,7 @@ function Install_GIT_Plugin(){
             main
             exit
         fi
-        if [ -z ${number} ];then
+        if [[ -z ${number} ]];then
             echo
             echo -en ${red}输入错误 ${cyan}回车返回${background};read
             main
