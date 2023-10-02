@@ -53,6 +53,9 @@ function Install_GIT_Plugin(){
                     then
                         echo -e ${cyan}${Name_tp} ${green}已安装 ${yellow}跳过${background}
                         echo
+                        if [ ${checklist_menu} == menu ];then
+                            echo -en ${green}执行完成 ${cyan}回车返回${background};read
+                        fi
                     else
                         echo "=================================="
                         echo 正在安装${Name_tp}, 稍安勿躁～
