@@ -79,7 +79,7 @@ function Install_GIT_Plugin(){
             
             if [ -d plugins/${Plugin_tp} ]
             then
-                if [ ${Single_Choice} == true ]
+                if [ "${Single_Choice}" == "true" ]
                 then
                     delete_plugin
                 else
@@ -116,11 +116,12 @@ function Install_GIT_Plugin(){
         --yesno "           请选择Git插件安装方式" \
         10 50)
         then
-            Single_Choice=true
+            Single_Choice="true"
             checklist_menu=menu
             OFF=
             tips=
         else
+            Single_Choice="false"
             checklist_menu=checklist
             OFF=OFF
             tips="[空格选择 回车确定]"
@@ -293,6 +294,7 @@ function Install_GIT_Plugin(){
         echo
         echo -en ${green}请输入您需要安装插件的序号,可以多选,用[空格]分开:${background}
         number=
+        Single_Choice="true"
         read -p " " number
         if [ "${Number}" == "0" ];then
             main
