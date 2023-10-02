@@ -854,7 +854,7 @@ function Delete_GIT_Plugin(){
         Number=$(${dialog_whiptail} \
         --title "白狐" \
         --checklist "请选择要删除的GIT插件" \
-        30 45 20 ${options} \
+        28 45 20 ${options} \
         3>&1 1>&2 2>&3)
     }
     function echo_page(){
@@ -920,7 +920,7 @@ function Delete_JS_Plugin(){
         Number=$(${dialog_whiptail} \
         --title "白狐" \
         --checklist "请选择要删除的JS插件" \
-        30 45 20 ${options} \
+        28 45 20 ${options} \
         3>&1 1>&2 2>&3)
     }
     function echo_page(){
@@ -1019,7 +1019,7 @@ elif [ "${number}" == "3" ];then
 elif [ "${number}" == "4" ];then
     Delete_GIT_Plugin
 elif [ "${number}" == "5" ];then
-    Install_JS_Plugin
+    Delete_JS_Plugin
 elif [ "${number}" == "0" ];then
     return
 fi
