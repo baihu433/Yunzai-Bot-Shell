@@ -9,6 +9,21 @@ export white="\033[37m"
 export background="\033[0m"
 function main(){
 function Install_GIT_Plugin(){
+    function delete_plugin(){
+    case ${YN} in
+    Y)
+        rm -rf ${Plugin_Path}/plugins/${Plugin_tp} > /dev/null 2>&1
+        rm -rf ${Plugin_Path}/plugins/${Plugin_tp} > /dev/null 2>&1
+        if [ ${Plugin_Path}/plugins/${Plugin_tp} ];then
+            echo -en ${red}删除失败 ${cyan}回车返回${background};read
+        fi
+        echo -en ${yellow}删除完成 ${cyan}回车返回${background};read
+    ;;
+    N|n|*)
+        echo -en ${green}取消 ${cyan}回车返回${background};read
+    ;;
+    esac
+    }
     function Install(){
         if [ -z ${Name} ];then
             main
@@ -51,10 +66,14 @@ function Install_GIT_Plugin(){
                 do
                     if [ -d plugins/${Plugin_tp} ]
                     then
-                        echo -e ${cyan}${Name_tp} ${green}已安装 ${yellow}跳过${background}
-                        echo
-                        if [ ${checklist_menu} == menu ];then
-                            echo -en ${green}执行完成 ${cyan}回车返回${background};read
+                        if [ ${checklist_menu} == menu ]
+                        then
+                            if [ plugins/${Plugin_tp} ];then
+                                delete_plugin
+                            fi
+                        else
+                            echo -e ${cyan}${Name_tp} ${green}已安装 ${yellow}跳过${background}
+                            echo
                         fi
                     else
                         echo "=================================="
@@ -839,10 +858,10 @@ function Delete_GIT_Plugin(){
             rm -rf ${Plugin_Path}/plugins/${file_folder} > /dev/null 2>&1
             echo -e ${cyan}已删除${file_folder}${background}
         done
-        echo -en ${yellow}删除完成 回车返回${background};read
+        echo -en ${yellow}删除完成 ${cyan}回车返回${background};read
     ;;
     N|n|*)
-        echo -e ${green}取消${background}
+        echo -en ${green}取消 ${cyan}回车返回${background};read
     ;;
     esac
 }
