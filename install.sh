@@ -83,11 +83,17 @@ else
 fi
 }
 function Script_Install(){
+    echo -e ${green}正在获取版本信息${background}
+    URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
+    version_date=$(curl ${URL})
+    version="$(echo ${version_date} | grep version | awk '{print $2}' )"
+    date="$(echo ${version_date} | grep date | awk '{print $2}' )"
+    echo -e ${cyan}获取成功${background}
     echo
     echo -e ${white}=========================${background}
     echo -e ${red}" "白狐 ${yellow}BOT ${green}Install ${cyan}Script ${background}
     echo -e "  "————"  "————"  "————"  "————"  "
-    echo -e ${green}" "版本:" "v0.4.0 ${cyan}\(20230930\) ${background}
+    echo -e ${green}" "版本:" "v${version} ${cyan}\(${date}\) ${background}
     echo -e ${green}" "作者:" "${cyan}白狐"   "\(baihu433\) ${background}
     echo -e ${white}=========================${background}
     echo

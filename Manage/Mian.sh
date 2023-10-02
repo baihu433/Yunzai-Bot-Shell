@@ -1,5 +1,4 @@
 #!/bin/env bash
-export ver=0.4.3
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -397,8 +396,15 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-version=`curl -s https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version`
-    if [ "$version" != "$ver" ];then
+    old_version="0.4.4"
+    old_date="20231002"
+    
+    URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
+    version_date=$(curl -sL ${URL})
+    new_version="$(echo ${version_date} | grep version | awk '{print $2}' )"
+    new_date="$(echo ${version_date} | grep date | awk '{print $2}' )"
+    
+    if [ "${new_version}" != "${old_version}" ];then
         echo -e ${cyan}正在更新${background}
         rm /usr/local/bin/bh
         curl -o bh https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Mian.sh
