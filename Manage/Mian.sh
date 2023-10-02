@@ -396,7 +396,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.4.4"
+    old_version="0.4.5"
     old_date="20231002"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
