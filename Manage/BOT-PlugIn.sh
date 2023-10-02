@@ -97,7 +97,7 @@ function Install_GIT_Plugin(){
         number=$(${dialog_whiptail} \
         --title "白狐-QQ群:705226976" \
         --${checklist_menu} "选择您喜欢的插件吧! ${tips}" \
-        25 60 20 \
+        30 60 20 \
         "1" "miao-plugin                    喵喵插件" ${OFF} \
         "2" "xiaoyao-cvs-plugin             逍遥图鉴" ${OFF} \
         "3" "Guoba-Plugin                   锅巴插件" ${OFF} \
