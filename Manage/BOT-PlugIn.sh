@@ -73,9 +73,9 @@ Git=
                 echo
             fi
         else
-            echo "=================================="
-            echo 正在安装${Name_tp}, 稍安勿躁～
-            echo "=================================="
+            echo ${green}==================================${background}
+            echo ${cyan}正在安装${yellow}${Name_tp} ${cyan}稍安勿躁~${background}
+            echo ${green}==================================${background}
             echo
             git clone --depth=1 ${Git_tp} ./plugins/${Plugin_tp}
             if [ -d plugins/${Plugin_tp} ]
@@ -90,6 +90,7 @@ Git=
                     cd ../../
                 fi
                 echo -e ${cyan}${Name_tp} ${green}安装成功${background}
+                echo
             else
                 echo -e ${yellow}${Name_tp} 安装失败 跳过${background}
             fi
