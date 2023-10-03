@@ -73,9 +73,9 @@ Git=
                 echo
             fi
         else
-            echo ${green}==================================${background}
-            echo ${cyan}正在安装${yellow}${Name_tp} ${cyan}稍安勿躁~${background}
-            echo ${green}==================================${background}
+            echo -e ${green}==================================${background}
+            echo -e ${cyan}正在安装${yellow}${Name_tp} ${cyan}稍安勿躁~${background}
+            echo -e${green}==================================${background}
             echo
             git clone --depth=1 ${Git_tp} ./plugins/${Plugin_tp}
             if [ -d plugins/${Plugin_tp} ]
@@ -265,7 +265,7 @@ Git=
         echo -e ${green_red}35. ${cyan}call_of_seven_saints"     "七圣召唤插件${background}
         echo -e ${green_red}36. ${cyan}QQGuild-Plugin"           "QQ频道插件${background}
         echo -e ${green_red}37. ${cyan}xiaoyue-plugin"           "小月插件${background}
-        echo -e ${green_red}38. ${cyan}FanSky_Qs"                "fans插件${background}
+        echo -e ${green_red}38. ${cyan}FanSky_Qs"                "繁星插件${background}
         echo -e ${green_red}39. ${cyan}phi-plugin"               "phigros辅助插件${background}
         echo -e ${green_red}40. ${cyan}ap-plugin"                "AI绘图插件${background}
         echo -e ${green_red}41. ${cyan}sanyi-plugin"             "三一插件${background}
@@ -355,12 +355,12 @@ Git=
              Git="${Git} https://gitee.com/ningmengchongshui/xiuxian-plugin.git"
              ;;
            7b)
-             Name="${Name} 修仙插件"-宗门扩展
+             Name="${Name} 修仙插件-宗门扩展"
              Plugin="${Plugin} xiuxian-association"
              Git="${Git} https://gitee.com/mg1105194437/xiuxian-association-plugin.git"
              ;;
            7c)
-             Name="${Name} 修仙插件"-家园扩展
+             Name="${Name} 修仙插件-家园扩展"
              Plugin="${Plugin} xiuxian-home"
              Git="${Git} '-b home https://gitee.com/ningmengchongshui/xiuxian-plugin.git'"
              ;;
@@ -441,7 +441,7 @@ Git=
              ;;
            14)
              Name="${Name} L插件"
-             Plugin="${Plugin} l-plugin"
+             Plugin="${Plugin} L-plugin"
              Git="${Git} https://ghproxy.com/https://github.com/liuly0322/l-plugin.git"
              ;;
            15)
@@ -560,7 +560,7 @@ Git=
              Git="${Git} https://gitee.com/bule-Tech/xiaoyue-plugin.git"
              ;;
            38)
-             Name="${Name} fans插件"
+             Name="${Name} 繁星插件"
              Plugin="${Plugin} FanSky_Qs"
              Git="${Git} https://gitee.com/FanSky_Qs/FanSky_Qs.git"
              ;;
