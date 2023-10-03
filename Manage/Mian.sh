@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 cd $HOME
 export red="\033[31m"
 export green="\033[32m"
@@ -400,7 +400,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.4.8"
+    old_version="0.4.9"
     old_date="20231003"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
@@ -420,7 +420,7 @@ if [ ! "${up}" = "false" ];then
             old_bh_bash='#!/bin/env bash'
             new_bh_bash=$(which bash)
             sed -i "s|${old_bh_bash}|#!${new_bh_bash}|g" /usr/local/bin/bh
-            exit
+            
                 if ! bh help > /dev/null 2>&1;then
                     echo -e ${yellow} - ${red}解决失败${background}
                     exit
@@ -1025,8 +1025,7 @@ Number=$(${dialog_whiptail} \
 "3" "TRSS-Yunzai" \
 "4" "签名服务器管理" \
 "5" "gocq-http管理" \
-"6" "编辑器使用方法" \
-"7" "使用自定义目录" \
+"6" "使用自定义目录" \
 "0" "退出" \
 3>&1 1>&2 2>&3)
 feedback=$?
@@ -1059,9 +1058,9 @@ elif [ "${Number}" == "4" ];then
 elif [ "${Number}" == "5" ];then
     URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Gocq-Http.sh"
     bash <(curl -sL ${URL})
-elif [ "${Number}" == "6" ];then
+elif [ "${Number}" == "66" ];then
     echo
-    echo
+    echo -e ${green}micro编辑器
     echo -e ${white}==================${background}
     echo -e ${green} Ctrl + ${yellow}S  ${blue}保存${background}
     echo -e ${green} Ctrl + ${yellow}Q  ${blue}退出${background}
@@ -1076,8 +1075,25 @@ elif [ "${Number}" == "6" ];then
     echo -e ${green} Ctrl + ${yellow}N  ${blue}搜索下一个${background}
     echo -e ${green} Ctrl + ${yellow}P  ${blue}搜索上一个${background}
     echo -e ${white}==================${background}
+    echo
+    echo -e ${green}vim编辑器
+    echo -e ${white}==================${background}
+    echo -e ${green} ESC ${blue}命令模式${background}
+    echo -e ${green} ESC + ${yellow}Q  ${blue}退出${background}
+    echo -e ${green} Ctrl + ${yellow}C  ${blue}复制${background}
+    echo -e ${green} Ctrl + ${yellow}V  ${blue}粘贴${background}
+    echo -e ${green} Ctrl + ${yellow}X  ${blue}剪切${background}
+    echo -e ${green} Ctrl + ${yellow}/  ${blue}注释${background}
+    echo -e ${green} Ctrl + ${yellow}Z  ${blue}撤销${background}
+    echo -e ${green} Ctrl + ${yellow}Y  ${blue}重做${background}
+    echo -e ${green} Ctrl + ${yellow}L  ${blue}跳转指定行${background}
+    echo -e ${green} Ctrl + ${yellow}F  ${blue}搜索${background}
+    echo -e ${green} Ctrl + ${yellow}N  ${blue}搜索下一个${background}
+    echo -e ${green} Ctrl + ${yellow}P  ${blue}搜索上一个${background}
+    echo -e ${white}==================${background}
+    echo
     echo -en ${cyan}回车返回${background};read
-elif [ "${Number}" == "7" ];then
+elif [ "${Number}" == "6" ];then
     export Bot_Path=$(${dialog_whiptail} \
     --title "白狐-BOT" \
     --inputbox "请输入您BOT的根目录的绝对路径" \
