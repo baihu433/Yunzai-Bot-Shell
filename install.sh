@@ -87,7 +87,7 @@ function Script_Install(){
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl ${URL})
     version="$(echo ${version_date} | grep version | awk '{print $2}' )"
-    date="$(echo ${version_date} | grep date | awk '{print $2}' )"
+    date="$(echo ${version_date} | grep date | awk '{print $4}' )"
     echo -e ${cyan}获取成功${background}
     echo
     echo -e ${white}=========================${background}

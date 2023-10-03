@@ -169,7 +169,7 @@ fi
 }
 function pkg(){
 if [ ! -e package.json ];then
-    echo -e ${red}参数错误${background}
+    echo -e ${red}对象错误${background}
     exit
 fi
 }
@@ -187,24 +187,35 @@ if [ "${Bot_Path_check}" == "true" ];then
 fi
 }
 function help(){
-echo -e ${green}=============================${background}
-echo -e ${cyan} bh"        | "${blue}打开白狐脚本${background}
-echo -e ${cyan} help"      | "${blue}获取快捷命令${background}
-echo -e ${cyan} QS"        | "${blue}管理签名服务器${background}
-echo -e ${cyan} YZ/MZ/TZ"  | "${green}[大写]${blue}选择您要控制的对象${background}
-echo -e ${cyan} yz/mz/tz"  | "${green}[小写]${blue}进入相应的bot文件夹${background}
-echo -e ${cyan} n"         | "${blue}前台启动${background}
-echo -e ${cyan} start"     | "${blue}后台启动${background}
-echo -e ${cyan} log"       | "${blue}打开日志${background}
-echo -e ${cyan} stop"      | "${blue}停止运行${background}
-echo -e ${cyan} login"     | "${blue}重新登陆${background}
-echo -e ${cyan} PI"        | "${blue}打开插件管理脚本${background}
-echo -e ${cyan} install"   | "${green}[依赖名] ${blue}安装依赖${background}
-echo -e ${cyan} qsign"     | "${green}[API链接] ${blue}填写签名服务器API${background}
-echo -e ${green}=============================${background}
-echo -e ${yellow} 脚本完全免费 如果你是购买所得 请给差评 打击倒卖 从你我做起${background}
+echo -e ${green}===============================${background}
+echo -e ${cyan} bh"        | "${blue}白狐脚本${background}
+echo -e ${cyan} bh help"   | "${blue}白狐脚本帮助${background}
+echo -e ${cyan} bh PI"     | "${blue}插件管理脚本${background}
+echo -e ${cyan} bh SWPKG"  | "${blue}修复软件包依赖${background}
+echo -e ${cyan} bh QS"     | "${blue}签名服务器管理脚本${background}
+echo -e ${green}===============================${background}
+echo -e ${cyan} bh yz ${blue}进入Yunzai-Bot根目录${background}
+echo -e ${cyan} bh mz ${blue}进入Miao-Yunzai根目录${background}
+echo -e ${cyan} bh tz ${blue}进入TRSS-Yunzai根目录${background}
+echo -e ${green}===============================${background}
+echo -e ${cyan} [对象]${white}==${yellow}[YZ/MZ/TZ/路径]${background}
+echo -e ${green}===============================${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}n "      | "${blue}前台启动BOT${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}start "  | "${blue}后台启动BOT${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}log "    | "${blue}打开BOT后台日志${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}stop "   | "${blue}停止BOT后台运行${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}login "  | "${blue}重新配置BOT账号${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}up bot " | "${blue}更新BOT${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}up pkg " | "${blue}更新NPM依赖包${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}fix pkg "| "${blue}重新安装NPM依赖包${background}
+echo -e ${green}===============================${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}install [依赖名] ${blue}安装NPM依赖包${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}qsign [签名服务器链接] ${blue}填写签名服务器链接${background}
+echo -e ${green}===============================${background}
+echo -e ${yellow} 脚本完全免费 打击倒卖 从你我做起${background}
 echo -e ${green} QQ群:${cyan}狐狸窝:705226976${background}
 echo -e ${green}=============================${background}
+exit
 }
 
 function Bot_Path_Check(){
@@ -223,7 +234,7 @@ elif [ -d "/root/TRSS_AllBot/${Bot_Name}/node_modules" ];then
 elif [ -d "${Bot_Path}" ];then
     echo -e ${cyan}自定义路径: ${Bot_Path} ${green}判断通过${background}
 else
-    echo -e ${red}参数错误${background}
+    echo -e ${red}对象错误${background}
     exit
 fi
 }
@@ -299,7 +310,7 @@ if echo "$1" | grep -q -E "/" ;then
     then
         cd "$1"
     else
-        echo -e ${red}参数错误${background}
+        echo -e ${red}对象错误${background}
         exit
     fi
 fi
@@ -400,7 +411,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.5.1"
+    old_version="0.5.2"
     old_date="20231003"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
