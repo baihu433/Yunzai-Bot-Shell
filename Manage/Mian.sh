@@ -400,7 +400,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.4.9"
+    old_version="0.5.0"
     old_date="20231003"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
@@ -544,6 +544,7 @@ elif [[ $1 == qsign ]];then
         main
         exit
     fi
+    API=$(echo ${API} | sed 's/sign_api_addr: //g')
     file=config/config/bot.yaml
     if [ ! -e config/config/bot.yaml ];then
         ${dialog_whiptail} --title "白狐-BOT" --msgbox "配置文件不存在" 8 40
@@ -556,10 +557,12 @@ elif [[ $1 == qsign ]];then
         main
         exit
     fi
-    sed -i "s#${old_qsign}#sign_api_addr: ${API}#g" config/config/bot.yaml
+    sed -i "s|${old_qsign}|sign_api_addr: ${API}|g" config/config/bot.yaml
     API=$(grep sign_api_addr config/config/bot.yaml)
     API=$(echo ${API} | sed "s/sign_api_addr: //g")
     echo -e ${cyan}您的API链接已修改为 ${green}${API}${background}
+    echo
+    echo -en ${cyan}回车返回${background};read
 elif [[ $1 == delete ]];then
     echo -e ${yellow}是否删除${red}${Bot_Name}${cyan}[N/y] ${background};read -p "" num
     case $num in
@@ -1075,23 +1078,6 @@ elif [ "${Number}" == "66" ];then
     echo -e ${green} Ctrl + ${yellow}N  ${blue}搜索下一个${background}
     echo -e ${green} Ctrl + ${yellow}P  ${blue}搜索上一个${background}
     echo -e ${white}==================${background}
-    echo
-    echo -e ${green}vim编辑器
-    echo -e ${white}==================${background}
-    echo -e ${green} ESC ${blue}命令模式${background}
-    echo -e ${green} ESC + ${yellow}Q  ${blue}退出${background}
-    echo -e ${green} Ctrl + ${yellow}C  ${blue}复制${background}
-    echo -e ${green} Ctrl + ${yellow}V  ${blue}粘贴${background}
-    echo -e ${green} Ctrl + ${yellow}X  ${blue}剪切${background}
-    echo -e ${green} Ctrl + ${yellow}/  ${blue}注释${background}
-    echo -e ${green} Ctrl + ${yellow}Z  ${blue}撤销${background}
-    echo -e ${green} Ctrl + ${yellow}Y  ${blue}重做${background}
-    echo -e ${green} Ctrl + ${yellow}L  ${blue}跳转指定行${background}
-    echo -e ${green} Ctrl + ${yellow}F  ${blue}搜索${background}
-    echo -e ${green} Ctrl + ${yellow}N  ${blue}搜索下一个${background}
-    echo -e ${green} Ctrl + ${yellow}P  ${blue}搜索上一个${background}
-    echo -e ${white}==================${background}
-    echo
     echo -en ${cyan}回车返回${background};read
 elif [ "${Number}" == "6" ];then
     export Bot_Path=$(${dialog_whiptail} \
