@@ -41,7 +41,6 @@ done
 pkg_list=("tar" \
 "gzip" \
 "pv" \
-"micro" \
 "redis" \
 "wget" \
 "curl" \
@@ -101,13 +100,21 @@ else
     dialog_whiptail=dialog
 fi
 
-if [ ! -x "/usr/local/bin/ffmpeg" ]
-    then
-        echo -e ${yellow}安装软件 ffmpeg${background}
-        source <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh)
-        wget -q --show-progress -O ffmpeg -c https://cdn.npmmirror.com/binaries/ffmpeg-static/b6.0/ffmpeg-linux-${ARCH}
-        wget -q --show-progress -O ffprobe -c https://cdn.npmmirror.com/binaries/ffmpeg-static/b6.0/ffprobe-linux-${ARCH}
-        chmod +x ffmpeg ffprobe
-        mv -f ffmpeg ffprobe /usr/local/bin/
+if [ ! -x "$(which vim)" ];then
+    pkg=vim
+    pkg_install
+fi
+
+if [ ! -x "/usr/local/bin/ffmpeg" ];then
+    echo -e ${yellow}安装软件 ffmpeg${background}
+    URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh
+    ffmpeg_static_URL=https://cdn.npmmirror.com/binaries/ffmpeg-static/b6.0
+    ffmpeg_URL=${ffmpeg_static_URL}/ffmpeg-linux-${ARCH}
+    ffprobe_URL=${ffmpeg_static_URL}/ffprobe-linux-${ARCH}
+    source <(curl -sL ${URL})
+    curl -o ffmpeg ${ffmpeg_URL}
+    curl -o ffprobe ${ffprobe_URL}
+    chmod +x ffmpeg ffprobe
+    mv -f ffmpeg ffprobe /usr/local/bin/
 fi
 

@@ -400,7 +400,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.4.7"
+    old_version="0.4.8"
     old_date="20231003"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
@@ -622,14 +622,29 @@ done
 }
 
 function configure_file(){
-micro_yaml(){
+Editor=$(${dialog_whiptail} \
+--title "白狐 QQ群:705226976" \
+--menu "请选择您的编辑器" \
+23 35 11 \
+"1" "micro" \
+"2" "vim" \
+"3" "nano" \
+"4" "emacs" \
+"0" "返回" \
+3>&1 1>&2 2>&3)
+if [ ! -x "$(which ${Editor})" ];then
+    ${dialog_whiptail} --title "白狐-BOT" --msgbox "您未安装${Editor}编辑器" 8 40
+    main
+    exit
+fi
+Editor_yaml(){
 file=config/config/"$1"
 if [ ! -e config/config/"$1" ];then
     ${dialog_whiptail} --title "白狐-BOT" --msgbox "配置文件不存在" 8 40
     main
     exit
 fi
-micro ${file}
+${Editor} ${file}
 }
 Number=$(${dialog_whiptail} \
 --title "白狐 QQ群:705226976" \
@@ -645,20 +660,23 @@ Number=$(${dialog_whiptail} \
 "0" "返回" \
 3>&1 1>&2 2>&3)
 if [ "${Number}" == "1" ];then
-    micro_yaml bot.yaml
+    Editor_yaml bot.yaml
 elif [ "${Number}" == "2" ];then
-    micro_yaml group.yaml
+    Editor_yaml group.yaml
 elif [ "${Number}" == "3" ];then
-    micro_yaml notice.yaml
+    Editor_yaml notice.yaml
 elif [ "${Number}" == "4" ];then
-    micro_yaml other.yaml
+    Editor_yaml other.yaml
 elif [ "${Number}" == "5" ];then
-    micro_yaml qq.yaml
+    Editor_yaml qq.yaml
 elif [ "${Number}" == "6" ];then
-    micro_yaml redis.yaml
+    Editor_yaml redis.yaml
 elif [ "${Number}" == "7" ];then
-    micro_yaml renderer.yaml
+    Editor_yaml renderer.yaml
 elif [ "${Number}" == "0" ];then
+    main
+    exit
+else
     main
     exit
 fi
