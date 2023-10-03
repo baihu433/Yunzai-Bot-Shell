@@ -887,7 +887,7 @@ function Delete_GIT_Plugin(){
     Number=$(echo ${Number} | sed 's|"||g')
     for Num in ${Number}
     do
-        file_folder=$(ls -1 ls -I example -I bin -I other -I system plugins | sed -n "${Num}p")
+        file_folder=$(ls -1 -I example -I bin -I other -I system plugins | sed -n "${Num}p")
         Git_Plugin="${file_folder} ${Git_Plugin}"
     done
     echo -en ${red}是否删除${Git_Plugin} ${cyan}[N/Y]${background}
@@ -896,7 +896,7 @@ function Delete_GIT_Plugin(){
     Y)
         for Num in ${Number}
         do
-            file_folder=$(ls -1 ls -I example -I bin -I other -I system plugins | sed -n "${Num}p")
+            file_folder=$(ls -1 -I example -I bin -I other -I system plugins | sed -n "${Num}p")
             rm -rf plugins/${file_folder} > /dev/null 2>&1
             rm -rf plugins/${file_folder} > /dev/null 2>&1
             echo -e ${cyan}已删除${file_folder}${background}
