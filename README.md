@@ -53,6 +53,8 @@
 
 #### 安装方式
 
+> ###### `注意:` 如果您`已经`使用其他脚本部署过机器人,那么安装白狐脚本后,请第一时间执行`bh SWPKG`来检查软件包依赖,防止出现某些错误
+
 安装即`同意`[用户协议](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/Manage/用户协议.txt)
 
 <details markdown='1'><summary>①服务器安装方法</summary>

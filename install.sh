@@ -109,8 +109,8 @@ function Script_Install(){
         new_bh_bash=$(which bash)
         sed -i "s|${old_bh_bash}|#!${new_bh_bash}|g" /usr/local/bin/bh
         if ! bh help > /dev/null 2>&1;then
-            echo -e ${yellow} - ${yellow}解决成功${background}
-            echo -e ${yellow} - ${cyan}请使用 ${green}bh ${cyan}命令 打开脚本${background}
+            echo -e ${yellow} - ${red}解决失败${background}
+            exit
         fi
     fi
     echo -e ${yellow} - ${yellow}安装成功${background}

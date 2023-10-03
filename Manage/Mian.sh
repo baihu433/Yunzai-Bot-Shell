@@ -229,8 +229,15 @@ fi
 }
 
 case "$1" in
+PI)
+bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PlugIn.sh)
+;;
 QS)
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QSignServer.sh)
+exit
+;;
+SWPKG)
+bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT_INSTALL.sh)
 exit
 ;;
 YZ|Yunzai|Yunzai-Bot)
@@ -284,9 +291,6 @@ exit
 ;;
 unup)
 up=false
-;;
-PI)
-bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PlugIn.sh)
 ;;
 esac
 
@@ -396,8 +400,8 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.4.6"
-    old_date="20231002"
+    old_version="0.4.7"
+    old_date="20231003"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
