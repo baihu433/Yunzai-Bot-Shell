@@ -400,7 +400,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.5.0"
+    old_version="0.5.1"
     old_date="20231003"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
@@ -696,6 +696,7 @@ Number=$(${dialog_whiptail} \
 "4" "dpkg依赖包错误" \
 "5" "dpkg安装被中断" \
 "6" "无法锁定数据库" \
+"7" "更换饼干Yunzai" \
 3>&1 1>&2 2>&3)
 if [ "${Number}" == "1" ];then
     echo -e ${yellow}正在修复${background}
@@ -759,6 +760,23 @@ elif [ "${Number}" == "6" ];then
         exit
     fi
     echo -en ${cyan}回车返回${background};read
+elif [ "${Number}" == "7" ];then
+    if grep -q 'Yunzai-Bot' .git/config
+    then
+        echo -e ${yellow}正在切换${background}
+        git remote rm origin
+        git remote add origin https://gitee.com/Yummy-cookie/Yunzai-Bot.git
+        git remote set-url origin https://gitee.com/Yummy-cookie/Yunzai-Bot.git
+        git fetch --all
+        git branch --set-upstream-to=origin/master main
+        git pull --rebase -f
+        pnpm update
+        pnpm install -P
+        echo -e ${yellow}切换完成${background}
+    else
+        echo -e ${cyan}您不是Yunzai-Bot ${red}无需切换${background}
+        exit
+    fi
 else
     return
 fi
@@ -919,7 +937,7 @@ fi
 
 function Git_BOT(){
 PACKAGE="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PACKAGE.sh"
-if [ "${Bot_Name}" == "Yunzai|Yunzai-Bot" ];then
+if [ "${Bot_Name}" == "Yunzai" ] || [ "${Bot_Name}" == "Yunzai-Bot" ];then
     if [ ! -e ~/${Bot_Name}/package.json ];then
         install_Bot
     fi
@@ -1023,12 +1041,11 @@ Number=$(${dialog_whiptail} \
 --title "白狐 QQ群:705226976" \
 --menu "请选择bot" \
 20 38 10 \
-"1" "Yunzai[icqq版]" \
+"1" "Yunzai[饼干版]" \
 "2" "Miao-Yunzai" \
 "3" "TRSS-Yunzai" \
 "4" "签名服务器管理" \
-"5" "gocq-http管理" \
-"6" "使用自定义目录" \
+"5" "使用自定义目录" \
 "0" "退出" \
 3>&1 1>&2 2>&3)
 feedback=$?
@@ -1040,8 +1057,8 @@ if [ "${Number}" == "1" ];then
     else
         export Bot_Name=Yunzai-Bot
     fi
-    export Gitee=https://gitee.com/yoimiya-kokomi/Yunzai-Bot.git
-    export Github=https://github.com/yoimiya-kokomi/Yunzai-Bot.git
+    export Gitee=https://gitee.com/Yummy-cookie/Yunzai-Bot
+    export Github=https://github.com/Yummy-cookie/Yunzai-Bot
     Bot_Path
 elif [ "${Number}" == "2" ];then
     export Bot_Path_check=false
@@ -1059,27 +1076,6 @@ elif [ "${Number}" == "4" ];then
     URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QSignServer.sh"
     bash <(curl -sL ${URL})
 elif [ "${Number}" == "5" ];then
-    URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Gocq-Http.sh"
-    bash <(curl -sL ${URL})
-elif [ "${Number}" == "66" ];then
-    echo
-    echo -e ${green}micro编辑器
-    echo -e ${white}==================${background}
-    echo -e ${green} Ctrl + ${yellow}S  ${blue}保存${background}
-    echo -e ${green} Ctrl + ${yellow}Q  ${blue}退出${background}
-    echo -e ${green} Ctrl + ${yellow}C  ${blue}复制${background}
-    echo -e ${green} Ctrl + ${yellow}V  ${blue}粘贴${background}
-    echo -e ${green} Ctrl + ${yellow}X  ${blue}剪切${background}
-    echo -e ${green} Ctrl + ${yellow}/  ${blue}注释${background}
-    echo -e ${green} Ctrl + ${yellow}Z  ${blue}撤销${background}
-    echo -e ${green} Ctrl + ${yellow}Y  ${blue}重做${background}
-    echo -e ${green} Ctrl + ${yellow}L  ${blue}跳转指定行${background}
-    echo -e ${green} Ctrl + ${yellow}F  ${blue}搜索${background}
-    echo -e ${green} Ctrl + ${yellow}N  ${blue}搜索下一个${background}
-    echo -e ${green} Ctrl + ${yellow}P  ${blue}搜索上一个${background}
-    echo -e ${white}==================${background}
-    echo -en ${cyan}回车返回${background};read
-elif [ "${Number}" == "6" ];then
     export Bot_Path=$(${dialog_whiptail} \
     --title "白狐-BOT" \
     --inputbox "请输入您BOT的根目录的绝对路径" \
