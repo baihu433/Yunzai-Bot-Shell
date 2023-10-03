@@ -844,7 +844,7 @@ function Update_GIT_Plugin(){
 
 function Delete_GIT_Plugin(){
     function dialog_whiptail_page(){
-        files=$(ls -1 -I example -I bin -I other -I system ${Plugin_Path}/plugins)
+        files=$(ls -1 -I example -I bin -I other -I system plugins)
         options=""
         i=0
         for file in ${files}
@@ -863,7 +863,7 @@ function Delete_GIT_Plugin(){
         i=0
         echo
         echo "#######################"
-        for file in $(ls -I example -I bin -I other -I system ${Plugin_Path}/plugins)
+        for file in $(ls -I example -I bin -I other -I system plugins)
         do
             i=$((${i}+1))
             echo -e ${green}${i}". "${cyan}${file}${background}
@@ -887,7 +887,7 @@ function Delete_GIT_Plugin(){
     Number=$(echo ${Number} | sed 's|"||g')
     for Num in ${Number}
     do
-        file_folder=$(ls -1 ls -I example -I bin -I other -I system ${Plugin_Path}/plugins | sed -n "${Num}p")
+        file_folder=$(ls -1 ls -I example -I bin -I other -I system plugins | sed -n "${Num}p")
         Git_Plugin="${file_folder} ${Git_Plugin}"
     done
     echo -en ${red}是否删除${Git_Plugin} ${cyan}[N/Y]${background}
@@ -896,11 +896,12 @@ function Delete_GIT_Plugin(){
     Y)
         for Num in ${Number}
         do
-            file_folder=$(ls -1 ls -I example -I bin -I other -I system ${Plugin_Path}/plugins | sed -n "${Num}p")
-            rm -rf ${Plugin_Path}/plugins/${file_folder} > /dev/null 2>&1
-            rm -rf ${Plugin_Path}/plugins/${file_folder} > /dev/null 2>&1
+            file_folder=$(ls -1 ls -I example -I bin -I other -I system plugins | sed -n "${Num}p")
+            rm -rf plugins/${file_folder} > /dev/null 2>&1
+            rm -rf plugins/${file_folder} > /dev/null 2>&1
             echo -e ${cyan}已删除${file_folder}${background}
         done
+        echo
         echo -en ${yellow}删除完成 ${cyan}回车返回${background};read
     ;;
     N|n|*)
@@ -953,8 +954,8 @@ function Delete_JS_Plugin(){
     fi
     for Num in ${Number}
     do
-        file_folder=$(ls -1 ls -I example -I bin -I other -I system ${Plugin_Path}/plugins/example | sed -n "${Num}p")
-        Git_Plugin="${file_folder} ${JS_Plugin}"
+        file_folder=$(ls -1 -I example -I bin -I other -I system plugins/example | sed -n "${Num}p")
+        JS_Plugin="${file_folder} ${JS_Plugin}"
     done
     echo -en ${red}是否删除${JS_Plugin} ${cyan}[N/Y]${background}
     read YN
@@ -962,9 +963,9 @@ function Delete_JS_Plugin(){
     Y)
         for Num in ${Number}
         do
-            file_folder=$(ls -1 ls -I example -I bin -I other -I system ${Plugin_Path}/plugins/example | sed -n "${Num}p")
-            rm -rf ${Plugin_Path}/plugins/example/${file_folder}/ > /dev/null 2>&1
-            rm -rf ${Plugin_Path}/plugins/example/${file_folder} > /dev/null 2>&1
+            file_folder=$(ls -1 -I example -I bin -I other -I system plugins/example | sed -n "${Num}p")
+            rm -rf plugins/example/${file_folder}/ > /dev/null 2>&1
+            rm -rf plugins/example/${file_folder} > /dev/null 2>&1
             echo -e ${cyan}已删除${file_folder}${background}
         done
         echo -en ${yellow}删除完成 回车返回${background};read
