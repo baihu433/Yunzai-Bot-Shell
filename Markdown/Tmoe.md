@@ -323,13 +323,13 @@ bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 
 <hr/>
 
-![picture_tmoe31.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe31.jpg)
+![picture_tmoe32.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe32.jpg)
 
 提示这个就代表 `Ubuntu 22.04` 已经安装完毕了
 
 <hr/>
 
-`如果` 出现这个界面
+注意: `如果` 出现这个界面
 
 ![tmoetool.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/tmoetool.png)
 

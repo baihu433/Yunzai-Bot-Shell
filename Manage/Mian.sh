@@ -652,14 +652,17 @@ Editor=$(${dialog_whiptail} \
 --title "白狐 QQ群:705226976" \
 --menu "请选择您的编辑器" \
 23 35 11 \
-"1" "micro" \
-"2" "vim" \
-"3" "nano" \
-"4" "emacs" \
-"0" "返回" \
+"micro" \
+"vim" \
+"nano" \
+"emacs" \
+"返回" \
 3>&1 1>&2 2>&3)
 if [ ! -x "$(which ${Editor})" ];then
     ${dialog_whiptail} --title "白狐-BOT" --msgbox "您未安装${Editor}编辑器" 8 40
+    main
+    exit
+elif [ "${Editor}" == "0" ];then
     main
     exit
 fi
