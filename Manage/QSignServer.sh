@@ -67,8 +67,9 @@ elif [ $(command -v pacman) ];then
 fi
 JAVA_VERSION=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}')
 if [[ ! "${JAVA_VERSION}" == "1.8*"* ]]; then
-    rm -rf $HOME/QSignServer/jdk > /dev/null
-    until wget -q --show-progress -O jdk.tar.gz -c ${JDK_URL}
+    rm -rf $HOME/QSignServer/jdk > /dev/null 2>&1
+    rm -rf $HOME/jdk.tar.gz > /dev/null 2>&1
+    until wget -q --show-progress -O jdk.tar.gz -c ${JDK_URL} || wget -O jdk.tar.gz -c ${JDK_URL}
     do
       echo -e ${red}下载失败 ${green}正在重试${background}
     done
