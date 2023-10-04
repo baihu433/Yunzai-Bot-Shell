@@ -46,6 +46,7 @@ pv node.tar.xz | tar -xJf - -C node
 rm -rf /usr/local/node > /dev/null
 rm -rf /usr/local/node > /dev/null
 mv -f node/$(ls node) /usr/local/node
+rm -rf node
 if [ ! -d $HOME/.local/share/pnpm ];then
     mkdir -p $HOME/.local/share/pnpm
 fi
