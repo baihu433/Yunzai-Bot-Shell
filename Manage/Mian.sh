@@ -198,20 +198,20 @@ echo -e ${cyan} bh PI"     | "${blue}插件管理脚本${background}
 echo -e ${cyan} bh SWPKG"  | "${blue}修复软件包依赖${background}
 echo -e ${cyan} bh QS"     | "${blue}签名服务器管理脚本${background}
 echo -e ${green}===============================${background}
-echo -e ${cyan} bh yz ${blue}进入Yunzai-Bot根目录${background}
-echo -e ${cyan} bh mz ${blue}进入Miao-Yunzai根目录${background}
-echo -e ${cyan} bh tz ${blue}进入TRSS-Yunzai根目录${background}
+echo -e ${cyan} bh yz ${blue}Yunzai-Bot根目录${background}
+echo -e ${cyan} bh mz ${blue}Miao-Yunzai根目录${background}
+echo -e ${cyan} bh tz ${blue}TRSS-Yunzai根目录${background}
 echo -e ${green}===============================${background}
 echo -e ${cyan} [对象]${white}==${yellow}[YZ/MZ/TZ/路径]${background}
 echo -e ${green}===============================${background}
-echo -e ${cyan} bh ${yellow}[对象] ${cyan}n "      | "${blue}前台启动BOT${background}
-echo -e ${cyan} bh ${yellow}[对象] ${cyan}start "  | "${blue}后台启动BOT${background}
-echo -e ${cyan} bh ${yellow}[对象] ${cyan}log "    | "${blue}打开BOT后台日志${background}
-echo -e ${cyan} bh ${yellow}[对象] ${cyan}stop "   | "${blue}停止BOT后台运行${background}
-echo -e ${cyan} bh ${yellow}[对象] ${cyan}login "  | "${blue}重新配置BOT账号${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}n "      | "${blue}前台启动${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}start "  | "${blue}后台启动${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}log "    | "${blue}后台日志${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}stop "   | "${blue}停止运行${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}login "  | "${blue}配置账号${background}
 echo -e ${cyan} bh ${yellow}[对象] ${cyan}up bot " | "${blue}更新BOT${background}
-echo -e ${cyan} bh ${yellow}[对象] ${cyan}up pkg " | "${blue}更新NPM依赖包${background}
-echo -e ${cyan} bh ${yellow}[对象] ${cyan}fix pkg "| "${blue}重新安装NPM依赖包${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}up pkg " | "${blue}更新依赖${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}fix pkg "| "${blue}重装依赖${background}
 echo -e ${green}===============================${background}
 echo -e ${cyan} bh ${yellow}[对象] ${cyan}install [依赖名] ${blue}安装NPM依赖包${background}
 echo -e ${cyan} bh ${yellow}[对象] ${cyan}qsign [签名服务器链接] ${blue}填写签名服务器链接${background}
@@ -423,13 +423,13 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.5.5"
+    old_version="0.5.6"
     old_date="20231004"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
     new_version="$(echo ${version_date} | grep version | awk '{print $2}' )"
-    new_date="$(echo ${version_date} | grep date | awk '{print $2}' )"
+    new_date="$(echo ${version_date} | grep date | awk '{print $4}' )"
     
     if [ "${new_version}" != "${old_version}" ];then
         echo -e ${cyan}正在更新${background}
