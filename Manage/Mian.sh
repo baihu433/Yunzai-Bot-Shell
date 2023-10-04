@@ -209,7 +209,7 @@ echo -e ${cyan} bh ${yellow}[对象] ${cyan}start "  | "${blue}后台启动${bac
 echo -e ${cyan} bh ${yellow}[对象] ${cyan}log "    | "${blue}后台日志${background}
 echo -e ${cyan} bh ${yellow}[对象] ${cyan}stop "   | "${blue}停止运行${background}
 echo -e ${cyan} bh ${yellow}[对象] ${cyan}login "  | "${blue}配置账号${background}
-echo -e ${cyan} bh ${yellow}[对象] ${cyan}up bot " | "${blue}更新BOT${background}
+echo -e ${cyan} bh ${yellow}[对象] ${cyan}up bot " | "${blue}更新 BOT${background}
 echo -e ${cyan} bh ${yellow}[对象] ${cyan}up pkg " | "${blue}更新依赖${background}
 echo -e ${cyan} bh ${yellow}[对象] ${cyan}fix pkg "| "${blue}重装依赖${background}
 echo -e ${green}===============================${background}
