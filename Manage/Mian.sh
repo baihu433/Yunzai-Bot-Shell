@@ -23,7 +23,7 @@ tmux new -s ${Tmux_Name} -d "${Shell_Command}"
 }
 function tmux_attach(){
 Tmux_Name="$1"
-tmux attach -t ${Tmux_Name}
+tmux attach -t ${Tmux_Name} > /dev/null 2>&1
 }
 function tmux_kill_session(){
 Tmux_Name="$1"
@@ -77,7 +77,10 @@ echo
 }
 ICQQ_VERSION="$(pnpm list icqq | grep icqq | awk '{print $2}')"
 case ${ICQQ_VERSION} in
-0.5.4|0.5.3|0.5.2|0.5.1|0.5.0|0.4.14|0.4.13|0.4.12)
+0.5.5|0.5.4)
+export version=8.9.73
+;;
+0.5.3|0.5.2|0.5.1|0.5.0|0.4.14|0.4.13|0.4.12)
 export version=8.9.70
 ;;
 0.4.11)
@@ -91,8 +94,7 @@ echo -e ${yellow}请更新icqq${background}
 export version=8.9.70
 ;;
 *)
-echo -e ${yellow}读取失败 请更新icqq${background}
-export version=8.9.70
+export version=8.9.73
 ;;
 esac
 if [ ! -e $HOME/QSignServer/txlib/${version}/config.json ];then
@@ -174,11 +176,13 @@ if [ ! -e package.json ];then
 fi
 }
 function run(){
-if pnpm pm2 list | grep -q ${Bot_Name};then
+if pnpm pm2 list | grep -q ${Bot_Name}
     pnpm pm2 stop ${Bot_Name}
     pnpm pm2 delete ${Bot_Name}
     echo -e ${red}进程停止 ${cyan}正在重启${background}
-    bh ${Bot_Name} n
+    return 0
+then
+    return 1
 fi
 if [ "${Bot_Path_check}" == "true" ];then
     pnpm run stop
@@ -306,7 +310,7 @@ up=false
 esac
 
 if echo "$1" | grep -q -E "/" ;then
-    if [ -d "$1" ]
+    if [ -e "$1"/package.json ]
     then
         cd "$1"
     else
@@ -318,20 +322,28 @@ fi
 case "$2" in
 n)
 pkg
-QSIGN
+if [ ! "${Bot_Name}" == "TRSS-Yunzai" ];then
+    QSIGN
+fi
 Redis=$(redis-cli ping)
 if ! [ "${Redis}" = "PONG" ]; then
  redis-server &
  echo
 fi
 node app
-run
-echo -en ${cyan}回车退出${background};read
-exit
+if run
+then
+    bh ${Bot_Name} n
+else
+    echo -en ${cyan}回车退出${background};read
+    exit
+fi
 ;;
 start)
 pkg
-QSIGN
+if [ ! "${Bot_Name}" == "TRSS-Yunzai" ];then
+    QSIGN
+fi
 Redis=$(redis-cli ping)
 if ! [ "${Redis}" = "PONG" ]; then
  nohup redis-server &
@@ -411,8 +423,8 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.5.3"
-    old_date="20231003"
+    old_version="0.5.4"
+    old_date="20231004"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
@@ -468,7 +480,7 @@ tmux_new ${Bot_Name} "bh ${Bot_Name} n" > /dev/null 2>&1
 tmux_gauge ${Bot_Name}
 }
 bot_tmux_attach_log(){
-if ! tmux attach -t ${Bot_Name};then
+if ! tmux attach -t ${Bot_Name} > /dev/null 2>&1;then
     tmux_windows_attach=$(tmux attach -t ${Bot_Name} 2>&1)
     ${dialog_whiptail} --msgbox "${Bot_Name}打开错误 \n错误原因:${tmux_windows_attach}" 8 50
 fi
@@ -482,7 +494,7 @@ fi
 if [[ $1 == log ]];then
     if tmux_ls ${Bot_Name}
     then
-        tmux attach -t ${Bot_Name}
+        tmux attach -t ${Bot_Name} > /dev/null 2>&1
     else
         if (${dialog_whiptail} --yesno "${Bot_Name} [未启动] \n是否立刻启动${Bot_Name}" 8 50)
         then

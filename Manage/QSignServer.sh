@@ -134,7 +134,7 @@ tmux new -s ${Tmux_Name} -d "${Shell_Command}"
 }
 function tmux_attach(){
 Tmux_Name="$1"
-tmux attach -t ${Tmux_Name}
+tmux attach -t ${Tmux_Name} > /dev/null 2>&1
 }
 function tmux_kill_session(){
 Tmux_Name="$1"
@@ -181,7 +181,7 @@ echo
 }
 bot_tmux_attach_log(){
 Tmux_Name="$1"
-if ! tmux attach -t ${Tmux_Name};then
+if ! tmux attach -t ${Tmux_Name} > /dev/null 2>&1;then
     tmux_windows_attach_error=$(tmux attach -t ${Tmux_Name} 2>&1)
     echo -e ${yellow}QSignServer打开错误"\n"错误原因:${red}${tmux_windows_attach_error}${background}
 fi
