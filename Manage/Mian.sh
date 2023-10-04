@@ -423,7 +423,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.5.4"
+    old_version="0.5.5"
     old_date="20231004"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
@@ -662,7 +662,7 @@ if [ ! -x "$(which ${Editor})" ];then
     ${dialog_whiptail} --title "白狐-BOT" --msgbox "您未安装${Editor}编辑器" 8 40
     main
     exit
-elif [ "${Editor}" == "0" ];then
+elif [ "${Editor}" == "返回" ];then
     main
     exit
 fi
