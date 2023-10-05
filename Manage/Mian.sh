@@ -177,11 +177,12 @@ fi
 }
 function run(){
 if pnpm pm2 list | grep -q ${Bot_Name}
+then
     pnpm pm2 stop ${Bot_Name}
     pnpm pm2 delete ${Bot_Name}
     echo -e ${red}进程停止 ${cyan}正在重启${background}
     return 0
-then
+else
     return 1
 fi
 if [ "${Bot_Path_check}" == "true" ];then
@@ -423,7 +424,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.6.0"
+    old_version="0.6.1"
     old_date="20231005"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
