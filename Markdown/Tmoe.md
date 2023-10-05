@@ -467,8 +467,10 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 ![login1.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/login2.png)
 
 然后它会提示
- `请打开滑动验证app，输入请求码【XXXX】，然后完成滑动验证`
- 记住【 】里面的数字 填到 `Sakura Login Solver` 然后点击 `下一步`
+ `请打开滑动验证app，输入请求码【XXXX】，然后完成滑动验证`<br>
+ 
+ `记住`【 】里面的数字 填到 `Sakura Login Solver` 然后点击 `下一步`<br>
+ 
 过完验证之后 到`Termux` 回车确定一下
 
 <hr/>
