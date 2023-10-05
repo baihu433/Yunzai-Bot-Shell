@@ -423,7 +423,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.5.9"
+    old_version="0.6.0"
     old_date="20231005"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
@@ -587,8 +587,8 @@ elif [[ $1 == qsign ]];then
     echo
     echo -en ${cyan}回车返回${background};read
 elif [[ $1 == delete ]];then
-    echo -e ${yellow}是否删除${red}${Bot_Name}${cyan}[N/y] ${background};read -p "" num
-    case $num in
+    echo -e ${yellow}是否删除${red}${Bot_Name}${cyan}[N/y] ${background};read -p "" YN
+    case $YN in
     Y|y)
         echo -e ${red}3${background}
         sleep 1
@@ -597,8 +597,8 @@ elif [[ $1 == delete ]];then
         echo -e ${red}1${background}
         sleep 1
         echo -e ${red}正在删除${Bot_Name}${background}
-        rm -rf ~/${Bot_Path} > /dev/null 2>&1
-        rm -rf ~/${Bot_Path} > /dev/null 2>&1
+        rm -rf ${Bot_Path} > /dev/null 2>&1
+        rm -rf ${Bot_Path} > /dev/null 2>&1
         echo -en ${cyan}删除完成 回车返回${background};read
     ;;
         n|N)
