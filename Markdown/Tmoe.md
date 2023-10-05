@@ -458,6 +458,21 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 <hr/>
 
+如果提示 `? 触发滑动验证，需要获取ticket通过验证，请选择获取方式: (Use arrow keys)`
+
+下载 [`Sakura Login Solver`](https://ghproxy.com/https://github.com/KasukuSakura/mirai-login-solver-sakura/releases/download/v0.0.12/apk-release.apk)
+
+选择 `滑动验证app请求码获取` 并 `回车`
+
+![login1.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/login2.png)
+
+然后它会提示
+ `请打开滑动验证app，输入请求码【XXXX】，然后完成滑动验证`
+ 记住【 】里面的数字 填到 `Sakura Login Solver` 然后点击 `下一步`
+过完验证之后 到`Termux` 回车确定一下
+
+<hr/>
+
 之后机器人就被启动成功了<br>
 赶快去向机器人分别发送`#帮助`和`#喵喵帮助`<br>
 开始享用吧
