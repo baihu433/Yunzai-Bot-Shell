@@ -259,6 +259,8 @@ exit
 YZ|Yunzai|Yunzai-Bot)
 if [ -z "${Bot_Name}" ]; then
     export Bot_Name=Yunzai-Bot
+    Quick_Command="true"
+    
 fi
 Bot_Path_Check
 cd ${Bot_Path}
@@ -266,6 +268,7 @@ cd ${Bot_Path}
 MZ|Miao-Yunzai)
 if [ -z "${Bot_Name}" ]; then
     export Bot_Name=Miao-Yunzai
+    Quick_Command="true"
 fi
 Bot_Path_Check
 cd ${Bot_Path}
@@ -273,6 +276,7 @@ cd ${Bot_Path}
 TZ|TRSS-Yunzai)
 if [ -z "${Bot_Name}" ]; then
     export Bot_Name=TRSS-Yunzai
+    Quick_Command="true"
 fi
 Bot_Path_Check
 cd ${Bot_Path}
@@ -336,7 +340,9 @@ if run
 then
     bh ${Bot_Name} n
 else
-    echo -en ${cyan}回车退出${background};read
+    if [ "${Quick_Command}" == "false" ];then
+        echo -en ${cyan}回车退出${background};read
+    fi
     exit
 fi
 ;;
@@ -424,7 +430,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.6.1"
+    old_version="0.6.2"
     old_date="20231005"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
@@ -1022,6 +1028,8 @@ Git_BOT
 }
 
 function Bot_Path(){
+export Quick_Command="true"
+export Bot_Path_check="false"
 if [ -d "/root/${Bot_Name}/node_modules" ];then
     export Bot_Path="/root/${Bot_Name}"
     cd ${Bot_Path}
@@ -1078,7 +1086,6 @@ Number=$(${dialog_whiptail} \
 feedback=$?
 feedback
 if [ "${Number}" == "1" ];then
-    export Bot_Path_check=false
     if [ -d /root/TRSS_AllBot ];then
         export Bot_Name=Yunzai
     else
@@ -1088,13 +1095,11 @@ if [ "${Number}" == "1" ];then
     export Github=https://github.com/Yummy-cookie/Yunzai-Bot
     Bot_Path
 elif [ "${Number}" == "2" ];then
-    export Bot_Path_check=false
     export Bot_Name=Miao-Yunzai
     export Gitee=https://gitee.com/yoimiya-kokomi/Miao-Yunzai.git
     export Github=https://github.com/yoimiya-kokomi/Miao-Yunzai.git
     Bot_Path
 elif [ "${Number}" == "3" ];then
-    export Bot_Path_check=false
     export Bot_Name=TRSS-Yunzai
     export Gitee=https://gitee.com/TimeRainStarSky/Yunzai.git
     export Github=https://github.com/TimeRainStarSky/Yunzai.git
@@ -1112,7 +1117,7 @@ elif [ "${Number}" == "5" ];then
         echo -e ${red} BOT不存在 ${background}
         exit
     fi
-    export Bot_Path_check=true
+    export Bot_Path_check="true"
     export Bot_Name=$(echo ${Bot_Path} | awk -F/ '{print $NF}')
     main
     exit
