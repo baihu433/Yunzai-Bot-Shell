@@ -423,8 +423,8 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.5.7"
-    old_date="20231004"
+    old_version="0.5.8"
+    old_date="20231005"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
@@ -441,7 +441,7 @@ if [ ! "${up}" = "false" ];then
             echo -e ${yellow} - ${red}更新失败${background}
             echo -e ${yellow} - ${cyan}正在尝试解决${background}
             old_bh_bash='#!/bin/env bash'
-            new_bh_bash=$(which bash)
+            new_bh_bash=$(command -v bash)
             sed -i "s|${old_bh_bash}|#!${new_bh_bash}|g" /usr/local/bin/bh
             
                 if ! bh help > /dev/null 2>&1;then
@@ -658,7 +658,7 @@ Editor=$(${dialog_whiptail} \
 "emacs" \
 "返回" \
 3>&1 1>&2 2>&3)
-if [ ! -x "$(which ${Editor})" ];then
+if [ ! -x "$(command -v ${Editor})" ];then
     ${dialog_whiptail} --title "白狐-BOT" --msgbox "您未安装${Editor}编辑器" 8 40
     main
     exit
@@ -732,7 +732,7 @@ if [ "${Number}" == "1" ];then
 elif [ "${Number}" == "2" ];then
     file="config/config/bot.yaml"
     old_chromium_path=$(grep chromium_path ${file})
-    new_chromium_path=$(which chromium || which chromium-browser)
+    new_chromium_path=$(command -v chromium || command -v chromium-browser)
     if [ -z "${new_chromium_path}" ];then
         echo -en ${red}未安装浏览器${background}
         exit

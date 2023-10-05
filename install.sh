@@ -106,9 +106,9 @@ function Script_Install(){
         echo -e ${yellow} - ${red}安装失败${background}
         echo -e ${yellow} - ${cyan}正在尝试解决${background}
         old_bh_bash='#!/bin/env bash'
-        new_bh_bash=$(which bash)
+        new_bh_bash=$(command -v bash)
         sed -i "s|${old_bh_bash}|#!${new_bh_bash}|g" /usr/local/bin/bh
-        #sed -i "s|'#!/bin/env bash'|#!$(which bash)|g" /usr/local/bin/bh
+        #sed -i "s|'#!/bin/env bash'|#!$(command -v bash)|g" /usr/local/bin/bh
         if ! bh help > /dev/null 2>&1;then
             echo -e ${yellow} - ${red}解决失败${background}
             exit
