@@ -460,7 +460,7 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 如果提示 `? 触发滑动验证，需要获取ticket通过验证，请选择获取方式: (Use arrow keys)`
 
-下载 [`Sakura Login Solver`](https://ghproxy.com/https://github.com/KasukuSakura/mirai-login-solver-sakura/releases/download/v0.0.12/apk-release.apk)
+下载 [`Sakura Login Solver`](https://ghproxy.com/https://github.com/KasukuSakura/mirai-login-solver-sakura/releases/download/v0.0.12/apk-release.apk)(这是一个可以点击的链接)
 
 选择 `滑动验证app请求码获取` 并 `回车`
 
