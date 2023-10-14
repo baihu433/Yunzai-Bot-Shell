@@ -28,6 +28,7 @@ QSIGN_URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/releases/download/1.2.1/u
 QSIGN_VERSION="119"
 qsign_version="1.1.9"
 txlib="https://gitee.com/baihu433/txlib"
+Txlib_Version_New="8.9.83"
 case $(uname -m) in
 amd64|x86_64)
 JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/x64/linux/OpenJDK8U-jdk_x64_linux_hotspot_8u382b05.tar.gz"
@@ -132,6 +133,16 @@ function tmux_new(){
 Tmux_Name="$1"
 Shell_Command="$2"
 tmux new -s ${Tmux_Name} -d "${Shell_Command}"
+if ! tmux attach -t ${Tmux_Name} -d > /dev/null 2>&1
+then
+    tmux_new_error=$(tmux attach -t ${Tmux_Name} -d 2>&1 > /dev/null)
+    echo
+    echo -e ${yellow}QSignServer启动错误"\n"错误原因:${red}${tmux_new_error}${background}
+    echo
+    echo -en ${yellow}回车返回${background};read
+    main
+    exit
+fi
 }
 function tmux_attach(){
 Tmux_Name="$1"
@@ -183,8 +194,11 @@ echo
 bot_tmux_attach_log(){
 Tmux_Name="$1"
 if ! tmux attach -t ${Tmux_Name} > /dev/null 2>&1;then
-    tmux_windows_attach_error=$(tmux attach -t ${Tmux_Name} 2>&1)
+    tmux_windows_attach_error=$(tmux attach -t ${Tmux_Name} 2>&1 > /dev/null)
+    echo
     echo -e ${yellow}QSignServer打开错误"\n"错误原因:${red}${tmux_windows_attach_error}${background}
+    echo
+    echo -en ${yellow}回车返回${background};read
 fi
 }
 function start_QSignServer(){
@@ -197,8 +211,8 @@ echo -e  ${green}4.  ${cyan}HD: 8.9.70${background}
 echo -e  ${green}5.  ${cyan}HD: 8.9.71${background}
 echo -e  ${green}6.  ${cyan}HD: 8.9.73${background}
 echo -e  ${green}7.  ${cyan}HD: 8.9.76${background}
-echo -e  ${green}8.  ${cyan}TIM: 3.5.1${background}
-echo -e  ${green}9.  ${cyan}TIM: 3.5.2${background}
+echo -e  ${green}8.  ${cyan}HD: 8.9.80${background}
+echo -e  ${green}9.  ${cyan}HD: 8.9.83${background}
 echo "========================="
 echo -en ${green}请输入您的选项: ${background};read num
 case ${num} in
@@ -223,11 +237,11 @@ export version=8.9.73
 7|8.9.76)
 export version=8.9.76
 ;;
-8|5.3.1)
-export version=3.5.1
+8|8.9.80)
+export version=8.9.80
 ;;
-9|5.3.2)
-export version=3.5.2
+9|8.9.83)
+export version=8.9.83
 ;;
 *)
 echo
@@ -292,6 +306,7 @@ start_QSignServer
 function update_QSignServer(){
 if tmux_ls qsignserver
 then
+    echo -e ${yellow}正在停止签名服务器${background}
     tmux_kill_session qsignserver
 fi
 for folder in $(ls -d $HOME/QSignServer/txlib/*)
@@ -310,6 +325,7 @@ rm -rf $HOME/QSignServer/txlib > /dev/null 2>&1
 rm -rf $HOME/QSignServer/txlib > /dev/null 2>&1
 rm -rf $HOME/QSignServer/qsign* > /dev/null 2>&1
 rm -rf $HOME/QSignServer/qsign* > /dev/null 2>&1
+rm -rf txlib > /dev/null 2>&1
 git clone --depth=1 ${txlib}
 rm -rf txlib/.git txlib/README.md > /dev/null 2>&1
 rm -rf txlib/.git txlib/README.md > /dev/null 2>&1
@@ -400,12 +416,12 @@ echo -e ${green}您的各版本API链接${background}
 echo
 for folder in $(ls $HOME/QSignServer/txlib)
 do
-file="$HOME/QSignServer/txlib/${folder}/config.json"
-port="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
-key="$(grep -E key ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
-host="$(grep -E host ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
-echo -e ${green}${folder}: ${cyan}"http://""${host}":"${port}"/sign?key="${key}"${background}
-echo
+    file="$HOME/QSignServer/txlib/${folder}/config.json"
+    port="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
+    key="$(grep -E key ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
+    host="$(grep -E host ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
+    echo -e ${green}${folder}: ${cyan}"http://""${host}":"${port}"/sign?key="${key}"${background}
+    echo
 done
 echo -en ${yellow}回车返回${background};read
 }
@@ -422,8 +438,19 @@ if [[ -d $HOME/QSignServer ]];then
     else
         condition="${red}[未启动]"
     fi
+    for folder in $(ls $HOME/QSignServer/txlib)
+    do
+        Txlib_Version_Local=${folder}
+    done
+    if [ "${Txlib_Version_Local}" == "${Txlib_Version_New}" ]
+    then
+        Txlib_Version="${cyan}[HD:${Txlib_Version_New}]"
+    else
+        Txlib_Version="${red}[${Txlib_Version_Local}] [请更新]"
+    fi
     Version="[$(ls $HOME/QSignServer | grep qsign | sed "s/qsign//g" | sed "s/.\B/&./g")]"
-    if [ "${QSIGN_VERSION}" = $(ls $HOME/QSignServer | grep qsign | sed "s/qsign//g") ]
+    QSIGN_VERSION_local=$(ls $HOME/QSignServer | grep qsign | sed 's/qsign//g')
+    if [ "${QSIGN_VERSION}" == "${QSIGN_VERSION_local}" ]
     then
         Version="${cyan}${Version}"
     else
@@ -449,6 +476,7 @@ echo -e  ${green}0.  ${cyan}退出${background}
 echo "========================="
 echo -e ${green}您的签名服务器状态: ${condition}${background}
 echo -e ${green}当前签名服务器版本: ${Version}${background}
+echo -e ${green}共享库最高支持版本: ${Txlib_Version}${background}
 echo -e ${green}QQ群:${cyan}狐狸窝:705226976${background}
 echo "========================="
 echo
