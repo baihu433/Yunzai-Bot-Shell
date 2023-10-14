@@ -132,11 +132,8 @@ function main(){
 function tmux_new(){
 Tmux_Name="$1"
 Shell_Command="$2"
-tmux new -s ${Tmux_Name} -d "${Shell_Command}"
-if ! tmux attach -t ${Tmux_Name} -d > /dev/null 2>&1
+if ! tmux new -s ${Tmux_Name} -d "${Shell_Command}"
 then
-    tmux_new_error=$(tmux attach -t ${Tmux_Name} -d 2>&1 > /dev/null)
-    echo
     echo -e ${yellow}QSignServer启动错误"\n"错误原因:${red}${tmux_new_error}${background}
     echo
     echo -en ${yellow}回车返回${background};read
