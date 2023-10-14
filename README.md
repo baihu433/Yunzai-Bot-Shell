@@ -52,7 +52,7 @@
 
 [戳我跳转QQ(新手群)(②群)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=ttH53_Pw6dBkbBimPfEq1M8LdwvNwOeZ&authKey=BUwoqpgofF27nTz4M6JJ4UPvgv3iFcDzl3Po0PgsQf36oxFT6Xch7DbJ4U24s%2BFn&noverify=0&group_code=596660282)
 
-[戳我跳转QQ(新手群)(③群)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=KxKeK3PMw8i_ql3NH-m_iOfpU1nMkLIz&authKey=zaKN%2BeWsFWbPq6zXgwKNdN%2BSjLH1YSQRo9edHq4T%2B5R7LcG8eHSCQdNfsC%2FhBtKk&noverify=0&group_code=879718035)
+[戳我跳转QQ(专小白群)(③群)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=KxKeK3PMw8i_ql3NH-m_iOfpU1nMkLIz&authKey=zaKN%2BeWsFWbPq6zXgwKNdN%2BSjLH1YSQRo9edHq4T%2B5R7LcG8eHSCQdNfsC%2FhBtKk&noverify=0&group_code=879718035)
 
 </details>
 <hr>
