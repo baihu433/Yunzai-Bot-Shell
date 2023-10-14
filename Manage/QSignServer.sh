@@ -70,14 +70,14 @@ JAVA_VERSION=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}')
 if [[ ! "${JAVA_VERSION}" == "1.8*"* ]]; then
     rm -rf $HOME/QSignServer/jdk > /dev/null 2>&1
     rm -rf $HOME/jdk.tar.gz > /dev/null 2>&1
-    until wget -q --show-progress -O jdk.tar.gz -c ${JDK_URL} || wget -O jdk.tar.gz -c ${JDK_URL}
+    until wget -O jdk.tar.gz -c ${JDK_URL}
     do
       echo -e ${red}下载失败 ${green}正在重试${background}
     done
     if [ ! -d $HOME/QSignServer ];then
         mkdir QSignServer
     fi
-    rm -rf QSignServer/jdk 2&> /dev/null
+    rm -rf QSignServer/jdk > /dev/null 2>&1
     echo -e ${yellow}正在解压JDK文件,请耐心等候${background}
     mkdir jdk
     pv jdk.tar.gz | tar -zxf - -C jdk
@@ -93,7 +93,7 @@ rm -rf txlib/.git txlib/README.md > /dev/null 2>&1
 rm -rf $HOME/QSignServer/txlib > /dev/null 2>&1
 rm -rf $HOME/QSignServer/txlib > /dev/null 2>&1
 mv -f txlib $HOME/QSignServer/txlib
-until wget -q --show-progress -O qsign.zip -c ${QSIGN_URL}
+until wget -O qsign.zip -c ${QSIGN_URL}
 do
     echo -e ${red}下载失败 3秒后重试${background}
 done
@@ -329,7 +329,7 @@ rm -rf txlib/.git txlib/README.md > /dev/null 2>&1
 rm -rf $HOME/QSignServer/txlib > /dev/null 2>&1
 rm -rf $HOME/QSignServer/txlib > /dev/null 2>&1
 mv -f txlib $HOME/QSignServer/txlib
-until wget -q --show-progress -O qsign.zip -c ${QSIGN_URL}
+until wget -O qsign.zip -c ${QSIGN_URL}
 do
     echo -e ${red}下载失败 3秒后重试${background}
 done

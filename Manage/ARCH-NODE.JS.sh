@@ -36,7 +36,7 @@ case $(uname -m) in
     exit
 ;;
 esac
-wget -q --show-progress -O node.tar.xz -c https://cdn.npmmirror.com/binaries/node/latest-v18.x/node-v18.17.0-linux-${ARCH}.tar.xz
+wget -O node.tar.xz -c https://cdn.npmmirror.com/binaries/node/latest-v18.x/node-v18.17.0-linux-${ARCH}.tar.xz
 
 if [ ! -d node ];then
     mkdir node
