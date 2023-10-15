@@ -108,13 +108,14 @@ fi
 if [ ! -x "/usr/local/bin/ffmpeg" ];then
     echo -e ${yellow}安装软件 ffmpeg${background}
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh
-    ffmpeg_static_URL=https://cdn.npmmirror.com/binaries/ffmpeg-static/b6.0
+    ffmpeg_static_URL=https://registry.npmmirror.com/-/binary/ffmpeg-static/b6.0
     ffmpeg_URL=${ffmpeg_static_URL}/ffmpeg-linux-${ARCH}
     ffprobe_URL=${ffmpeg_static_URL}/ffprobe-linux-${ARCH}
     source <(curl -sL ${URL})
-    curl -o ffmpeg ${ffmpeg_URL}
-    curl -o ffprobe ${ffprobe_URL}
+    wget -O ffmpeg ${ffmpeg_URL}
+    wget -O ffprobe ${ffprobe_URL}
     chmod +x ffmpeg ffprobe
-    mv -f ffmpeg ffprobe /usr/local/bin/
+    mv -f ffmpeg /usr/local/bin/ffmpeg
+    mv -f ffprobe /usr/local/bin/ffprobe
 fi
 
