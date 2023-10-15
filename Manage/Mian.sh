@@ -431,12 +431,10 @@ fi
 
 if [ ! "${up}" = "false" ];then
     old_version="0.6.2"
-    old_date="20231005"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
     new_version="$(echo ${version_date} | grep version | awk '{print $2}' )"
-    new_date="$(echo ${version_date} | grep date | awk '{print $4}' )"
     
     if [ "${new_version}" != "${old_version}" ];then
         echo -e ${cyan}正在更新${background}
