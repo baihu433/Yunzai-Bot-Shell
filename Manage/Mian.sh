@@ -294,7 +294,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.6.4"
+    old_version="0.6.5"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
@@ -517,26 +517,36 @@ done
 }
 
 function configure_file(){
-Editor=$(${dialog_whiptail} \
+Number=$(${dialog_whiptail} \
 --title "白狐 QQ群:705226976" \
 --menu "请选择您的编辑器" \
-23 35 11 \
-"micro" \
-"vim" \
-"nano" \
-"emacs" \
-"返回" \
+15 32 5 \
+"1" "micro " \
+"2" "vim " \
+"3" "nano " \
+"4" "emacs " \
+"0" "返回" \
 3>&1 1>&2 2>&3)
-if [ ! -x "$(command -v ${Editor})" ];then
-    ${dialog_whiptail} --title "白狐-BOT" --msgbox "您未安装${Editor}编辑器" 8 40
+Number=$(echo ${Number} | sed "s/${Number}/\"//g")
+case ${Number} in
+1)
+    Editor=micro
+    ;;
+2)
+    Editor=vim
+    ;;
+3)
+    Editor=nano
+    ;;
+4)
+    Editor=emacs
+    ;;
+0)
     main
     exit
-elif [ "${Editor}" == "返回" ];then
-    main
-    exit
-fi
+esac
 Editor_yaml(){
-file=config/config/"$1"
+file="config/config/$1"
 if [ ! -e config/config/"$1" ];then
     ${dialog_whiptail} --title "白狐-BOT" --msgbox "配置文件不存在" 8 40
     main
