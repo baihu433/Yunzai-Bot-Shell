@@ -100,7 +100,7 @@ else
     dialog_whiptail=dialog
 fi
 
-if [ ! -x "$(which vim)" ];then
+if [ ! -x "$(command -v vim)" ];then
     pkg=vim
     pkg_install
 fi

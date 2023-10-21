@@ -22,51 +22,47 @@ then
 else
     echo -e ${red}程序终止!! 脚本停止运行${background}
 fi
-folder=ubuntu
-if [ -d "${folder}" ]; then
-	first=1
+folder=ubuntu-jammy
+
+if grep -q "packages.termux.org" $PREFIX/etc/apt/sources.list
+then
+    echo '# The termux repository mirror from TUNA:
+deb https://mirrors.bfsu.edu.cn/termux/apt/termux-main stable main' > $PREFIX/etc/apt/sources.list
+    apt update -y
 fi
-if [ -d ubuntu ];then
-echo -e '\033[33mubuntu已安装\033[0m'
-exit
+if [ ! -x "$(command -v proot)" ];then
+    apt install -y proot
 fi
-echo -e '\033[33m卡住直接回车\033[0m'
-sleep 1s
-echo -e '\033[33m卡住直接回车\033[0m'
-sleep 1s 
-echo -e '\033[33m卡住直接回车\033[0m'
-sleep 1s
-sed -i 's@^\(deb.*stable main\)$@#\1\ndeb https://mirrors.bfsu.edu.cn/termux/termux-packages-24 stable main@' $PREFIX/etc/apt/sources.list
-yes Y | pkg update -y | pkg upgrade -y
-sed -i 's@^\(deb.*stable main\)$@#\1\ndeb https://mirrors.bfsu.edu.cn/termux/termux-packages-24 stable main@' $PREFIX/etc/apt/sources.list
-yes Y | pkg update -y | pkg upgrade -y
-sed -i 's@^\(deb.*stable main\)$@#\1\ndeb https://mirrors.bfsu.edu.cn/termux/termux-packages-24 stable main@' $PREFIX/etc/apt/sources.list
-yes Y | pkg update -y && pkg upgrade -y
-pkg install openssl-tool pulseaudio proot -y
+if [ ! -x "$(command -v pulseaudio)" ];then
+    apt install -y pulseaudio
+fi
+if [ ! -x "$(command -v wget)" ];then
+    apt install -y wget
+fi
+case $(uname -m) in
+    arm64|aarch64)
+    frame=arm64
+    ;;
+    amd64|x86_64)
+    frame=amd64
+    ;;
+    *)
+    echo "您的设备框架为$(dpkg --print-architecture),快让白狐做适配!!"
+    exit
+    ;;
+esac
+date=$(curl https://mirrors.bfsu.edu.cn/lxc-images/images/ubuntu/jammy/${frame}/default/ | grep 'class="link"><a href=' | tail -n 1 | grep -o 'title="[^"]*"' | awk -F'"' '{print $2}' )
+if wget -O rootfs.tar.xz https://mirrors.bfsu.edu.cn/lxc-images/images/ubuntu/jammy/${frame}/default/${date}/rootfs.tar.xz
+
+
 rootfs="ubuntu-rootfs.tar.xz"
 if [ "${first}" != 1 ];then
 		echo "下载rootfs，可能需要一段时间，取决于您的互联网速度."
-		case $(uname -m) in
-		arm64|aarch64)
-		  frame=arm64
-		  ;;
-		arm|armhf|armel)
-		  frame=armhf
-		  ;;
-		amd64|x86_64)
-		  frame=amd64
-		  ;;
-		*)
-			echo "您的设备框架为$(dpkg --print-architecture),快让白狐做适配!!"; exit 1 ;;
-		esac
 		
-    date=$(curl https://mirrors.bfsu.edu.cn/lxc-images/images/ubuntu/jammy/${frame}/default/ | \
-    grep 'class="link"><a href=' | \
-    tail -n 1 | \
-    grep -o 'title="[^"]*"' | \
-    awk -F'"' '{print $2}' )
+		
+    
       
-    if ! curl -o ${rootfs} https://mirrors.bfsu.edu.cn/lxc-images/images/ubuntu/jammy/${frame}/default/${date}/rootfs.tar.xz
+    if ! curl -o ${rootfs} 
       then
       echo "下载失败 请检查网络!!"
       exit 1
