@@ -95,9 +95,8 @@ if [ -x "$(command -v whiptail)" ];then
 elif [ -x "$(command -v dialog)" ];then
     dialog_whiptail=dialog
 else
-    package=dialog
-    pkg_install dialog
-    dialog_whiptail=dialog
+    pkg=dialog
+    pkg_install
 fi
 
 if [ ! -x "$(command -v vim)" ];then
@@ -109,9 +108,9 @@ if [ ! -x "/usr/local/bin/ffmpeg" ];then
     echo -e ${yellow}安装软件 ffmpeg${background}
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh
     ffmpeg_static_URL=https://registry.npmmirror.com/-/binary/ffmpeg-static/b6.0
+    source <(curl -sL ${URL})
     ffmpeg_URL=${ffmpeg_static_URL}/ffmpeg-linux-${ARCH}
     ffprobe_URL=${ffmpeg_static_URL}/ffprobe-linux-${ARCH}
-    source <(curl -sL ${URL})
     wget -O ffmpeg ${ffmpeg_URL}
     wget -O ffprobe ${ffprobe_URL}
     chmod +x ffmpeg ffprobe
