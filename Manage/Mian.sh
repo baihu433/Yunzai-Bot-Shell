@@ -294,7 +294,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.6.6"
+    old_version="0.6.7"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
@@ -329,9 +329,8 @@ function BOT(){
 function tmux_gauge(){
 i=0
 Tmux_Name="$1"
-tmux_ls ${Tmux_Name} > /dev/null 2>&1 &
 {
-until echo ${tmux_windows} | grep -q ${Tmux_Name}
+until tmux_ls ${Tmux_Name} 2>&1 | grep -q ${Tmux_Name}
 do
     i=$((${i}+1))
     sleep 0.05s
@@ -341,16 +340,16 @@ do
         return 1
     fi
 done
-} | ${dialog_whiptail} --title "白狐-script" --gauge "正在"${Start_Stop_Restart}" ${Tmux_Name}" 8 50 0
+} | ${dialog_whiptail} --title "白狐-script" --gauge "正在"${Start_Stop_Restart}" ${Bot_Name}" 8 50 0
 }
 
 bot_tmux_start(){
-tmux_new ${Bot_Name} "bh ${Bot_Name} n" > /dev/null 2>&1
-tmux_gauge ${Bot_Name}
+tmux_new ${Tmux_Window_Name} "bh ${Tmux_Window_Name} n" > /dev/null 2>&1
+tmux_gauge ${Tmux_Window_Name}
 }
 bot_tmux_attach_log(){
-if ! tmux attach -t ${Bot_Name} > /dev/null 2>&1;then
-    tmux_windows_attach=$(tmux attach -t ${Bot_Name} 2>&1)
+if ! tmux attach -t ${Tmux_Window_Name} > /dev/null 2>&1;then
+    tmux_windows_attach=$(tmux attach -t ${Tmux_Window_Name} 2>&1)
     ${dialog_whiptail} --msgbox "${Bot_Name}打开错误 \n错误原因:${tmux_windows_attach}" 8 50
 fi
 }
@@ -361,9 +360,9 @@ then
 fi
 }
 if [[ $1 == log ]];then
-    if tmux_ls ${Bot_Name}
+    if tmux_ls ${Tmux_Window_Name}
     then
-        tmux attach -t ${Bot_Name} > /dev/null 2>&1
+        bot_tmux_attach_log
     else
         if (${dialog_whiptail} --yesno "${Bot_Name} [未启动] \n是否立刻启动${Bot_Name}" 8 50)
         then
@@ -372,7 +371,7 @@ if [[ $1 == log ]];then
         fi
     fi
 elif [[ $1 == start ]];then
-    if ! tmux_ls ${Bot_Name}
+    if ! tmux_ls ${Tmux_Window_Name}
     then
         export Start_Stop_Restart="启动"
         bot_tmux_start
@@ -381,17 +380,17 @@ elif [[ $1 == start ]];then
         bot_tmux_attach
     fi
 elif [[ $1 == stop ]];then
-    if tmux_ls ${Bot_Name}
+    if tmux_ls ${Tmux_Window_Name}
     then
-        tmux_kill_session ${Bot_Name}
+        tmux_kill_session ${Tmux_Window_Name}
         ${dialog_whiptail} --yesno "${Bot_Name} [已停止]" 8 50
     else
         ${dialog_whiptail} --yesno "${Bot_Name} [未启动] \n无需停止${Bot_Name}" 8 50
     fi
 elif [[ $1 == restart ]];then
-    if tmux_ls ${Bot_Name}
+    if tmux_ls ${Tmux_Window_Name}
     then
-        tmux_kill_session ${Bot_Name}
+        tmux_kill_session ${Tmux_Window_Name}
         export Start_Stop_Restart="重启"
         bot_tmux_start
         bot_tmux_attach
@@ -964,19 +963,23 @@ feedback
 if [ "${Number}" == "1" ];then
     if [ -d /root/TRSS_AllBot ];then
         export Bot_Name=Yunzai
+        export Tmux_Window_Name=YZ
     else
         export Bot_Name=Yunzai-Bot
+        export Tmux_Window_Name=YZ
     fi
     export Gitee=https://gitee.com/Yummy-cookie/Yunzai-Bot
     export Github=https://github.com/Yummy-cookie/Yunzai-Bot
     Bot_Path
 elif [ "${Number}" == "2" ];then
     export Bot_Name=Miao-Yunzai
+    export Tmux_Window_Name=MZ
     export Gitee=https://gitee.com/yoimiya-kokomi/Miao-Yunzai.git
     export Github=https://github.com/yoimiya-kokomi/Miao-Yunzai.git
     Bot_Path
 elif [ "${Number}" == "3" ];then
     export Bot_Name=TRSS-Yunzai
+    export Tmux_Window_Name=TZ
     export Gitee=https://gitee.com/TimeRainStarSky/Yunzai.git
     export Github=https://github.com/TimeRainStarSky/Yunzai.git
     Bot_Path
