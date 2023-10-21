@@ -173,6 +173,7 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QS
 |胡桃快来吧！|5.4元|
 |晓彬残月|5.21元|
 |丶基控Q | 5.2元|
+|玩云崽死路一条|5元|
 |末世星史莱姆|5元|
 |夜|5元|
 |   |5元|
