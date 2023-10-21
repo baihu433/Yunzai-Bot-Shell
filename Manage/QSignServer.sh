@@ -52,19 +52,19 @@ if [ -e /etc/resolv.conf ]; then
         echo -e ${yellow}DNS已修改为 114.114.114.114 8.8.8.8${background}
     fi
 fi
-if [ $(command -v apk) ];then
-    apk update
-    apk add tar gzip wget curl unzip git tmux
-elif [ $(command -v apt) ];then
+if [ $(command -v apt) ];then
     apt update
-    apt install -y tar gzip wget curl unzip git tmux
+    apt install -y tar gzip wget curl unzip git tmux pv
 elif [ $(command -v yum) ];then
     yum update
-    yum install -y tar gzip wget curl unzip git tmux
+    yum install -y tar gzip wget curl unzip git tmux pv
 elif [ $(command -v dnf) ];then
-    dnf install -y tar gzip wget curl unzip git tmux
+    dnf install -y tar gzip wget curl unzip git tmux pv
 elif [ $(command -v pacman) ];then
-    pacman -Syy --noconfirm --needed tar gzip wget curl unzip git tmux
+    pacman -Syy --noconfirm --needed tar gzip wget curl unzip git tmux pv
+else
+    echo -e ${red}不受支持的Linux发行版${background}
+    exit
 fi
 JAVA_VERSION=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}')
 if [[ ! "${JAVA_VERSION}" == "1.8*"* ]]; then
