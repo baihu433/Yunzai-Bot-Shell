@@ -294,7 +294,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.6.5"
+    old_version="0.6.6"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
@@ -521,13 +521,12 @@ Number=$(${dialog_whiptail} \
 --title "白狐 QQ群:705226976" \
 --menu "请选择您的编辑器" \
 15 32 5 \
-"1" "micro " \
-"2" "vim " \
-"3" "nano " \
-"4" "emacs " \
-"0" "返回" \
+1 "micro " \
+2 "vim " \
+3 "nano " \
+4 "emacs " \
+0 "返回" \
 3>&1 1>&2 2>&3)
-Number=$(echo ${Number} | sed "s/${Number}/\"//g")
 case ${Number} in
 1)
     Editor=micro
@@ -545,6 +544,11 @@ case ${Number} in
     main
     exit
 esac
+if [ ! -x "$(command -v ${Editor})" ];then
+    ${dialog_whiptail} --title "白狐-BOT" --msgbox "未安装${Editor}编辑器" 8 40
+    main
+    exit
+fi
 Editor_yaml(){
 file="config/config/$1"
 if [ ! -e config/config/"$1" ];then
