@@ -180,7 +180,7 @@ help
 exit
 ;;
 unup)
-up=false
+export up="false"
 ;;
 esac
 
@@ -288,13 +288,13 @@ esac
 
 if ping -c 1 gitee.com > /dev/null 2>&1
     then
-    up=true
+    up="true"
 else
-    up=false
+    up="false"
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.6.7"
+    old_version="0.6.8"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
@@ -406,28 +406,38 @@ elif [[ $1 == login ]];then
         main
         exit
     fi
+    platform=$(${dialog_whiptail} \
+    --title "白狐 QQ群:705226976" \
+    --menu "请选择您的登录设备" \
+    15 32 5 \
+    1 "安卓手机 " \
+    2 "aPad " \
+    3 "安卓手表 " \
+    4 "MacOS " \
+    5 "iPad" \
+    6 "Tim" \
+    3>&1 1>&2 2>&3)
+    feedback=$?
+    if [[ ${feedback} == "1" ]];then
+        main
+        exit
+    fi
     if [ ! -e config/config/qq.yaml ];then
         ${dialog_whiptail} --title "白狐-BOT" --msgbox "账密文件不存在" 8 40
         main
         exit
     fi
     file=config/config/qq.yaml
-    old_QQ=$(grep -w "qq:" ${file} | sed 's/qq://g')
-    if [ -z "${old_QQ}" ]; then
-        echo -en ${red}读取失败 回车返回${background};read
-        main
-        exit
-    fi
+    old_QQ=$(grep -w "qq:" ${file})
     old_QQ=$(echo ${old_QQ})
-    sed -i "s/${old_QQ}/${QQ}/g" ${file}
-    old_password=$(grep -w "password:" ${file} | sed 's/password://g')
-    if [ -z "${old_password}" ]; then
-        echo -en ${red}读取失败 回车返回${background};read
-        main
-        exit
-    fi
+    sed -i "s/${old_QQ}/qq: ${QQ}/g" ${file}
+    old_password=$(grep -w "password:" ${file})
     old_password=$(echo ${old_password})
-    sed -i "s/${old_password}/${password}/g" ${file}
+    sed -i "s/${old_password}/password: ${password}/g" ${file}
+    old_platform=$(grep -w "platform:" ${file})
+    old_platform=$(echo ${old_platform})
+    sed -i "s/${old_platform}/platform: ${platform}/g" ${file}
+    echo -en ${green}更换成功${cyan}回车返回${background};read
 elif [[ $1 == qsign ]];then
     API=$(${dialog_whiptail} --title "白狐-BOT" --inputbox "请输入您的签名服务器API" 10 50 3>&1 1>&2 2>&3)
     feedback=$?

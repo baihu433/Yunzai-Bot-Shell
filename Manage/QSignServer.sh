@@ -24,17 +24,17 @@ if [ -d $HOME/QSignServer/jdk ];then
 export PATH=$PATH:$HOME/QSignServer/jdk/bin
 export JAVA_HOME=$HOME/QSignServer/jdk
 fi
-QSIGN_URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/releases/download/1.2.1/unidbg-fetch-qsign-1.1.9.zip"
+QSIGN_URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/releases/download/QSignServer/unidbg-fetch-qsign-1.1.9.zip"
 QSIGN_VERSION="119"
 qsign_version="1.1.9"
 txlib="https://gitee.com/baihu433/txlib"
 Txlib_Version_New="8.9.83"
 case $(uname -m) in
 amd64|x86_64)
-JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/x64/linux/OpenJDK8U-jdk_x64_linux_hotspot_8u382b05.tar.gz"
+JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/x64/linux/OpenJDK8U-jdk_x64_linux_hotspot_8u392b08.tar.gz"
 ;;
 arm64|aarch64)
-JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/aarch64/linux/OpenJDK8U-jdk_aarch64_linux_hotspot_8u382b05.tar.gz"
+JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/aarch64/linux/OpenJDK8U-jdk_aarch64_linux_hotspot_8u392b08.tar.gz"
 ;;
 esac
 
@@ -62,6 +62,17 @@ elif [ $(command -v dnf) ];then
     dnf install -y tar gzip wget curl unzip git tmux pv
 elif [ $(command -v pacman) ];then
     pacman -Syy --noconfirm --needed tar gzip wget curl unzip git tmux pv
+elif [ $(command -v apk) ];then
+    apk update
+    apk add --no-cache tar gzip wget curl unzip git tmux pv
+    case $(uname -m) in
+    amd64|x86_64)
+    JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/x64/alpine-linux/OpenJDK8U-jdk_x64_alpine-linux_hotspot_8u392b08.tar.gz"
+    ;;
+    arm64|aarch64)
+    JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/aarch64/linux/OpenJDK8U-jdk_aarch64_linux_hotspot_8u392b08.tar.gz"
+    ;;
+    esac
 else
     echo -e ${red}不受支持的Linux发行版${background}
     exit
@@ -180,8 +191,8 @@ until qsign_curl
 do
     i=$((${i}+1))
     a="${a}#"
-    echo -ne "\r${i}% ${a}"
-    if [[ ${i} == 100 ]];then
+    echo -ne "\r${i}% ${a}\r"
+    if [[ ${i} == 15 ]];then
         echo
         return 1
     fi
@@ -273,9 +284,7 @@ then
     ;;
     esac
 else
-    echo -en ${red}启动失败 回车返回${background}
-    read
-    echo
+    bot_tmux_attach_log qsignserver
 fi
 }
 
