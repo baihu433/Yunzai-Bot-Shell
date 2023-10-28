@@ -192,7 +192,7 @@ do
     i=$((${i}+1))
     a="${a}#"
     echo -ne "\r${i}% ${a}\r"
-    if [[ ${i} == 15 ]];then
+    if [[ ${i} == 40 ]];then
         echo
         return 1
     fi
