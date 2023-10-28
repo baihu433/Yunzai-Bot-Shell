@@ -294,7 +294,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.6.8"
+    old_version="0.6.9"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
@@ -410,12 +410,12 @@ elif [[ $1 == login ]];then
     --title "白狐 QQ群:705226976" \
     --menu "请选择您的登录设备" \
     15 32 5 \
-    1 "安卓手机 " \
-    2 "aPad " \
-    3 "安卓手表 " \
-    4 "MacOS " \
-    5 "iPad" \
-    6 "Tim" \
+    "1" "安卓手机 " \
+    "2" "aPad " \
+    "3" "安卓手表 " \
+    "4" "MacOS " \
+    "5" "iPad" \
+    "6" "Tim" \
     3>&1 1>&2 2>&3)
     feedback=$?
     if [[ ${feedback} == "1" ]];then
@@ -752,7 +752,6 @@ elif [ "${Number}" == "7" ];then
     exit
 elif [ "${Number}" == "8" ];then
     BOT login
-    echo -en ${cyan}回车返回${background};read
     main
     exit
 elif [ "${Number}" == "9" ];then
