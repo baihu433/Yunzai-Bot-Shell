@@ -14,7 +14,7 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BO
 if ! apk info -e xz >/dev/null 2>&1
     then
         echo -e ${yellow}安装xz解压工具${background}
-        until apk add xz
+        until apk add --no-cache xz
         do
             echo -e ${red}安装失败 3秒后重试${background}
             sleep 3s
@@ -24,7 +24,7 @@ fi
 if ! apk info -e chromium >/dev/null 2>&1
     then
         echo -e ${yellow}安装chromium浏览器${background}
-        until apk add chromium
+        until apk add --no-cache chromium
         do
             echo -e ${red}安装失败 3秒后重试${background}
             sleep 3s
@@ -34,7 +34,7 @@ fi
 if ! apk info -e ttf-dejavu >/dev/null 2>&1
     then
         echo -e ${yellow}安装中文字体包${background}
-        until apk add ttf-dejavu
+        until apk add --no-cache ttf-dejavu
         do
             echo -e ${red}安装失败 3秒后重试${background}
             sleep 3s
@@ -44,7 +44,7 @@ fi
 if ! apk info -e nodejs >/dev/null 2>&1
     then
         echo -e ${yellow}安装软件 Node.JS${background}
-        until apk add nodejs
+        until apk add --no-cache nodejs
         do
             echo -e ${red}安装失败 3秒后重试${background}
             sleep 3s
@@ -54,7 +54,7 @@ fi
 if ! apk info -e npm >/dev/null 2>&1
     then
         echo -e ${yellow}安装软件 npm${background}
-        until apk add npm
+        until apk add --no-cache npm
         do
             echo -e ${red}安装失败 3秒后重试${background}
             sleep 3s
