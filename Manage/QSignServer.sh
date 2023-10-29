@@ -21,8 +21,8 @@ if [ ! "$(id -u)" = "0" ]; then
     exit 0
 fi
 if [ -d $HOME/QSignServer/jdk ];then
-export PATH=$PATH:$HOME/QSignServer/jdk/bin
-export JAVA_HOME=$HOME/QSignServer/jdk
+    export PATH=$PATH:$HOME/QSignServer/jdk/bin
+    export JAVA_HOME=$HOME/QSignServer/jdk
 fi
 QSIGN_URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/releases/download/QSignServer/unidbg-fetch-qsign-1.1.9.zip"
 QSIGN_VERSION="119"
