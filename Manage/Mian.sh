@@ -233,6 +233,7 @@ echo -e ${red}输入错误${background}
 exit
 ;;
 esac
+
 if curl -sL ${API} > /dev/null 2>&1
 then
     echo -e ${green}签名服务器 ${cyan}已启动${background}
@@ -269,6 +270,7 @@ else
         read
         exit
     fi
+fi
 fi
 fi
 }
