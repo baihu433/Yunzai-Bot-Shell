@@ -37,7 +37,16 @@ arm64|aarch64)
 JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/aarch64/linux/OpenJDK8U-jdk_aarch64_linux_hotspot_8u392b08.tar.gz"
 ;;
 esac
-
+if [ $(command -v apk) ];then
+case $(uname -m) in
+    amd64|x86_64)
+        JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/x64/alpine-linux/OpenJDK8U-jdk_x64_alpine-linux_hotspot_8u392b08.tar.gz"
+    ;;
+    arm64|aarch64)
+        JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/aarch64/linux/OpenJDK8U-jdk_aarch64_linux_hotspot_8u392b08.tar.gz"
+    ;;
+esac
+fi
 function install_QSignServer(){
 if [ -d $HOME/QSignServer/txlib ];then
     echo -e ${yellow}您已安装签名服务器${background}
@@ -53,10 +62,10 @@ if [ -e /etc/resolv.conf ]; then
     fi
 fi
 if [ $(command -v apt) ];then
-    apt update
+    apt update -y
     apt install -y tar gzip wget curl unzip git tmux pv
 elif [ $(command -v yum) ];then
-    yum update
+    yum update -y
     yum install -y tar gzip wget curl unzip git tmux pv
 elif [ $(command -v dnf) ];then
     dnf install -y tar gzip wget curl unzip git tmux pv
@@ -65,14 +74,6 @@ elif [ $(command -v pacman) ];then
 elif [ $(command -v apk) ];then
     apk update
     apk add --no-cache tar gzip wget curl unzip git tmux pv
-    case $(uname -m) in
-    amd64|x86_64)
-    JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/x64/alpine-linux/OpenJDK8U-jdk_x64_alpine-linux_hotspot_8u392b08.tar.gz"
-    ;;
-    arm64|aarch64)
-    JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/aarch64/linux/OpenJDK8U-jdk_aarch64_linux_hotspot_8u392b08.tar.gz"
-    ;;
-    esac
 else
     echo -e ${red}不受支持的Linux发行版${background}
     exit
@@ -201,7 +202,8 @@ echo
 }
 bot_tmux_attach_log(){
 Tmux_Name="$1"
-if ! tmux attach -t ${Tmux_Name} > /dev/null 2>&1;then
+if ! tmux attach -t ${Tmux_Name} > /dev/null 2>&1
+then
     tmux_windows_attach_error=$(tmux attach -t ${Tmux_Name} 2>&1 > /dev/null)
     echo
     echo -e ${yellow}QSignServer打开错误"\n"错误原因:${red}${tmux_windows_attach_error}${background}
@@ -210,8 +212,19 @@ if ! tmux attach -t ${Tmux_Name} > /dev/null 2>&1;then
 fi
 }
 function start_QSignServer(){
+for folder in $(ls -d $HOME/QSignServer/txlib/*)
+do
+    file="${folder}/config.json"
+    port_="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
+done
+if curl 127.0.0.1:${port_} > /dev/null 2>&1
+then
+    echo -en ${yellow}签名服务器已启动 ${cyan}回车返回${background};read
+    echo
+    return
+fi
 echo -e ${white}"====="${green}白狐-QSignServer${white}"====="${background}
-echo -e ${cyan}请选择您想让您签名服务器适配的QQ版本${background}
+echo -e ${cyan}请选择签名服务器适配的QQ共享库版本${background}
 echo -e  ${green}1.  ${cyan}HD: 8.9.58${background}
 echo -e  ${green}2.  ${cyan}HD: 8.9.63${background}
 echo -e  ${green}3.  ${cyan}HD: 8.9.68${background}
@@ -261,11 +274,13 @@ if [ ! -d $HOME/QSignServer/txlib/${version} ];then
     echo -e ${yellow}您没有该版本的libfekit.so文件${background}
     exit
 fi
-if tmux_ls qsignserver
-then
-    echo -e ${yellow}签名服务器已启动${background}
-    exit
-fi
+Foreground_Start(){
+bash $HOME/QSignServer/qsign${QSIGN_VERSION}/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${version}
+echo -en ${cyan}回车返回${background}
+read
+echo
+}
+Tmux_Start(){
 Start_Stop_Restart="启动"
 tmux_new qsignserver "bash $HOME/QSignServer/qsign${QSIGN_VERSION}/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${version}"
 if tmux_gauge qsignserver
@@ -283,37 +298,106 @@ then
         echo
     ;;
     esac
-else
-    bot_tmux_attach_log qsignserver
 fi
+}
+Pm2_Start(){
+if [ -x "$(command -v pm2)" ]
+then
+    if ! pm2 show qsignserver | grep -q online > /dev/null 2>&1
+    then
+        pm2 start --name qsignserver "bash $HOME/QSignServer/qsign${QSIGN_VERSION}/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${version}"
+        echo
+        echo -en ${yellow}签名服务器已经启动,是否打开日志 [Y/n]${background};read num
+        case $num in
+        Y|y)
+            pm2 logs qsignserver
+            echo
+            ;;
+        esac
+    fi
+else
+    echo -e ${red}没有pm2!!!${background}
+    exit
+fi
+}
+echo
+echo -e ${white}"====="${green}白狐-QSignServer${white}"====="${background}
+echo -e ${cyan}请选择启动方式${background}
+echo -e  ${green}1.  ${cyan}前台启动[安卓推荐]${background}
+echo -e  ${green}2.  ${cyan}TMUX后台启动${background}
+echo -e  ${green}3.  ${cyan}PM2后台启动${background}
+echo "========================="
+echo -en ${green}请输入您的选项: ${background};read num
+case ${num} in 
+1)
+Foreground_Start
+;;
+2)
+Tmux_Start
+;;
+3)
+Pm2_Start
+;;
+*)
+echo
+echo -e ${red}输入错误${background}
+exit
+;;
+esac
 }
 
 function stop_QSignServer(){
-if ! tmux_ls qsignserver
+for folder in $(ls -d $HOME/QSignServer/txlib/*)
+do
+    file="${folder}/config.json"
+    port_="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
+done
+if curl 127.0.0.1:${port_} > /dev/null 2>&1
 then
+    echo -e ${yellow}正在停止签名服务器${background}
+    tmux_kill_session qsignserver > /dev/null 2>&1
+    pm2 delete qsignserver > /dev/null 2>&1
+    echo -en ${red}签名服务器停止成功 ${cyan}回车返回${background}
+    read
+    echo
+    return
+else
     echo -en ${red}签名服务器未启动 ${cyan}回车返回${background}
     read
-    return
     echo
+    return
 fi
-tmux_kill_session qsignserver
-echo -en ${red}签名服务器停止成功 ${cyan}回车返回${background}
-read
-return
-echo
 }
 
 function restart_QSignServer(){
-tmux_kill_session qsignserver
-export Start_Stop_Restart="重启"
-start_QSignServer
+if tmux_ls qsignserver > /dev/null 2>&1 
+then
+    tmux_kill_session qsignserver
+    export Start_Stop_Restart="重启"
+    start_QSignServer
+elif pm2 show qsignserver | grep -q online > /dev/null 2>&1
+then
+    pm2 delete qsignserver
+    start_QSignServer
+fi
 }
 
 function update_QSignServer(){
-if tmux_ls qsignserver
+for folder in $(ls -d $HOME/QSignServer/txlib/*)
+do
+    file="${folder}/config.json"
+    port_="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
+done
+if curl 127.0.0.1:${port_} > /dev/null 2>&1
 then
     echo -e ${yellow}正在停止签名服务器${background}
-    tmux_kill_session qsignserver
+    tmux_kill_session qsignserver > /dev/null 2>&1
+    pm2 delete qsignserver > /dev/null 2>&1
+    echo
+    echo -en ${red}签名服务器停止成功 ${cyan}回车返回${background}
+    read
+    echo
+    return
 fi
 for folder in $(ls -d $HOME/QSignServer/txlib/*)
 do
@@ -370,9 +454,31 @@ fi
 cd $HOME
 echo -e ${yellow}正在停止服务器运行${background}
 tmux_kill_session qsignserver > /dev/null 2>&1
+pm2 delete qsignserver > /dev/null 2>&1
 rm -rf $HOME/QSignServer > /dev/null 2>&1
 rm -rf $HOME/QSignServer > /dev/null 2>&1
 Version="${red}[未部署]"
+}
+
+function log_QSignServer(){
+for folder in $(ls -d $HOME/QSignServer/txlib/*)
+do
+    file="${folder}/config.json"
+    port_="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
+done
+if ! curl 127.0.0.1:${port_} > /dev/null 2>&1
+then
+    echo -en ${red}签名服务器 未启动 ${cyan}回车返回${background};read
+    echo
+    return
+fi
+if tmux_ls qsignserver > /dev/null 2>&1 
+then
+    bot_tmux_attach_log qsignserver
+elif pm2 show qsignserver | grep -q online > /dev/null 2>&1
+then
+    pm2 logs qsignserver
+fi
 }
 
 function key_QSignServer(){
@@ -474,7 +580,7 @@ echo -e  ${green}3.  ${cyan}关闭签名服务器${background}
 echo -e  ${green}4.  ${cyan}重启签名服务器${background}
 echo -e  ${green}5.  ${cyan}更新签名服务器${background}
 echo -e  ${green}6.  ${cyan}卸载签名服务器${background}
-echo -e  ${green}7.  ${cyan}打开签名服务器窗口${background}
+echo -e  ${green}7.  ${cyan}打开签名服务器窗口/日志${background}
 echo -e  ${green}8.  ${cyan}修改签名服务器key值${background}
 echo -e  ${green}9.  ${cyan}修改签名服务器端口${background}
 echo -e  ${green}10.  ${cyan}查看签名服务器链接${background}
@@ -513,7 +619,7 @@ echo
 uninstall_QSignServer
 ;;
 7)
-bot_tmux_attach_log qsignserver
+log_QSignServer
 ;;
 8)
 echo
