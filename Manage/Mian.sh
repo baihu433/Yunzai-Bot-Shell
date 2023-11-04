@@ -114,7 +114,6 @@ else
 fi
 }
 
-QSIGN(){
 function QSIGN(){
 if [ -d $HOME/QSignServer/qsign119 ];then
     if [ -d $HOME/QSignServer/jdk ];then
@@ -270,7 +269,6 @@ else
         read
         exit
     fi
-fi
 fi
 fi
 }
@@ -455,7 +453,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.7.3"
+    old_version="0.7.4"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
