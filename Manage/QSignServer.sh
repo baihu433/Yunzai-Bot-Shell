@@ -414,10 +414,6 @@ then
         kill -9 ${PID}
     fi
     echo
-    echo -en ${red}签名服务器停止成功 ${cyan}回车返回${background}
-    read
-    echo
-    return
 fi
 for folder in $(ls -d $HOME/QSignServer/txlib/*)
 do
