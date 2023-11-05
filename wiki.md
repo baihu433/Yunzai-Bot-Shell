@@ -54,19 +54,18 @@ bh yz
 
 #### 操作BOT
 
-##### 同样的，bh提供了三个内建对象:
+##### 同样的，`bh`提供了三个内建对象:
 
-##### Yunzai-Bot:
-`YZ`
+##### Yunzai-Bot: `YZ`
 
-##### Miao-Yunzai:
-`MZ`
+##### Miao-Yunzai: `MZ`
 
-##### TRSS-Yunzai:
-`TZ`
+##### TRSS-Yunzai: `TZ`
 
 ##### 当然，还可以是一个路径，例如:
-`/root/Yunzai-Bot`
+```bash
+/root/Yunzai-Bot
+```
 
 ##### 现在开始操作，例如我们想要在前台启动已经安装好的Yunzai-Bot:
 ```bash
@@ -78,7 +77,7 @@ bh YZ n
 bh /root/Node.js/RoBot/Yunzai-Bot n
 ```
 
-#### 以下是bh对项目控制的操作，请将`*对象*`替换成以上三个内建对象之一或项目路径
+#### 以下是`bh`对项目控制的操作，请将`*对象*`替换成以上三个内建对象之一或项目路径
 ```bash
 bh *对象* n #前台启动
 ```
