@@ -33,14 +33,11 @@ bh SWPKG #检查软件包依赖
 
 ##### bh在此提供了三个内建对象:
 
-##### Yunzai-Bot:
-`yz`
+##### Yunzai-Bot: `yz`
 
-##### Miao-Yunzai:
-`mz`
+##### Miao-Yunzai: `mz`
 
-##### TRSS-Yunzai:
-`tz`
+##### TRSS-Yunzai: `tz`
 ##### 需要执行的命令是:
 ```bash
 bh *对象* #进入项目根目录（白话：机器人所在文件夹）
