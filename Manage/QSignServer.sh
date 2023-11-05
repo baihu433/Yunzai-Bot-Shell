@@ -357,6 +357,10 @@ then
     echo -e ${yellow}正在停止签名服务器${background}
     tmux_kill_session qsignserver > /dev/null 2>&1
     pm2 delete qsignserver > /dev/null 2>&1
+    PID=$(ps aux | grep qsign | sed '/grep/d' | awk '{print $2}')
+    if [ ! -z ${PID} ];then
+        kill -9 ${PID}
+    fi
     echo -en ${red}签名服务器停止成功 ${cyan}回车返回${background}
     read
     echo
@@ -379,6 +383,10 @@ elif pm2 show qsignserver | grep -q online > /dev/null 2>&1
 then
     pm2 delete qsignserver
     start_QSignServer
+else
+    echo -e ${red}签名服务器未启动或为后台运行${background}
+    echo
+    return
 fi
 }
 
@@ -393,6 +401,10 @@ then
     echo -e ${yellow}正在停止签名服务器${background}
     tmux_kill_session qsignserver > /dev/null 2>&1
     pm2 delete qsignserver > /dev/null 2>&1
+    PID=$(ps aux | grep qsign | sed '/grep/d' | awk '{print $2}')
+    if [ ! -z ${PID} ];then
+        kill -9 ${PID}
+    fi
     echo
     echo -en ${red}签名服务器停止成功 ${cyan}回车返回${background}
     read
