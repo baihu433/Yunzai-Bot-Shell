@@ -28,7 +28,7 @@ QSIGN_URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/releases/download/QSignSe
 QSIGN_VERSION="119"
 qsign_version="1.1.9"
 txlib="https://gitee.com/baihu433/txlib"
-Txlib_Version_New="8.9.83"
+Txlib_Version_New="8.9.85"
 case $(uname -m) in
 amd64|x86_64)
 JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/x64/linux/OpenJDK8U-jdk_x64_linux_hotspot_8u392b08.tar.gz"
@@ -225,44 +225,52 @@ then
 fi
 echo -e ${white}"====="${green}白狐-QSignServer${white}"====="${background}
 echo -e ${cyan}请选择签名服务器适配的QQ共享库版本${background}
-echo -e  ${green}1.  ${cyan}HD: 8.9.58${background}
-echo -e  ${green}2.  ${cyan}HD: 8.9.63${background}
-echo -e  ${green}3.  ${cyan}HD: 8.9.68${background}
-echo -e  ${green}4.  ${cyan}HD: 8.9.70${background}
-echo -e  ${green}5.  ${cyan}HD: 8.9.71${background}
-echo -e  ${green}6.  ${cyan}HD: 8.9.73${background}
-echo -e  ${green}7.  ${cyan}HD: 8.9.76${background}
-echo -e  ${green}8.  ${cyan}HD: 8.9.80${background}
-echo -e  ${green}9.  ${cyan}HD: 8.9.83${background}
+echo -e  ${green}1.  ${cyan}HD: 8.9.33${background}
+echo -e  ${green}2.  ${cyan}HD: 8.9.58${background}
+echo -e  ${green}3.  ${cyan}HD: 8.9.63${background}
+echo -e  ${green}4.  ${cyan}HD: 8.9.68${background}
+echo -e  ${green}5.  ${cyan}HD: 8.9.70${background}
+echo -e  ${green}6.  ${cyan}HD: 8.9.71${background}
+echo -e  ${green}7.  ${cyan}HD: 8.9.73${background}
+echo -e  ${green}8.  ${cyan}HD: 8.9.76${background}
+echo -e  ${green}9.  ${cyan}HD: 8.9.80${background}
+echo -e  ${green}10.  ${cyan}HD: 8.9.83${background}
+echo -e  ${green}11.  ${cyan}HD: 8.9.85${background}
 echo "========================="
 echo -en ${green}请输入您的选项: ${background};read num
 case ${num} in
-1|8.9.58)
+1|8.9.33)
+export version=8.9.33
+;;
+2|8.9.58)
 export version=8.9.58
 ;;
-2|8.9.63)
+3|8.9.63)
 export version=8.9.63
 ;;
-3|8.9.68)
+4|8.9.68)
 export version=8.9.68
 ;;
-4|8.9.70)
+5|8.9.70)
 export version=8.9.70
 ;;
-5|8.9.71)
+6|8.9.71)
 export version=8.9.71
 ;;
-6|8.9.73)
+7|8.9.73)
 export version=8.9.73
 ;;
-7|8.9.76)
+8|8.9.76)
 export version=8.9.76
 ;;
-8|8.9.80)
+9|8.9.80)
 export version=8.9.80
 ;;
-9|8.9.83)
+10|8.9.83)
 export version=8.9.83
+;;
+11|8.9.85)
+export version=8.9.85
 ;;
 *)
 echo

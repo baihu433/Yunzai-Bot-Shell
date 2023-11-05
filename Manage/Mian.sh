@@ -116,160 +116,48 @@ fi
 
 function QSIGN(){
 if [ -d $HOME/QSignServer/qsign119 ];then
-    if [ -d $HOME/QSignServer/jdk ];then
-        export PATH=$PATH:$HOME/QSignServer/jdk/bin
-        export JAVA_HOME=$HOME/QSignServer/jdk
+    if [ "${Bot_Name}" == "TRSS-Yunzai" ];then
+        return
     fi
-QSIGN_VERSION="119"
-function qsign_curl(){
-for folder in $(ls -d $HOME/QSignServer/txlib/*)
-do
-    file="${folder}/config.json"
-    port_="$(grep port ${file} | awk '{print $2}')"
-done
-if curl -sL 127.0.0.1:${port_} > /dev/null 2>&1
-then
-    return 0
-else
-    return 1
-fi
-}
-function tmux_gauge(){
-i=0
-Tmux_Name="$1"
-tmux_ls ${Tmux_Name} & > /dev/null 2>&1
-until qsign_curl
-do
-    i="$((${i}+1))"
-    a="${a}#"
-    echo -ne "\r${i}% ${a}"
-    if [ "${i}" == "100" ];then
-        echo
-        return 1
-    fi
-done
-echo
-}
-ICQQ_VERSION="$(pnpm list icqq | grep icqq | awk '{print $2}')"
-if [ ! -e $HOME/QSignServer/txlib/${version}/config.json ];then
-    echo -e ${red}文件不存在 请确认您已经部署签名服务器${background}
-    exit
-fi
-file="$HOME/QSignServer/txlib/${version}/config.json"
-port="$(grep -E port ${file} | awk '{print $2}' )"
-key="$(grep -E key ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
-host="$(grep -E host ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
-API="http://"${host}":"${port}"/sign?key="${key}
-API=$(echo ${API})
-echo -e ${cyan}您的本地签名服务器API链接: ${green}${API}${background}
-file1="${Bot_Path}/config/config/bot.yaml"
-file2="${Bot_Path}/config/config/qq.yaml"
-equipment="platform: 2"
-if [ -e ${file1} ];then
-    if ! grep -q "${API}" ${file1};then
-        old_ver=$(grep ver ${file1})
-        old_sign_api_addr=$(grep sign_api_addr ${file1})
-        new_ver="ver: ${version}"
-        new_sign_api_addr="sign_api_addr: ${API}"
-        if [[ ! -z ${old_ver} ]];then
-            sed -i "s|${old_ver}|${new_ver}|g" ${file1}
-        fi
-        sed -i "s|${old_sign_api_addr}|${new_sign_api_addr}|g" ${file1}
-    fi
-fi
-if [ -e ${file2} ];then
-    if ! grep -q "${equipment}" ${file2};then
-        sed -i "s/$(grep platform ${file2})/${equipment}/g" ${file2}
-        sed -i "s/$(grep ver ${file2})//g" ${file2}
-    fi
-fi
-API=$(echo ${API} | sed "s#/sign?key=${key}##g")
-echo -e ${white}"====="${green}白狐-QSignServer${white}"====="${background}
-echo -e ${cyan}您的ICQQ版本为${ICQQ_VERSION}${background}
-echo -e ${cyan}请选择适配的共享库版本${background}
-echo -e  ${green}1.  ${cyan}HD: 8.9.58${background}
-echo -e  ${green}2.  ${cyan}HD: 8.9.63${background}
-echo -e  ${green}3.  ${cyan}HD: 8.9.68${background}
-echo -e  ${green}4.  ${cyan}HD: 8.9.70${background}
-echo -e  ${green}5.  ${cyan}HD: 8.9.71${background}
-echo -e  ${green}6.  ${cyan}HD: 8.9.73${background}
-echo -e  ${green}7.  ${cyan}HD: 8.9.76${background}
-echo -e  ${green}8.  ${cyan}HD: 8.9.80${background}
-echo -e  ${green}9.  ${cyan}HD: 8.9.83${background}
-echo "========================="
-echo -en ${green}请输入您的选项: ${background};read num
-case ${num} in
-1|8.9.58)
-export version=8.9.58
-;;
-2|8.9.63)
-export version=8.9.63
-;;
-3|8.9.68)
-export version=8.9.68
-;;
-4|8.9.70)
-export version=8.9.70
-;;
-5|8.9.71)
-export version=8.9.71
-;;
-6|8.9.73)
-export version=8.9.73
-;;
-7|8.9.76)
-export version=8.9.76
-;;
-8|8.9.80)
-export version=8.9.80
-;;
-9|8.9.83)
-export version=8.9.83
-;;
-*)
-echo
-echo -e ${red}输入错误${background}
-exit
-;;
-esac
-
-if curl -sL ${API} > /dev/null 2>&1
-then
-    echo -e ${green}签名服务器 ${cyan}已启动${background}
-    if curl -sL ${API} | grep -q ${version}
+    for folder in $(ls -d $HOME/QSignServer/txlib/*)
+    do
+        file="${folder}/config.json"
+        port="$(grep -E port ${file} | awk '{print $2}' )"
+        key="$(grep -E key ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
+        host="$(grep -E host ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
+    done        
+    API="http://"${host}":"${port}"/sign?key="${key}
+    API=$(echo ${API})
+    echo -e ${cyan}您的本地签名服务器API链接: ${green}${API}${background}
+    if ! curl -sL 127.0.0.1:${port} > /dev/null 2>&1
     then
-        echo -e ${cyan}签名服务器的共享库版本 ${green}正确${background}
-    else
-        echo -e ${cyan}签名服务器的共享库版本 ${red}错误${background}
-        echo -e ${yellow}正在重启签名服务器${background}
-        Start_Stop_Restart="重启"
-        tmux_kill_session qsignserver
-        tmux_new qsignserver "bash $HOME/QSignServer/qsign${QSIGN_VERSION}/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${version}"
-        if tmux_gauge qsignserver
-        then
-            echo -e ${green}${Start_Stop_Restart}成功${background}
-        else
-            echo -en ${red}${Start_Stop_Restart}失败 回车返回${background}
-            read
-            exit
-        fi
-    fi
-else
-    echo -e ${green}签名服务器 ${red}未启动${background}
-    echo -e ${green}签名服务器 ${cyan}正在启动${background}
-    Start_Stop_Restart="启动"
-    tmux_new qsignserver "bash $HOME/QSignServer/qsign${QSIGN_VERSION}/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${version}"
-    if tmux_gauge qsignserver
-    then
-        echo
-        echo -e ${green}${Start_Stop_Restart}成功${background}
-        echo -e ${green}正在启动 ${cyan}${Bot_Name}${background}
-    else
-        echo -en ${red}${Start_Stop_Restart}失败 回车返回${background}
-        read
+        echo -e ${cyan}签名服务器 ${red}[未启动]${background}
         exit
     fi
-fi
+    file1="${Bot_Path}/config/config/bot.yaml"
+    file2="${Bot_Path}/config/config/qq.yaml"
+    equipment="platform: 2"
+    if [ -e ${file1} ];then
+        if ! grep -q "${API}" ${file1};then
+            old_sign_api_addr=$(grep sign_api_addr ${file1})
+            new_sign_api_addr="sign_api_addr: ${API}"
+            
+            sed -i "s|${old_sign_api_addr}|${new_sign_api_addr}|g" ${file1}
+        fi
+        if ! grep -q "ver: 8.*" ${file1};then
+            old_ver=$(grep ver ${file1})
+            new_ver="ver: "
+            if [[ ! -z ${old_ver} ]];then
+                sed -i "s|${old_ver}|${new_ver}|g" ${file1}
+            fi
+        fi
+    fi
+    if [ -e ${file2} ];then
+        if ! grep -q "${equipment}" ${file2};then
+            sed -i "s/$(grep platform ${file2})/${equipment}/g" ${file2}
+            sed -i "s/$(grep ver ${file2})//g" ${file2}
+        fi
+    fi
 fi
 }
 
@@ -361,6 +249,7 @@ if ! [ "${Redis}" = "PONG" ]; then
  redis-server &
  echo
 fi
+QSIGN
 node app
 if run
 then
@@ -379,6 +268,7 @@ if ! [ "${Redis}" = "PONG" ]; then
  nohup redis-server &
  echo
 fi
+QSIGN
 pnpm run start
 exit
 ;;
@@ -453,7 +343,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.7.4"
+    old_version="0.7.6"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
