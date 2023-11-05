@@ -141,7 +141,6 @@ if [ -d $HOME/QSignServer/qsign119 ];then
         if ! grep -q "${API}" ${file1};then
             old_sign_api_addr=$(grep sign_api_addr ${file1})
             new_sign_api_addr="sign_api_addr: ${API}"
-            
             sed -i "s|${old_sign_api_addr}|${new_sign_api_addr}|g" ${file1}
         fi
         if ! grep -q "ver: 8.*" ${file1};then
@@ -155,7 +154,6 @@ if [ -d $HOME/QSignServer/qsign119 ];then
     if [ -e ${file2} ];then
         if ! grep -q "${equipment}" ${file2};then
             sed -i "s/$(grep platform ${file2})/${equipment}/g" ${file2}
-            sed -i "s/$(grep ver ${file2})//g" ${file2}
         fi
     fi
 fi
@@ -343,7 +341,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.7.6"
+    old_version="0.7.7"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
