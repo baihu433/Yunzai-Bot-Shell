@@ -175,7 +175,6 @@ YZ|Yunzai|Yunzai-Bot)
 if [ -z "${Bot_Name}" ]; then
     export Bot_Name=Yunzai-Bot
     Quick_Command="true"
-    
 fi
 Bot_Path_Check
 cd ${Bot_Path}
