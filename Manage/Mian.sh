@@ -340,7 +340,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.7.8"
+    old_version="0.7.9"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
@@ -497,11 +497,10 @@ elif [[ $1 == qsign ]];then
         main
         exit
     fi
-    old_sign_api_addr=$(grep sign_api_addr ${file1})
+    old_sign_api_addr=$(grep sign_api_addr ${file})
     new_sign_api_addr="sign_api_addr: ${API}"
-    sed -i "s|${old_sign_api_addr}|${new_sign_api_addr}|g" ${file1}
-    sed -i "s|${old_qsign}|${API}|g" config/config/bot.yaml
-    API=$(grep sign_api_addr config/config/bot.yaml)
+    sed -i "s|${old_sign_api_addr}|${new_sign_api_addr}|g" ${file}
+    API=$(grep sign_api_addr ${file})
     API=$(echo ${API} | sed "s/sign_api_addr: //g")
     echo -e ${cyan}您的API链接已修改为 ${green}${API}${background}
     echo
