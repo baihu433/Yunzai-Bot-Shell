@@ -120,13 +120,13 @@ key_=fox
 for folder in $(ls -d $HOME/QSignServer/txlib/*)
 do
     file="${folder}/config.json"
-    port="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
+    port=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g" )
     sed -i "s/${port}/${port_}/g" ${file}
 done
 for folder in $(ls -d $HOME/QSignServer/txlib/*)
 do
     file="${folder}/config.json"
-    key="$(grep -E key ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
+    key=$(grep -E key ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g" )
     sed -i "s/${key}/${key_}/g" ${file}
 done
 if [ ! "${install_QSignServer}" == "true" ]
@@ -175,7 +175,7 @@ function qsign_curl(){
 for folder in $(ls -d $HOME/QSignServer/txlib/*)
 do
     file="${folder}/config.json"
-    port_="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
+    port_=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g" )
 done
 if curl -sL 127.0.0.1:${port_} > /dev/null 2>&1
 then
@@ -362,7 +362,7 @@ function stop_QSignServer(){
 for folder in $(ls -d $HOME/QSignServer/txlib/*)
 do
     file="${folder}/config.json"
-    port_="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
+    port_=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g" )
 done
 if curl 127.0.0.1:${port_} > /dev/null 2>&1
 then
@@ -406,7 +406,7 @@ function update_QSignServer(){
 for folder in $(ls -d $HOME/QSignServer/txlib/*)
 do
     file="${folder}/config.json"
-    port_="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
+    port_=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g" )
 done
 if curl 127.0.0.1:${port_} > /dev/null 2>&1
 then
@@ -422,12 +422,12 @@ fi
 for folder in $(ls -d $HOME/QSignServer/txlib/*)
 do
     file="${folder}/config.json"
-    port_="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
+    port_=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g" )
 done
 for folder in $(ls -d $HOME/QSignServer/txlib/*)
 do
     file="${folder}/config.json"
-    key_="$(grep -E key ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
+    key_=$(grep -E key ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g" )
 done
 rm -rf txlib/.git txlib/README.md > /dev/null 2>&1
 rm -rf txlib/.git txlib/README.md > /dev/null 2>&1
@@ -455,13 +455,13 @@ API_LINK=["${cyan} ${qsign_version}"]
 for folder in $(ls -d $HOME/QSignServer/txlib/*)
 do
     file="${folder}/config.json"
-    port="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
+    port=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g" )
     sed -i "s/${port}/${port_}/g" ${file}
 done
 for folder in $(ls -d $HOME/QSignServer/txlib/*)
 do
     file="${folder}/config.json"
-    key="$(grep -E key ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
+    key=$(grep -E key ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g" )
     sed -i "s/${key}/${key_}/g" ${file}
 done
 }
@@ -484,7 +484,7 @@ function log_QSignServer(){
 for folder in $(ls -d $HOME/QSignServer/txlib/*)
 do
     file="${folder}/config.json"
-    port_="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
+    port_=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g" )
 done
 if ! curl 127.0.0.1:${port_} > /dev/null 2>&1
 then
@@ -514,7 +514,7 @@ fi
 for folder in $(ls -d $HOME/QSignServer/txlib/*)
 do
     file="${folder}/config.json"
-    key="$(grep -E key ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
+    key=$(grep -E key ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g" )
     sed -i "s/${key}/${key_}/g" ${file}
 done
 echo -en ${yellow}更改完成 回车返回${background};read
@@ -533,7 +533,7 @@ fi
 for folder in $(ls -d $HOME/QSignServer/txlib/*)
 do
     file="${folder}/config.json"
-    port="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
+    port=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g" )
     sed -i "s/${port}/${port_}/g" ${file}
 done
 echo -en ${yellow}更改完成 回车返回${background};read
@@ -549,9 +549,9 @@ echo
 for folder in $(ls $HOME/QSignServer/txlib)
 do
     file="$HOME/QSignServer/txlib/${folder}/config.json"
-    port="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
-    key="$(grep -E key ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
-    host="$(grep -E host ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/,//g" )"
+    port=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g" )
+    key=$(grep -E key ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g" )
+    host=$(grep -E host ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g" )
     echo -e ${green}${folder}: ${cyan}"http://""${host}":"${port}"/sign?key="${key}"${background}
     echo
 done
@@ -562,7 +562,7 @@ if [[ -d $HOME/QSignServer ]];then
     for folder in $(ls -d $HOME/QSignServer/txlib/*)
     do
         file="${folder}/config.json"
-        port_="$(grep -E port ${file} | awk '{print $2}' | sed "s/\"//g" | sed "s/://g" )"
+        port_=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g" )
     done
     if curl -sL 127.0.0.1:${port_} > /dev/null 2>&1
     then
