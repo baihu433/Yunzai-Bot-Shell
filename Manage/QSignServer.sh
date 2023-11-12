@@ -225,15 +225,15 @@ then
 fi
 echo -e ${white}"====="${green}白狐-QSignServer${white}"====="${background}
 echo -e ${cyan}请选择签名服务器适配的QQ共享库版本${background}
-echo -e  ${green}1.  ${cyan}HD: 8.9.33${background}
-echo -e  ${green}2.  ${cyan}HD: 8.9.58${background}
-echo -e  ${green}3.  ${cyan}HD: 8.9.63${background}
-echo -e  ${green}4.  ${cyan}HD: 8.9.68${background}
-echo -e  ${green}5.  ${cyan}HD: 8.9.70${background}
-echo -e  ${green}6.  ${cyan}HD: 8.9.71${background}
-echo -e  ${green}7.  ${cyan}HD: 8.9.73${background}
-echo -e  ${green}8.  ${cyan}HD: 8.9.76${background}
-echo -e  ${green}9.  ${cyan}HD: 8.9.80${background}
+echo -e  ${green} 1.  ${cyan}HD: 8.9.33${background}
+echo -e  ${green} 2.  ${cyan}HD: 8.9.58${background}
+echo -e  ${green} 3.  ${cyan}HD: 8.9.63${background}
+echo -e  ${green} 4.  ${cyan}HD: 8.9.68${background}
+echo -e  ${green} 5.  ${cyan}HD: 8.9.70${background}
+echo -e  ${green} 6.  ${cyan}HD: 8.9.71${background}
+echo -e  ${green} 7.  ${cyan}HD: 8.9.73${background}
+echo -e  ${green} 8.  ${cyan}HD: 8.9.76${background}
+echo -e  ${green} 9.  ${cyan}HD: 8.9.80${background}
 echo -e  ${green}10.  ${cyan}HD: 8.9.83${background}
 echo -e  ${green}11.  ${cyan}HD: 8.9.85${background}
 echo -e  ${green}12.  ${cyan}HD: 8.9.88${background}
@@ -594,17 +594,17 @@ else
 fi
 
 echo -e ${white}"====="${green}白狐-QSignServer${white}"====="${background}
-echo -e  ${green}1.  ${cyan}安装签名服务器${background}
-echo -e  ${green}2.  ${cyan}启动签名服务器${background}
-echo -e  ${green}3.  ${cyan}关闭签名服务器${background}
-echo -e  ${green}4.  ${cyan}重启签名服务器${background}
-echo -e  ${green}5.  ${cyan}更新签名服务器${background}
-echo -e  ${green}6.  ${cyan}卸载签名服务器${background}
-echo -e  ${green}7.  ${cyan}打开签名服务器窗口/日志${background}
-echo -e  ${green}8.  ${cyan}修改签名服务器key值${background}
-echo -e  ${green}9.  ${cyan}修改签名服务器端口${background}
+echo -e  ${green} 1.  ${cyan}安装签名服务器${background}
+echo -e  ${green} 2.  ${cyan}启动签名服务器${background}
+echo -e  ${green} 3.  ${cyan}关闭签名服务器${background}
+echo -e  ${green} 4.  ${cyan}重启签名服务器${background}
+echo -e  ${green} 5.  ${cyan}更新签名服务器${background}
+echo -e  ${green} 6.  ${cyan}卸载签名服务器${background}
+echo -e  ${green} 7.  ${cyan}打开签名服务器窗口/日志${background}
+echo -e  ${green} 8.  ${cyan}修改签名服务器key值${background}
+echo -e  ${green} 9.  ${cyan}修改签名服务器端口${background}
 echo -e  ${green}10.  ${cyan}查看签名服务器链接${background}
-echo -e  ${green}0.  ${cyan}退出${background}
+echo -e  ${green}0.   ${cyan}退出${background}
 echo "========================="
 echo -e ${green}您的签名服务器状态: ${condition}${background}
 echo -e ${green}当前签名服务器版本: ${Version}${background}
