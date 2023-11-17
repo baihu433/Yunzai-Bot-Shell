@@ -340,7 +340,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.7.9"
+    old_version="0.8.0"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
