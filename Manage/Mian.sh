@@ -727,7 +727,7 @@ elif [ "${Number}" == "7" ];then
         git remote add origin https://gitee.com/Yummy-cookie/Yunzai-Bot.git
         git remote set-url origin https://gitee.com/Yummy-cookie/Yunzai-Bot.git
         git fetch --all
-        git branch --set-upstream-to=origin/master main
+        git branch --set-upstream-to=origin/master master
         git pull --rebase -f
         pnpm update
         pnpm install -P
