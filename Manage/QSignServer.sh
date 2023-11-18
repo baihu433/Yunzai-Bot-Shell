@@ -28,7 +28,7 @@ QSIGN_URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/releases/download/QSignSe
 QSIGN_VERSION="119"
 qsign_version="1.1.9"
 txlib="https://gitee.com/baihu433/txlib"
-Txlib_Version_New="8.9.88"
+Txlib_Version_New="8.9.90"
 case $(uname -m) in
 amd64|x86_64)
 JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/x64/linux/OpenJDK8U-jdk_x64_linux_hotspot_8u392b08.tar.gz"
@@ -237,6 +237,7 @@ echo -e  ${green} 9.  ${cyan}HD: 8.9.80${background}
 echo -e  ${green}10.  ${cyan}HD: 8.9.83${background}
 echo -e  ${green}11.  ${cyan}HD: 8.9.85${background}
 echo -e  ${green}12.  ${cyan}HD: 8.9.88${background}
+echo -e  ${green}13.  ${cyan}HD: 8.9.90${background}
 echo "========================="
 echo -en ${green}请输入您的选项: ${background};read num
 case ${num} in
@@ -275,6 +276,9 @@ export version=8.9.85
 ;;
 12|8.9.88)
 export version=8.9.88
+;;
+13|8.9.90)
+export version=8.9.90
 ;;
 *)
 echo
