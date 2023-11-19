@@ -1,3 +1,4 @@
+<a href='https://gitee.com/baihu433/Yunzai-Bot-Shell/stargazers'><img src='https://gitee.com/baihu433/Yunzai-Bot-Shell/badge/star.svg?theme=dark' alt='star'></img></a>
 <h1 align="center">白狐-Script</h1>
 <hr/>
 
