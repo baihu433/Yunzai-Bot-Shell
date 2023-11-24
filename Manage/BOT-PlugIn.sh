@@ -1,3 +1,4 @@
+#!/bin/env bash
 export grey="\033[30m"
 export red="\033[31m"
 export green="\033[32m"
