@@ -35,12 +35,12 @@ export PATH=$PATH:/usr/local/node/bin
 export PATH=$PATH:/root/.local/share/pnpm
 export PNPM_HOME=/root/.local/share/pnpm
 ' >> /etc/profile
-if ! grep 'PUPPETEER_EXECUTABLE_PATH' ;then
+if ! grep 'PUPPETEER_EXECUTABLE_PATH' /etc/profile;then
 echo "
-export PUPPETEER_EXECUTABLE_PATH=${chromium_path}
-" >> /etc/profile
+export PUPPETEER_EXECUTABLE_PATH=${chromium_path}" >> /etc/profile
 fi
 fi
+
 if [ -e /etc/fish/config.fish ];then
 if ! grep -q '#Node.JS' /etc/fish/config.fish;then
 echo '
@@ -48,10 +48,9 @@ echo '
 set -x PATH /root/.local/share/pnpm /usr/local/node/bin $PATH
 set PNPM_HOME /root/.local/share/pnpm
 ' >> /etc/fish/config.fish
-if ! grep 'PUPPETEER_EXECUTABLE_PATH' ;then
+if ! grep 'PUPPETEER_EXECUTABLE_PATH' /etc/fish/config.fish;then
 echo "
-export PUPPETEER_EXECUTABLE_PATH=${chromium_path}
-" >> /etc/fish/config.fish
+export PUPPETEER_EXECUTABLE_PATH=${chromium_path}" >> /etc/fish/config.fish
 fi
 fi
 source /etc/fish/config.fish
