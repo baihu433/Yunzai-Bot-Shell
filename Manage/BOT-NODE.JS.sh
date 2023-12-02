@@ -16,12 +16,18 @@ pv node.tar.xz | tar -xJf - -C node
 rm -rf /usr/local/node > /dev/null
 rm -rf /usr/local/node > /dev/null
 mv -f node/$(ls node) /usr/local/node
+if [ -x /usr/bin/chromium-browser ];then
+    chromium_path=/usr/bin/chromium-browser
+else
+    chromium_path=$(command -v chromium || command -v chromium-browser)
+fi
 if [ ! -d $HOME/.local/share/pnpm ];then
     mkdir -p $HOME/.local/share/pnpm
 fi
 export PATH=$PATH:/usr/local/node/bin
 export PATH=$PATH:/root/.local/share/pnpm
 export PNPM_HOME=/root/.local/share/pnpm
+export PUPPETEER_EXECUTABLE_PATH=${chromium_path}
 if ! grep -q '#Node.JS' /etc/profile;then
 echo '
 #Node.JS
@@ -29,6 +35,11 @@ export PATH=$PATH:/usr/local/node/bin
 export PATH=$PATH:/root/.local/share/pnpm
 export PNPM_HOME=/root/.local/share/pnpm
 ' >> /etc/profile
+if ! grep 'PUPPETEER_EXECUTABLE_PATH' ;then
+echo "
+export PUPPETEER_EXECUTABLE_PATH=${chromium_path}
+" >> /etc/profile
+fi
 fi
 if [ -e /etc/fish/config.fish ];then
 if ! grep -q '#Node.JS' /etc/fish/config.fish;then
@@ -37,6 +48,11 @@ echo '
 set -x PATH /root/.local/share/pnpm /usr/local/node/bin $PATH
 set PNPM_HOME /root/.local/share/pnpm
 ' >> /etc/fish/config.fish
+if ! grep 'PUPPETEER_EXECUTABLE_PATH' ;then
+echo "
+export PUPPETEER_EXECUTABLE_PATH=${chromium_path}
+" >> /etc/fish/config.fish
+fi
 fi
 source /etc/fish/config.fish
 fi
