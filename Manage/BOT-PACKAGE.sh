@@ -35,6 +35,8 @@ do
 done
 pnpm uninstall puppeteer -w
 pnpm install puppeteer@19.0.0 -w
+pnpm install icqq -w
+pnpm install icqq@latest -w
 echo -en ${yellow}正在初始化${background}
 pnpm run start
 sleep 3s

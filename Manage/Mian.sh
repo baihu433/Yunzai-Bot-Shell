@@ -131,8 +131,8 @@ if [ -d $HOME/QSignServer/qsign119 ];then
     echo -e ${cyan}您的本地签名服务器API链接: ${green}${API}${background}
     if ! curl -sL 127.0.0.1:${port} > /dev/null 2>&1
     then
-        echo -e ${cyan}签名服务器 ${red}[未启动]${background}
-        exit
+        export start_QSignServer="ture"
+        bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QSignServer.sh)
     fi
     file1="${Bot_Path}/config/config/bot.yaml"
     file2="${Bot_Path}/config/config/qq.yaml"
@@ -340,7 +340,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.8.2"
+    old_version="0.8.3"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
