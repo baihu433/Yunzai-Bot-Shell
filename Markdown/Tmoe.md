@@ -429,6 +429,24 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 手机用户请选择 `9  前台启动` 
 
+<hr/>
+
+然后会提示选择签名服务器版本
+
+![bhmain.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qsign.png)
+
+推荐: `13. HD: 8.9.90` 
+填入 `13` 并回车
+
+<hr>
+
+然后会提示选择启动方式
+
+![bhmain.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qsign1.png)
+
+推荐: `2. TMUX后台启动` 
+填入 `2` 并回车
+
 <hr>
 
 随后 机器人就开始启动了
@@ -478,6 +496,8 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 之后机器人就被启动成功了<br>
 赶快去向机器人分别发送`#帮助`和`#喵喵帮助`<br>
 开始享用吧
+
+[注意 第一次启动 可能会启动失败 请重启]
 
 <hr/>
 
