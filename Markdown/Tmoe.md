@@ -433,7 +433,7 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 然后会提示选择签名服务器版本
 
-![bhmain.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qsign.png)
+![qsign.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qsign.png)
 
 推荐: `13. HD: 8.9.90` 
 填入 `13` 并回车
@@ -442,10 +442,19 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 然后会提示选择启动方式
 
-![bhmain.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qsign1.png)
+![qsign1.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qsign1.png)
 
 推荐: `2. TMUX后台启动` 
 填入 `2` 并回车
+
+<hr/>
+
+然后会提示 是否打开窗口
+
+![qsign2.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qsign2.png)
+
+填入 `N` 并回车
+如果提示 `回车返回` 就回车一下
 
 <hr>
 
