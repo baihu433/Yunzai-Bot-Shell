@@ -340,7 +340,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.8.4"
+    old_version="0.8.5"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
@@ -656,6 +656,7 @@ Number=$(${dialog_whiptail} \
 "5" "dpkg安装被中断" \
 "6" "无法锁定数据库" \
 "7" "更换饼干Yunzai" \
+"8" "修复监听错误" \
 3>&1 1>&2 2>&3)
 if [ "${Number}" == "1" ];then
     echo -e ${yellow}正在修复${background}
@@ -740,6 +741,21 @@ elif [ "${Number}" == "7" ];then
         echo -e ${cyan}您不是Yunzai-Bot ${red}无需切换${background}
         exit
     fi
+elif [ "${Number}" == "8" ];then
+    echo -e ${cyan}正在删除依赖${background}
+    rm -rf node_modules > /dev/null 2>&1
+    rm -rf node_modules > /dev/null 2>&1
+    URL="https://registry.npmmirror.com"
+    sqlite3_URL="https://npmmirror.com/mirrors/sqlite3"
+    echo -e ${cyan}正在换源${background}
+    pnpm config set registry ${URL}
+    pnpm config set registry ${URL}
+    pnpm config set node_sqlite3_binary_host_mirror ${sqlite3_URL}
+    pnpm config set node_sqlite3_binary_host_mirror ${sqlite3_URL}
+    echo -e ${cyan}正在安装依赖${background}
+    echo Y | pnpm install
+    echo Y | pnpm install
+    echo -en ${cyan}回车返回${background};read
 else
     return
 fi

@@ -134,6 +134,11 @@ rm /usr/local/bin/bh
 ```
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PlugIn.sh)
 ```
+>签名服务器部署: [仅适配Linux]<br>
+>Linux请使用Terminal[终端]执行
+```
+bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QSignServer.sh)
+```
 
 <hr/>
 
