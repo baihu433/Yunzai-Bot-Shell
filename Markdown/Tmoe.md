@@ -435,8 +435,10 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 ![qsign.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qsign.png)
 
-推荐: `13. HD: 8.9.90` 
-填入 `13` 并回车
+推荐: `9. HD: 8.9.80` 
+填入 `9` 并回车
+###### `注意: 如果8.9.80提示45错误，那就往上增加版本`
+
 
 <hr>
 
