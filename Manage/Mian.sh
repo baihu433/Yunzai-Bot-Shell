@@ -340,7 +340,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.8.5"
+    old_version="0.8.6"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
@@ -666,8 +666,14 @@ if [ "${Number}" == "1" ];then
 elif [ "${Number}" == "2" ];then
     file="config/config/bot.yaml"
     old_chromium_path=$(grep chromium_path ${file})
-    if [ -x /usr/bin/chromium-browser ];then
+    if /bin/chromium-browser > /dev/null 2>&1
+    then
+        new_chromium_path=/bin/chromium-browser
+        echo 1
+    elif /usr/bin/chromium-browser > /dev/null 2>&1
+    then
         new_chromium_path=/usr/bin/chromium-browser
+        echo 2
     else
         new_chromium_path=$(command -v chromium || command -v chromium-browser)
     fi

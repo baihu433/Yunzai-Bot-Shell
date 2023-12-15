@@ -16,11 +16,7 @@ pv node.tar.xz | tar -xJf - -C node
 rm -rf /usr/local/node > /dev/null
 rm -rf /usr/local/node > /dev/null
 mv -f node/$(ls node) /usr/local/node
-if [ -x /usr/bin/chromium-browser ];then
-    chromium_path=/usr/bin/chromium-browser
-else
-    chromium_path=$(command -v chromium || command -v chromium-browser)
-fi
+chromium_path=$(command -v chromium || command -v chromium-browser)
 if [ ! -d $HOME/.local/share/pnpm ];then
     mkdir -p $HOME/.local/share/pnpm
 fi
