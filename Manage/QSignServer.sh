@@ -286,6 +286,9 @@ export version=8.9.85
 14|8.9.88)
 export version=8.9.88
 ;;
+15|8.9.90)
+export version=8.9.90
+;;
 16|8.9.93)
 export version=8.9.93
 ;;
