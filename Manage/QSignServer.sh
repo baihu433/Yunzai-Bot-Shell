@@ -25,10 +25,10 @@ if [ -d $HOME/QSignServer/jdk ];then
     export JAVA_HOME=$HOME/QSignServer/jdk
 fi
 QSIGN_URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/releases/download/QSignServer/unidbg-fetch-qsign-1.1.9.zip"
+NewVersion="1.0.0"
 QSIGN_VERSION="119"
 qsign_version="1.1.9"
 txlib="https://gitee.com/baihu433/txlib"
-Txlib_Version_New="8.9.93"
 function tmux_new(){
 Tmux_Name="$1"
 Shell_Command="$2"
@@ -231,13 +231,16 @@ echo -e  ${green} 4.  ${cyan}HD: 8.9.68${background}
 echo -e  ${green} 5.  ${cyan}HD: 8.9.70${background}
 echo -e  ${green} 6.  ${cyan}HD: 8.9.71${background}
 echo -e  ${green} 7.  ${cyan}HD: 8.9.73${background}
-echo -e  ${green} 8.  ${cyan}HD: 8.9.76${background}
-echo -e  ${green} 9.  ${cyan}HD: 8.9.80${background}
-echo -e  ${green}10.  ${cyan}HD: 8.9.83${background}
-echo -e  ${green}11.  ${cyan}HD: 8.9.85${background}
-echo -e  ${green}12.  ${cyan}HD: 8.9.88${background}
-echo -e  ${green}13.  ${cyan}HD: 8.9.90${background}
-echo -e  ${green}14.  ${cyan}HD: 8.9.93${background}
+echo -e  ${green} 8.  ${cyan}HD: 8.9.75${background}
+echo -e  ${green} 9.  ${cyan}HD: 8.9.76${background}
+echo -e  ${green}10.  ${cyan}HD: 8.9.78${background}
+echo -e  ${green}11.  ${cyan}HD: 8.9.80${background}
+echo -e  ${green}12.  ${cyan}HD: 8.9.83${background}
+echo -e  ${green}13.  ${cyan}HD: 8.9.85${background}
+echo -e  ${green}14.  ${cyan}HD: 8.9.88${background}
+echo -e  ${green}15.  ${cyan}HD: 8.9.90${background}
+echo -e  ${green}16.  ${cyan}HD: 8.9.93${background}
+echo -e  ${green}17.  ${cyan}HD: 8.9.96${background}
 echo "========================="
 echo -en ${green}请输入您的选项: ${background};read num
 case ${num} in
@@ -262,26 +265,32 @@ export version=8.9.71
 7|8.9.73)
 export version=8.9.73
 ;;
-8|8.9.76)
+8|8.9.75)
+export version=8.9.75
+;;
+9|8.9.76)
 export version=8.9.76
 ;;
-9|8.9.80)
+10|8.9.78)
+export version=8.9.78
+;;
+11|8.9.80)
 export version=8.9.80
 ;;
-10|8.9.83)
+12|8.9.83)
 export version=8.9.83
 ;;
-11|8.9.85)
+13|8.9.85)
 export version=8.9.85
 ;;
-12|8.9.88)
+14|8.9.88)
 export version=8.9.88
 ;;
-13|8.9.90)
-export version=8.9.90
-;;
-14|8.9.93)
+16|8.9.93)
 export version=8.9.93
+;;
+17|8.9.96)
+export version=8.9.96
 ;;
 *)
 echo
@@ -472,6 +481,8 @@ do
     key=$(grep -E key ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g" )
     sed -i "s/${key}/${key_}/g" ${file}
 done
+export Version=${NewVersion}
+echo "${Version}" > $HOME/QSignServer/Version
 }
 
 function uninstall_QSignServer(){
@@ -574,33 +585,25 @@ if [[ -d $HOME/QSignServer ]];then
     done
     if curl -sL 127.0.0.1:${port_} > /dev/null 2>&1
     then
-        condition="${cyan}[已启动]"
+        QsignVersion=$(curl -sL 127.0.0.1:${port_} | grep version | sed 's|"||g' | sed 's|:||g' | sed 's|,||g')
+        QsignVersion=$(echo ${QsignVersion} | awk '{print $4}')
+        condition="${cyan}[${QsignVersion}]"
     else
         condition="${red}[未启动]"
     fi
-    for folder in $(ls $HOME/QSignServer/txlib)
-    do
-        Txlib_Version_Local=${folder}
-    done
-    if [ "${Txlib_Version_Local}" == "${Txlib_Version_New}" ]
-    then
-        Txlib_Version="${cyan}[HD:${Txlib_Version_New}]"
-    else
-        Txlib_Version="${red}[${Txlib_Version_Local}] [请更新]"
+    if [ -e $HOME/QSignServer/Version ];then
+        Version=$(cat $HOME/QSignServer/Version)
     fi
-    Version="[$(ls $HOME/QSignServer | grep qsign | sed "s/qsign//g" | sed "s/.\B/&./g")]"
-    QSIGN_VERSION_local=$(ls $HOME/QSignServer | grep qsign | sed 's/qsign//g')
-    if [ "${QSIGN_VERSION}" == "${QSIGN_VERSION_local}" ]
+    if [ "${Version}" == "${NewVersion}" ]
     then
-        Version="${cyan}${Version}"
+        Version="${cyan}[${Version}]"
     else
-        Version="${red}${Version} [请更新]"
+        Version="${red}${Version}[请更新]"
     fi
 else
     Version="${red}[未部署]"
     condition="${red}[未部署]"
 fi
-
 echo -e ${white}"====="${green}白狐-QSignServer${white}"====="${background}
 echo -e  ${green} 1.  ${cyan}安装签名服务器${background}
 echo -e  ${green} 2.  ${cyan}启动签名服务器${background}
@@ -614,9 +617,8 @@ echo -e  ${green} 9.  ${cyan}修改签名服务器端口${background}
 echo -e  ${green}10.  ${cyan}查看签名服务器链接${background}
 echo -e  ${green}0.   ${cyan}退出${background}
 echo "========================="
-echo -e ${green}您的签名服务器状态: ${condition}${background}
-echo -e ${green}当前签名服务器版本: ${Version}${background}
-echo -e ${green}共享库最高支持版本: ${Txlib_Version}${background}
+echo -e ${green}签名服务器脚本版本: ${Version}${background}
+echo -e ${green}签名服务器适配版本: ${condition}${background}
 echo -e ${green}QQ群:${cyan}狐狸窝:705226976${background}
 echo "========================="
 echo
