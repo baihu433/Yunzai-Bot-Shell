@@ -206,6 +206,7 @@ Git=
         "66" "wind-plugin                    风插件" ${OFF} \
         "67" "ttsapi-yunzai-Plugin           TTS语音合成" ${OFF} \
         "68" "Xs-plugin                      XS插件" ${OFF} \
+        "69" "GT-Manual-plugin               米游社手动验证" ${OFF} \
         3>&1 1>&2 2>&3)
         then
             main
@@ -293,6 +294,7 @@ Git=
         echo -e ${green_red}66. ${cyan}wind-plugin"              "风插件${background}
         echo -e ${green_red}67. ${cyan}ttsapi-yunzai-Plugin"     "TTS语音合成${background}
         echo -e ${green_red}68. ${cyan}Xs-plugin"                "XS插件${background}
+        echo -e ${green_red}69. ${cyan}GT-Manual-plugin"         "米游社手动验证${background}
         echo
         echo -e ${green}0. ${cyan}返回${background}
         echo "#####################################"
