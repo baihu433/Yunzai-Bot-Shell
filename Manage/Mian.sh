@@ -161,7 +161,7 @@ fi
 
 case "$1" in
 PI)
-bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PlugIn.sh)
+bash <(curl -sL https://mirror.ghproxy.com/https://raw.githubusercontent.com/baihu433/baihu433.github.io/main/BOT-PlugIn.sh)
 ;;
 QS)
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QSignServer.sh)
@@ -809,7 +809,7 @@ elif [ "${Number}" == "5" ];then
     main
     exit
 elif [ "${Number}" == "6" ];then
-    bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PlugIn.sh)
+    bash <(curl -sL https://mirror.ghproxy.com/https://raw.githubusercontent.com/baihu433/baihu433.github.io/main/BOT-PlugIn.sh)
     main
     exit
 elif [ "${Number}" == "7" ];then
