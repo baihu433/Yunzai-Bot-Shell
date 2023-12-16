@@ -99,20 +99,14 @@ Git=
             fi
         fi
         }
-        for num_ in ${Git[@]}
+        for Name_tp in ${Name[@]}
         do
-            for Name_tp in ${Name[@]}
+            for Git_tp in ${Git[@]}
             do
-                Name=$(echo ${Name} | sed "s|${Name_tp}||g")
-                for Git_tp in ${Git[@]}
+            for Plugin_tp in ${Plugin[@]}
                 do
-                    Git=$(echo ${Git} | sed "s|${Git_tp}||g")
-                    for Plugin_tp in ${Plugin[@]}
-                    do
-                        Plugin=$(echo ${Plugin} | sed "s|${Plugin_tp}||g")
-                            install_
-                        break 2
-                    done
+                    install_
+                    continue 3
                 done
             done
         done
@@ -716,6 +710,11 @@ Git=
              Name="${Name} XS插件"
              Plugin="${Plugin} Xs-plugin"
              Git="${Git} https://gitee.com/hsxfk/Xs-plugin"
+             ;;
+           69)
+             Name="${Name} 米游社手动验证"
+             Plugin="${Plugin} GT-Manual-plugin"
+             Git="${Git} https://gitee.com/haanxuan/GT-Manual.git"
              ;;
            0)
              echo
