@@ -99,14 +99,20 @@ Git=
             fi
         fi
         }
-        for Name_tp in ${Name[@]}
+        for num_ in ${Git[@]}
         do
-            for Git_tp in ${Git[@]}
+            for Name_tp in ${Name[@]}
             do
-            for Plugin_tp in ${Plugin[@]}
+                Name=$(echo ${Name} | sed "s|${Name_tp}||g")
+                for Git_tp in ${Git[@]}
                 do
-                    install_
-                    continue 3
+                    Git=$(echo ${Git} | sed "s|${Git_tp}||g")
+                    for Plugin_tp in ${Plugin[@]}
+                    do
+                        Plugin=$(echo ${Plugin} | sed "s|${Plugin_tp}||g")
+                            install_
+                        break 2
+                    done
                 done
             done
         done
