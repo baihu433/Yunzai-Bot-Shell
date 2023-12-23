@@ -20,9 +20,9 @@ if [ ! "$(id -u)" = "0" ]; then
     echo -e ${red}请使用root用户${background}
     exit 0
 fi
-if [ -d $HOME/QSignServer/jre ];then
-    export PATH=$PATH:$HOME/QSignServer/jre/bin
-    export JAVA_HOME=$HOME/QSignServer/jre
+if [ -d $HOME/QSignServer/JRE ];then
+    export PATH=$PATH:$HOME/QSignServer/JRE/bin
+    export JAVA_HOME=$HOME/QSignServer/JRE
 fi
 QSIGN_URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/releases/download/QSignServer/unidbg-fetch-qsign-1.1.9.zip"
 NewVersion="1.0.2"
