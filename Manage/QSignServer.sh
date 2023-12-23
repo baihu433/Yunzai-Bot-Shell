@@ -25,7 +25,7 @@ if [ -d $HOME/QSignServer/jre ];then
     export JAVA_HOME=$HOME/QSignServer/jre
 fi
 QSIGN_URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/releases/download/QSignServer/unidbg-fetch-qsign-1.1.9.zip"
-NewVersion="1.0.1"
+NewVersion="1.0.2"
 QSIGN_VERSION="119"
 qsign_version="1.1.9"
 txlib="https://gitee.com/baihu433/txlib"
