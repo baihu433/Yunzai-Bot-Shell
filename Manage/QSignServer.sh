@@ -20,12 +20,12 @@ if [ ! "$(id -u)" = "0" ]; then
     echo -e ${red}请使用root用户${background}
     exit 0
 fi
-if [ -d $HOME/QSignServer/jdk ];then
-    export PATH=$PATH:$HOME/QSignServer/jdk/bin
-    export JAVA_HOME=$HOME/QSignServer/jdk
+if [ -d $HOME/QSignServer/jre ];then
+    export PATH=$PATH:$HOME/QSignServer/jre/bin
+    export JAVA_HOME=$HOME/QSignServer/jre
 fi
 QSIGN_URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/releases/download/QSignServer/unidbg-fetch-qsign-1.1.9.zip"
-NewVersion="1.0.0"
+NewVersion="1.0.1"
 QSIGN_VERSION="119"
 qsign_version="1.1.9"
 txlib="https://gitee.com/baihu433/txlib"
@@ -101,19 +101,19 @@ fi
 }
 case $(uname -m) in
 amd64|x86_64)
-JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/x64/linux/OpenJDK8U-jdk_x64_linux_hotspot_8u392b08.tar.gz"
+JRE_URL="https://mirror.tuna.tsinghua.edu.cn/Adoptium/17/jre/x64/linux/OpenJDK17U-jre_x64_linux_hotspot_17.0.9_9.tar.gz"
 ;;
 arm64|aarch64)
-JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/aarch64/linux/OpenJDK8U-jdk_aarch64_linux_hotspot_8u392b08.tar.gz"
+JRE_URL="https://mirror.tuna.tsinghua.edu.cn/Adoptium/17/jre/aarch64/linux/OpenJDK17U-jre_aarch64_linux_hotspot_17.0.9_9.tar.gz"
 ;;
 esac
 if [ $(command -v apk) ];then
 case $(uname -m) in
     amd64|x86_64)
-        JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/x64/alpine-linux/OpenJDK8U-jdk_x64_alpine-linux_hotspot_8u392b08.tar.gz"
+        JRE_URL="https://mirror.tuna.tsinghua.edu.cn/Adoptium/17/jre/x64/alpine-linux/OpenJDK17U-jre_x64_alpine-linux_hotspot_17.0.9_9.tar.gz"
     ;;
     arm64|aarch64)
-        JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/aarch64/linux/OpenJDK8U-jdk_aarch64_linux_hotspot_8u392b08.tar.gz"
+        JRE_URL="https://mirror.tuna.tsinghua.edu.cn/Adoptium/17/jre/aarch64/linux/OpenJDK17U-jre_aarch64_linux_hotspot_17.0.9_9.tar.gz"
     ;;
 esac
 fi
@@ -150,24 +150,23 @@ else
 fi
 JAVA_VERSION=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}')
 if [[ ! "${JAVA_VERSION}" == "1.8*"* ]]; then
-    rm -rf $HOME/QSignServer/jdk > /dev/null 2>&1
-    rm -rf $HOME/jdk.tar.gz > /dev/null 2>&1
-    until wget -O jdk.tar.gz -c ${JDK_URL}
+    rm -rf $HOME/QSignServer/JRE > /dev/null 2>&1
+    rm -rf $HOME/jre.tar.gz > /dev/null 2>&1
+    until wget -O jre.tar.gz -c ${JRE_URL}
     do
       echo -e ${red}下载失败 ${green}正在重试${background}
     done
     if [ ! -d $HOME/QSignServer ];then
         mkdir QSignServer
     fi
-    rm -rf QSignServer/jdk > /dev/null 2>&1
-    echo -e ${yellow}正在解压JDK文件,请耐心等候${background}
-    mkdir jdk
-    pv jdk.tar.gz | tar -zxf - -C jdk
-    mv jdk/$(ls jdk) QSignServer/jdk
-    rm -rf jdk.tar.gz
-    rm -rf jdk
-    PATH=$PATH:$HOME/QSignServer/jdk/bin
-    export JAVA_HOME=$HOME/QSignServer/jdk
+    echo -e ${yellow}正在解压JRE文件,请耐心等候${background}
+    mkdir JRE
+    pv jre.tar.gz | tar -zxf - -C JRE
+    mv JRE/$(ls JRE) QSignServer/JRE
+    rm -rf jre.tar.gz
+    rm -rf JRE
+    PATH=$PATH:$HOME/QSignServer/JRE/bin
+    export JAVA_HOME=$HOME/QSignServer/JRE
 fi
 git clone --depth=1 ${txlib}
 rm -rf txlib/.git txlib/README.md > /dev/null 2>&1
@@ -199,6 +198,7 @@ do
     key=$(grep -E key ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g" )
     sed -i "s/${key}/${key_}/g" ${file}
 done
+echo "${Version}" > $HOME/QSignServer/Version
 if [ ! "${install_QSignServer}" == "true" ]
 then
     echo -en ${yellow}安装完成 是否启动?[Y/n]${background};read yn
@@ -224,75 +224,71 @@ then
 fi
 echo -e ${white}"====="${green}白狐-QSignServer${white}"====="${background}
 echo -e ${cyan}请选择签名服务器适配的QQ共享库版本${background}
-echo -e  ${green} 1.  ${cyan}HD: 8.9.33${background}
-echo -e  ${green} 2.  ${cyan}HD: 8.9.58${background}
-echo -e  ${green} 3.  ${cyan}HD: 8.9.63${background}
-echo -e  ${green} 4.  ${cyan}HD: 8.9.68${background}
-echo -e  ${green} 5.  ${cyan}HD: 8.9.70${background}
-echo -e  ${green} 6.  ${cyan}HD: 8.9.71${background}
-echo -e  ${green} 7.  ${cyan}HD: 8.9.73${background}
-echo -e  ${green} 8.  ${cyan}HD: 8.9.75${background}
-echo -e  ${green} 9.  ${cyan}HD: 8.9.76${background}
-echo -e  ${green}10.  ${cyan}HD: 8.9.78${background}
-echo -e  ${green}11.  ${cyan}HD: 8.9.80${background}
-echo -e  ${green}12.  ${cyan}HD: 8.9.83${background}
-echo -e  ${green}13.  ${cyan}HD: 8.9.85${background}
-echo -e  ${green}14.  ${cyan}HD: 8.9.88${background}
-echo -e  ${green}15.  ${cyan}HD: 8.9.90${background}
-echo -e  ${green}16.  ${cyan}HD: 8.9.93${background}
-echo -e  ${green}17.  ${cyan}HD: 8.9.96${background}
+echo -e  ${green} 1.  ${cyan}HD: 8.9.58${background}
+echo -e  ${green} 2.  ${cyan}HD: 8.9.63${background}
+echo -e  ${green} 3.  ${cyan}HD: 8.9.68${background}
+echo -e  ${green} 4.  ${cyan}HD: 8.9.70${background}
+echo -e  ${green} 5.  ${cyan}HD: 8.9.71${background}
+echo -e  ${green} 6.  ${cyan}HD: 8.9.73${background}
+echo -e  ${green} 7.  ${cyan}HD: 8.9.75${background}
+echo -e  ${green} 8.  ${cyan}HD: 8.9.76${background}
+echo -e  ${green} 9.  ${cyan}HD: 8.9.78${background}
+echo -e  ${green}10.  ${cyan}HD: 8.9.80${background}
+echo -e  ${green}11.  ${cyan}HD: 8.9.83${background}
+echo -e  ${green}12.  ${cyan}HD: 8.9.85${background}
+echo -e  ${green}13.  ${cyan}HD: 8.9.88${background}
+echo -e  ${green}14.  ${cyan}HD: 8.9.90${background}
+echo -e  ${green}15.  ${cyan}HD: 8.9.93${background}
+echo -e  ${green}16.  ${cyan}HD: 8.9.96${background}
 echo "========================="
 echo -en ${green}请输入您的选项: ${background};read num
 case ${num} in
-1|8.9.33)
-export version=8.9.33
-;;
-2|8.9.58)
+1|8.9.58)
 export version=8.9.58
 ;;
-3|8.9.63)
+2|8.9.63)
 export version=8.9.63
 ;;
-4|8.9.68)
+3|8.9.68)
 export version=8.9.68
 ;;
-5|8.9.70)
+4|8.9.70)
 export version=8.9.70
 ;;
-6|8.9.71)
+5|8.9.71)
 export version=8.9.71
 ;;
-7|8.9.73)
+6|8.9.73)
 export version=8.9.73
 ;;
-8|8.9.75)
+7|8.9.75)
 export version=8.9.75
 ;;
-9|8.9.76)
+8|8.9.76)
 export version=8.9.76
 ;;
-10|8.9.78)
+9|8.9.78)
 export version=8.9.78
 ;;
-11|8.9.80)
+10|8.9.80)
 export version=8.9.80
 ;;
-12|8.9.83)
+11|8.9.83)
 export version=8.9.83
 ;;
-13|8.9.85)
+12|8.9.85)
 export version=8.9.85
 ;;
-14|8.9.88)
+13|8.9.88)
 export version=8.9.88
 ;;
-15|8.9.90)
+14|8.9.90)
 export version=8.9.90
 ;;
-16|8.9.93)
+15|8.9.93)
 export version=8.9.93
 ;;
-17|8.9.96)
+16|8.9.96)
 export version=8.9.96
 ;;
 *)
