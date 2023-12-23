@@ -198,7 +198,7 @@ do
     key=$(grep -E key ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g" )
     sed -i "s/${key}/${key_}/g" ${file}
 done
-echo "${Version}" > $HOME/QSignServer/Version
+echo "${NewVersion}" > $HOME/QSignServer/Version
 if [ ! "${install_QSignServer}" == "true" ]
 then
     echo -en ${yellow}安装完成 是否启动?[Y/n]${background};read yn
@@ -481,7 +481,7 @@ do
     sed -i "s/${key}/${key_}/g" ${file}
 done
 export Version=${NewVersion}
-echo "${Version}" > $HOME/QSignServer/Version
+echo "${NewVersion}" > $HOME/QSignServer/Version
 }
 
 function uninstall_QSignServer(){
