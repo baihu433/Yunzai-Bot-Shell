@@ -345,18 +345,6 @@ bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 
 <hr/>
 
-然后用下面的命令更新一下ubuntu
-```sh
-apt update && apt -y upgrade && apt -y dist-upgrade
-```
-
-然后安装基本软件
-```sh
-apt install git curl wget -y
-```
-
-<hr/>
-
 注意事项:
 
 1.大退termux之后 请使用下面的命令来启动
@@ -367,11 +355,3 @@ tmoe proot ubuntu jammy arm64
 ```
 
 <hr/>
-
-如果在安装过程中遇到问题，请添加群聊[q群:879718035] 
-
-有困难大家一起解决，不要硬挺着。
-
-日常闲聊也可以加入，欢迎来玩。
-
-教程到这里就结束了，希望对你有帮助，拜~
