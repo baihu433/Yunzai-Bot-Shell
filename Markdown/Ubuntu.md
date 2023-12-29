@@ -11,6 +11,8 @@
 bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 ```
 
+![picture_tmoe.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe.jpg)
+复制 粘贴 并 `回车`
 <hr/>
 
 然后会出现下面的提示
