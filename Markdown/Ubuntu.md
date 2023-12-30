@@ -288,18 +288,6 @@ bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 
 <hr/>
 
-区域设置
-
-![localse.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/localse.jpg)
-
-选择 `全部区域设置` 也就是第一个 即可以直接 `回车`
-
-![localse2.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/localse2.png)
-
-选择 `zh_CN.UTF-8` 然后 `回车`
-
-<hr/>
-
 ![picture_tmoe28.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe28.jpg)
 
 是否创建普通用户
