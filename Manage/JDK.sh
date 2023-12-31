@@ -8,6 +8,10 @@ export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
 cd $HOME
+if [ "$(uname -o)" = "Android" ]; then
+	echo "大聪明出现了"
+	exit 1
+fi
 JDK_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/17/jdk/aarch64/linux/OpenJDK17U-jdk_aarch64_linux_hotspot_17.0.9_9.tar.gz"
 if [ $(command -v apt) ];then
     apt update -y
