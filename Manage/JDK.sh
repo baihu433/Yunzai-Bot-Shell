@@ -26,7 +26,7 @@ if [[ ! "${JAVA_VERSION}" == "17.*"* ]]; then
     echo -e ${yellow}正在解压JDK文件,请耐心等候${background}
     mkdir jdk
     pv jdk.tar.gz | tar -zxf - -C jdk
-    mv jdk/$(ls jdk) /usr/local/JDK-17 
+    mv jdk/$(ls jdk) /usr/local/JDK_17 
     rm -rf jdk.tar.gz > /dev/null 2>&1
     rm -rf jdk > /dev/null 2>&1
     if ! grep -q JDK /etc/profile;then
