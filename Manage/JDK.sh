@@ -25,9 +25,11 @@ if [[ ! "${JAVA_VERSION}" == "17.*"* ]]; then
     mv jdk/$(ls jdk) /usr/local/JDK-17 
     rm -rf jdk.tar.gz > /dev/null 2>&1
     rm -rf jdk > /dev/null 2>&1
-    echo 'PATH=$PATH:/usr/local/JDK-17/bin
-export JAVA_HOME=/usr/local/JDK-17' > /etc/profile
+    if ! grep -q JDK /etc/profile;then
+    echo 'PATH=$PATH:/usr/local/JDK_17/bin
+export JAVA_HOME=/usr/local/JDK_17' >> /etc/profile
     source /etc/profile
-    PATH=$PATH:/usr/local/JDK-17/bin
-    export JAVA_HOME=/usr/local/JDK-17
+    fi
+    PATH=$PATH:/usr/local/JDK_17/bin
+    export JAVA_HOME=/usr/local/JDK_17
 fi
