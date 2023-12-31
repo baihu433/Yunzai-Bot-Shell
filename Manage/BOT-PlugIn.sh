@@ -625,7 +625,7 @@ Git=
              ;;
            50)
              Name="${Name} 天如插件"
-             Plugin="${Plugin} tianru-plugin"
+             Plugin="${Plugin} TianRu-plugin"
              Git="${Git} https://gitee.com/HDTianRu/TianRu-plugin.git"
              ;;
            51)
