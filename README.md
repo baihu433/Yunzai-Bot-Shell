@@ -2,6 +2,12 @@
 <h1 align="center">白狐-Script</h1>
 <hr/>
 
+#### 国外服务器
+
+- [ ] 等待适配
+
+tip:没弄国外源，等白狐
+
 #### 适配系统
 - [x] Alpine
 - [x] Android
