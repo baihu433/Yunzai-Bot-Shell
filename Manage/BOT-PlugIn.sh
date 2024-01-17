@@ -17,9 +17,9 @@ Git=
     function delete_plugin(){
     case ${YN} in
     Y)
-        rm -rf ${Plugin_Path}/plugins/${Plugin_tp} > /dev/null 2>&1
-        rm -rf ${Plugin_Path}/plugins/${Plugin_tp} > /dev/null 2>&1
-        if [ ${Plugin_Path}/plugins/${Plugin_tp} ];then
+        rm -rf ${Plugin_Path}/plugins/${Plugin} > /dev/null 2>&1
+        rm -rf ${Plugin_Path}/plugins/${Plugin} > /dev/null 2>&1
+        if [ ${Plugin_Path}/plugins/${Plugin} ];then
             echo -en ${red}删除失败 ${cyan}回车返回${background};read
         fi
         echo -en ${yellow}删除完成 ${cyan}回车返回${background};read
@@ -29,95 +29,47 @@ Git=
     ;;
     esac
     }
-    function Install(){
-        if [[ -z ${Name} ]];then
-            main
-            exit
-        elif [ "[${Name}]" == "[]" ];then
-            main
-            exit
-        fi
-        function dialog_whiptail_page(){
-            if ! ${dialog_whiptail} --title "白狐-Bot-Plugin" \
-            --yesno "将会为您安装\n[${Name} ]" \
-            20 50
-            then
-                Name=
-                Plugin=
-                Git=
-                main
-                exit
-            fi
-        }
-        function echo_page(){
-            echo -e ${cyan}将会为您安装"\n"[${Name} ]${background}
-            echo -e ${yellow}是否继续${background};read YN
-            case ${YN} in
-                N|n)
-                    Name=
-                    Plugin=
-                    Git=
-                    main
-                    exit
-                ;;
-            esac
-        }
-        choose_page
+    function Install_Plugins(){
         install_(){
-        if [ -d plugins/${Plugin_tp} ]
+        if [ -d plugins/${Plugin} ]
         then
             if [ "${Single_Choice}" == "true" ]
             then
                 delete_plugin
             else
-                echo -e ${cyan}${Name_tp} ${green}已安装 ${yellow}跳过${background}
+                echo -e ${cyan}${Name} ${green}已安装 ${yellow}跳过${background}
                 echo
             fi
         else
             echo -e ${green}==================================${background}
             echo
-            echo -e ${cyan}正在安装${yellow}${Name_tp} ${cyan}稍安勿躁~${background}
+            echo -e ${cyan}正在安装${yellow}${Name} ${cyan}稍安勿躁~${background}
             echo
             echo -e ${green}==================================${background}
             echo
-            git clone --depth=1 ${Git_tp} ./plugins/${Plugin_tp}
-            if [ -d plugins/${Plugin_tp} ]
+            git clone --depth=1 ${Git} ./plugins/${Plugin}
+            if [ -d plugins/${Plugin} ]
             then
-                if [ -e plugins/${Plugin_tp}/package.json ];then
-                    echo -e ${cyan}正在为 ${Name_tp} 安装依赖${background}
-                    cd plugins/${Plugin_tp}
+                if [ -e plugins/${Plugin}/package.json ];then
+                    echo -e ${cyan}正在为 ${Name} 安装依赖${background}
+                    cd plugins/${Plugin}
                     if ! echo "Y" | pnpm install --registry=https://registry.npmmirror.com
                     then
-                        echo ${yellow}${Name_tp} 依赖安装失败 跳过${background}
+                        echo ${yellow}${Name} 依赖安装失败 跳过${background}
                     fi
                     cd ../../
                 fi
-                echo -e ${cyan}${Name_tp} ${green}安装成功${background}
+                echo -e ${cyan}${Name} ${green}安装成功${background}
                 echo
             else
-                echo -e ${yellow}${Name_tp} 安装失败 跳过${background}
+                echo -e ${yellow}${Name} 安装失败 跳过${background}
             fi
         fi
         }
-        for num_ in ${Git[@]}
-        do
-            for Name_tp in ${Name[@]}
-            do
-                Name=$(echo ${Name} | sed "s|${Name_tp}||g")
-                for Git_tp in ${Git[@]}
-                do
-                    Git=$(echo ${Git} | sed "s|${Git_tp}||g")
-                    for Plugin_tp in ${Plugin[@]}
-                    do
-                        Plugin=$(echo ${Plugin} | sed "s|${Plugin_tp}||g")
-                            install_
-                        break 2
-                    done
-                done
-            done
-        done
+        if [ -z ${Git} ];then
         echo
-        echo -en ${green}插件安装完成 ${cyan}回车返回${background};read
+        echo -e ${green}插件安装完成 ${cyan}回车返回${background};read
+        fi
     }
     function dialog_whiptail_page(){
         if (${dialog_whiptail} \
@@ -157,7 +109,7 @@ Git=
         "11" "py-plugin                      py插件" ${OFF} \
         "12" "xianxin-plugin                 闲心插件" ${OFF} \
         "13" "lin-plugin                     麟插件" ${OFF} \
-        "14" "l-plugin                       L插件" ${OFF} \
+        "14" "L-plugin                       L插件" ${OFF} \
         "15" "qianyu-plugin                  千羽插件" ${OFF} \
         "16" "ql-plugin                      清凉图插件" ${OFF} \
         "17" "flower-plugin                  抽卡插件" ${OFF} \
@@ -245,7 +197,7 @@ Git=
         echo -e ${green_red}11. ${cyan}py-plugin"                "py插件${background}
         echo -e ${green_red}12. ${cyan}xianxin-plugin"           "闲心插件${background}
         echo -e ${green_red}13. ${cyan}lin-plugin"               "麟插件${background}
-        echo -e ${green_red}14. ${cyan}l-plugin"                 "L插件${background}
+        echo -e ${green_red}14. ${cyan}L-plugin"                 "L插件${background}
         echo -e ${green_red}15. ${cyan}qianyu-plugin"            "千羽插件${background}
         echo -e ${green_red}16. ${cyan}ql-plugin"                "清凉图插件${background}
         echo -e ${green_red}17. ${cyan}flower-plugin"            "抽卡插件${background}
@@ -446,7 +398,7 @@ Git=
              ;;
            14)
              Name="${Name} L插件"
-             Plugin="${Plugin} L-plugin"
+             Plugin="${Plugin} l-plugin"
              Git="${Git} https://mirror.ghproxy.com/https://github.com/liuly0322/l-plugin.git"
              ;;
            15)
