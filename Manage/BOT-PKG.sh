@@ -46,7 +46,8 @@ pkg_list=("tar" \
 "curl" \
 "unzip" \
 "git" \
-"tmux")
+"tmux" \
+"make")
 
 for package in ${pkg_list[@]}
 do
