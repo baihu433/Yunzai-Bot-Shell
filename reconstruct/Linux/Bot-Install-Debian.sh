@@ -9,7 +9,7 @@ export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
 
-bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PKG.sh)
+bash <(curl -sL https://${Git_Mirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PKG.sh)
 
 if ! dpkg -s xz-utils >/dev/null 2>&1
     then
@@ -48,7 +48,7 @@ fi
 
 if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
     echo -e ${yellow}安装软件 Node.JS${background}
-    source <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh)
+    source <(curl -sL https://${Git_Mirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh)
     until wget -O node.tar.xz -c https://cdn.npmmirror.com/binaries/node/latest-v18.x/node-v18.19.0-linux-${ARCH}.tar.xz
     do
         if [[ ${i} -eq 3 ]]
@@ -60,6 +60,6 @@ if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
         echo -e ${red}安装失败 3秒后重试${background}
         sleep 3s
     done
-    bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-NODE.JS.sh)
+    bash <(curl -sL https://${Git_Mirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-NODE.JS.sh)
 fi
 

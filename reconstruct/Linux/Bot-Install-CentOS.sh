@@ -15,7 +15,7 @@ elif [ $(command -v yum) ];then
     pkg_install="yum"
 fi
 
-bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PKG.sh)
+bash <(curl -sL https://${Git_Mirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PKG.sh)
 
 if ! ${pkg_install} list installed xz >/dev/null 2>&1
     then
@@ -59,7 +59,7 @@ do
     echo -e ${red}安装失败 3秒后重试${background}
     sleep 3s
 done
-bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-NODE.JS.sh)
+bash <(curl -sL https://${Git_Mirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-NODE.JS.sh)
 }
 
 if [ -x "$(command -v node)" ]
@@ -69,7 +69,7 @@ fi
 
 if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
     echo -e ${yellow}安装软件 Node.JS${background}
-    source <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh)
+    source <(curl -sL https://${Git_Mirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh)
     if awk '{print $2}' /etc/os-release | grep -q -E 9
         then
             version1=v18

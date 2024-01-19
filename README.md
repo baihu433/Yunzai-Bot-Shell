@@ -158,6 +158,7 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QS
 |----|----|
 |倾渊|<strong>`100`</strong>元|<br>
 |希亚|<strong>`50`</strong>元|<br>
+|jackson|<strong>`66`</strong>元|<br>
 |小云睡大觉|<strong>`45`</strong>元|<br>
 |汾阳|<strong>30</strong>元|<br>
 |笙凉|<strong>20</strong>元|<br>

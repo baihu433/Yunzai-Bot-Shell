@@ -9,7 +9,7 @@ export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
 
-bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PKG.sh)
+bash <(curl -sL https://${Git_Mirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PKG.sh)
 
 if ! dpkg -s xz-utils >/dev/null 2>&1
     then
@@ -24,7 +24,7 @@ fi
 if ! dpkg -s chromium-browser >/dev/null 2>&1
     then
         echo -e ${yellow}安装chromium浏览器${background}
-        until bash <(curl -sL https://gitee.com/baihu433/chromium/raw/master/chromium.sh)
+        until bash <(curl -sL https://${Git_Mirror}/baihu433/chromium/raw/master/chromium.sh)
         do
             echo -e ${red}安装失败 3秒后重试${background}
             sleep 3s
@@ -53,7 +53,7 @@ do
     echo -e ${red}安装失败 3秒后重试${background}
     sleep 3s
 done
-bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-NODE.JS.sh)
+bash <(curl -sL https://${Git_Mirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-NODE.JS.sh)
 }
 
 if [ -x "$(command -v node)" ]
@@ -63,7 +63,7 @@ fi
 
 if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
     echo -e ${yellow}安装软件 Node.JS${background}
-    source <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh)
+    source <(curl -sL https://${Git_Mirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh)
     if awk '{print $2}' /etc/issue | grep -q -E 22.*
         then
             version1=v18

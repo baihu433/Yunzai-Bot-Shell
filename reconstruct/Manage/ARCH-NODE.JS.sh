@@ -8,6 +8,36 @@ export purple="\033[35m"
 export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
+
+if pacman -Qs nodejs > /dev/null 2>&1;then
+    echo -e ${yellow}卸载软件 nodejs${background}
+    pacman -Rcs --noconfirm nodejs
+fi
+
+pkg_list=("tar" "pv" "xz" "gzip" "wget" )
+for package in ${pkg_list[@]}
+do
+    if ! pacman -Qs "${package}" > /dev/null 2>&1;then
+        echo -e ${yellow}安装软件 ${package}${background}
+        pacman -Syy --noconfirm --needed ${package}
+    fi
+done
+
+echo -e ${yellow}安装软件 Node.JS${background}
+case $(uname -m) in
+    x86_64|amd64)
+    export ARCH=x64
+;;
+    arm64|aarch64)
+    export ARCH=arm64
+;;
+*)
+    echo ${red}您的框架为${yellow}$(uname -m)${red},快让白狐做适配.${background}
+    exit
+;;
+esac
+wget -O node.tar.xz -c https://cdn.npmmirror.com/binaries/node/latest-v18.x/node-v18.17.0-linux-${ARCH}.tar.xz
+
 if [ ! -d node ];then
     mkdir node
 fi
@@ -16,14 +46,13 @@ pv node.tar.xz | tar -xJf - -C node
 rm -rf /usr/local/node > /dev/null
 rm -rf /usr/local/node > /dev/null
 mv -f node/$(ls node) /usr/local/node
-chromium_path=$(command -v chromium || command -v chromium-browser)
+rm -rf node
 if [ ! -d $HOME/.local/share/pnpm ];then
     mkdir -p $HOME/.local/share/pnpm
 fi
 export PATH=$PATH:/usr/local/node/bin
 export PATH=$PATH:/root/.local/share/pnpm
 export PNPM_HOME=/root/.local/share/pnpm
-export PUPPETEER_EXECUTABLE_PATH=${chromium_path}
 if ! grep -q '#Node.JS' /etc/profile;then
 echo '
 #Node.JS
@@ -32,7 +61,6 @@ export PATH=$PATH:/root/.local/share/pnpm
 export PNPM_HOME=/root/.local/share/pnpm
 ' >> /etc/profile
 fi
-
 if [ -e /etc/fish/config.fish ];then
 if ! grep -q '#Node.JS' /etc/fish/config.fish;then
 echo '
