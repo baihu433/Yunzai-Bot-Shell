@@ -254,7 +254,7 @@ bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 
 然后会出现这个界面
 
-![picture_tmoe24.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe24.jpg)
+![picture_tmoe24.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/centos1.png)
 
 用小键盘的↑↓键来选择  `6  🍱 Alpine,mint,rocky,solus & puppy`
 
@@ -264,7 +264,7 @@ bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 
 然后会出现这个界面
 
-![picture_tmoe25.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe25.jpg)
+![picture_tmoe25.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/centos2.png)
 
 选择 `2 CentOS(基于红帽的社区企业操作系统)`
 
@@ -274,7 +274,7 @@ bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 
 然后会提示这个
 
-![picture_tmoe26.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe26.jpg)
+![picture_tmoe26.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/centos3.png)
 
 选择 `8-Stream`
 
@@ -284,7 +284,7 @@ bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 
 然后会提示
 
-![picture_tmoe27.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe27.jpg)
+![picture_tmoe27.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/centos4.png)
 
 请 `直接回车`
 
@@ -327,7 +327,7 @@ bash -c "$(curl -L gitee.com/mo2/linux/raw/2/2)"
 
 ![picture_tmoe32.jpg](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/TOME/picture_tmoe32.jpg)
 
-提示这个就代表 `Ubuntu 22.04` 已经安装完毕了
+提示这个就代表 `8-Stream` 已经安装完毕了
 
 <hr/>
 
