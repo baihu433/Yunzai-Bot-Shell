@@ -101,10 +101,10 @@ fi
 }
 case $(uname -m) in
 amd64|x86_64)
-JRE_URL="https://mirror.tuna.tsinghua.edu.cn/Adoptium/17/jre/x64/linux/OpenJDK17U-jre_x64_linux_hotspot_17.0.9_9.tar.gz"
+JRE_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/17/jre/x64/linux/OpenJDK17U-jre_x64_linux_hotspot_17.0.10_7.tar.gz"
 ;;
 arm64|aarch64)
-JRE_URL="https://mirror.tuna.tsinghua.edu.cn/Adoptium/17/jre/aarch64/linux/OpenJDK17U-jre_aarch64_linux_hotspot_17.0.9_9.tar.gz"
+JRE_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/17/jre/aarch64/linux/OpenJDK17U-jre_aarch64_linux_hotspot_17.0.10_7.tar.gz"
 ;;
 esac
 if [ $(command -v apk) ];then
