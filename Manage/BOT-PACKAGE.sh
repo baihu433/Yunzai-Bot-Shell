@@ -16,6 +16,7 @@ export PATH=$PATH:/usr/local/node/bin
 export PATH=$PATH:/root/.local/share/pnpm
 export PNPM_HOME=/root/.local/share/pnpm
 i=0
+sed -i "s/\^5.1.6/5.1.6/g" package.json
 until echo "Y" | pnpm install -P && echo "Y" | pnpm install
 do
     echo -e ${red}依赖安装失败 ${green}正在重试${background}
