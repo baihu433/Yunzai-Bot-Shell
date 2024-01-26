@@ -210,4 +210,5 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QS
 3. 如果你是脚本作者,想外调本仓库内的脚本,请联系白狐<br>
 4. 白狐没有开通爱发电，所以欢迎通过赞助码打赏<br>
 5. 赞助备注:QQ号+你的QQ名称[戳我跳转赞助码](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/img/赞助码.jpg)<br>
+6. [戳这里可以不花一分钱赞助](https://gitee.com/baihu433/Yunzai-Bot-Shell/blob/master/Markdown/sponsor.md)<br>
 <hr>
