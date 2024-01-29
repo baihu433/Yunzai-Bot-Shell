@@ -9,6 +9,7 @@ export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
 ###
+
 function main(){
 function Install_GIT_Plugin(){
 Name=
