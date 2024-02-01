@@ -340,7 +340,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.8.7"
+    old_version="0.8.8"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
@@ -809,7 +809,11 @@ elif [ "${Number}" == "5" ];then
     main
     exit
 elif [ "${Number}" == "6" ];then
-    bash <(curl -sL https://github.moeyy.xyz/https://raw.githubusercontent.com/ArcticFox520/YZ/main/BOT-PlugIn.sh)
+    echo -e ${cyan}请填入Github镜像站${background}
+    echo -en ${cyan}不填为不使用镜像站${background}
+    echo -e ${cyan}没有请填入 ${green}https://mirrors.chenby.cn/${background}
+    echo -en ${cyan}请填入: ${background};read GithubMirror
+    bash <(curl -sL ${GithubMirror}https://raw.githubusercontent.com/ArcticFox520/YZ/main/BOT-PlugIn.sh)
     main
     exit
 elif [ "${Number}" == "7" ];then
