@@ -161,7 +161,7 @@ fi
 
 case "$1" in
 PI)
-bash <(curl -sL https://mirror.ghproxy.com/https://raw.githubusercontent.com/baihu433/baihu433.github.io/main/BOT-PlugIn.sh)
+bash <(curl -sL https://github.moeyy.xyz/https://raw.githubusercontent.com/ArcticFox520/YZ/main/BOT-PlugIn.sh)
 ;;
 QS)
 bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QSignServer.sh)
@@ -340,7 +340,7 @@ else
 fi
 
 if [ ! "${up}" = "false" ];then
-    old_version="0.8.6"
+    old_version="0.8.7"
     
     URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl -sL ${URL})
@@ -809,7 +809,7 @@ elif [ "${Number}" == "5" ];then
     main
     exit
 elif [ "${Number}" == "6" ];then
-    bash <(curl -sL https://mirror.ghproxy.com/https://raw.githubusercontent.com/baihu433/baihu433.github.io/main/BOT-PlugIn.sh)
+    bash <(curl -sL https://github.moeyy.xyz/https://raw.githubusercontent.com/ArcticFox520/YZ/main/BOT-PlugIn.sh)
     main
     exit
 elif [ "${Number}" == "7" ];then
