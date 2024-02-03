@@ -148,6 +148,7 @@ else
     echo -e ${red}不受支持的Linux发行版${background}
     exit
 fi
+git clone --depth=1 https://gitee.com/baihu433/QSignServer
 JAVA_VERSION=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}')
 if [[ ! "${JAVA_VERSION}" == "2.1*"* ]]; then
     rm -rf $HOME/QSignServer/JRE > /dev/null 2>&1
@@ -168,36 +169,6 @@ if [[ ! "${JAVA_VERSION}" == "2.1*"* ]]; then
     PATH=$PATH:$HOME/QSignServer/JRE/bin
     export JAVA_HOME=$HOME/QSignServer/JRE
 fi
-git clone --depth=1 ${txlib}
-rm -rf txlib/.git txlib/README.md > /dev/null 2>&1
-rm -rf txlib/.git txlib/README.md > /dev/null 2>&1
-rm -rf $HOME/QSignServer/txlib > /dev/null 2>&1
-rm -rf $HOME/QSignServer/txlib > /dev/null 2>&1
-mv -f txlib $HOME/QSignServer/txlib
-until wget -O qsign.zip -c ${QSIGN_URL}
-do
-    echo -e ${red}下载失败 3秒后重试${background}
-done
-echo -e ${yellow}正在解压签名服务器压缩包${background}
-pv qsign.zip | unzip -q qsign.zip -d qsign
-rm -rf qsign.zip
-mv qsign/* $HOME/QSignServer/qsign${QSIGN_VERSION}
-rm -rf qsign
-API_LINK=["${cyan} ${qsign_version}"]
-port_=5200
-key_=fox
-for folder in $(ls -d $HOME/QSignServer/txlib/*)
-do
-    file="${folder}/config.json"
-    port=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g" )
-    sed -i "s/${port}/${port_}/g" ${file}
-done
-for folder in $(ls -d $HOME/QSignServer/txlib/*)
-do
-    file="${folder}/config.json"
-    key=$(grep -E key ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g" )
-    sed -i "s/${key}/${key_}/g" ${file}
-done
 echo "${NewVersion}" > $HOME/QSignServer/Version
 if [ ! "${install_QSignServer}" == "true" ]
 then
@@ -445,41 +416,28 @@ do
     file="${folder}/config.json"
     key_=$(grep -E key ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g" )
 done
-rm -rf txlib/.git txlib/README.md > /dev/null 2>&1
-rm -rf txlib/.git txlib/README.md > /dev/null 2>&1
-rm -rf $HOME/QSignServer/txlib > /dev/null 2>&1
-rm -rf $HOME/QSignServer/txlib > /dev/null 2>&1
-rm -rf $HOME/QSignServer/qsign* > /dev/null 2>&1
-rm -rf $HOME/QSignServer/qsign* > /dev/null 2>&1
-rm -rf txlib > /dev/null 2>&1
-git clone --depth=1 ${txlib}
-rm -rf txlib/.git txlib/README.md > /dev/null 2>&1
-rm -rf txlib/.git txlib/README.md > /dev/null 2>&1
-rm -rf $HOME/QSignServer/txlib > /dev/null 2>&1
-rm -rf $HOME/QSignServer/txlib > /dev/null 2>&1
-mv -f txlib $HOME/QSignServer/txlib
-until wget -O qsign.zip -c ${QSIGN_URL}
-do
-    echo -e ${red}下载失败 3秒后重试${background}
-done
-echo -e ${yellow}正在解压签名服务器压缩包${background}
-pv qsign.zip | unzip -q qsign.zip -d qsign
-rm -rf qsign.zip
-mv qsign/* $HOME/QSignServer/qsign${QSIGN_VERSION}
-rm -rf qsign
-API_LINK=["${cyan} ${qsign_version}"]
-for folder in $(ls -d $HOME/QSignServer/txlib/*)
-do
-    file="${folder}/config.json"
-    port=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g" )
-    sed -i "s/${port}/${port_}/g" ${file}
-done
-for folder in $(ls -d $HOME/QSignServer/txlib/*)
-do
-    file="${folder}/config.json"
-    key=$(grep -E key ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g" )
-    sed -i "s/${key}/${key_}/g" ${file}
-done
+git clone --depth=1 https://gitee.com/baihu433/QSignServer
+JAVA_VERSION=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}')
+if [[ ! "${JAVA_VERSION}" == "2.1*"* ]]; then
+    rm -rf $HOME/QSignServer/JRE > /dev/null 2>&1
+    rm -rf $HOME/jre.tar.gz > /dev/null 2>&1
+    until wget -O jre.tar.gz -c ${JRE_URL}
+    do
+      echo -e ${red}下载失败 ${green}正在重试${background}
+    done
+    if [ ! -d $HOME/QSignServer ];then
+        mkdir QSignServer
+    fi
+    echo -e ${yellow}正在解压JRE文件,请耐心等候${background}
+    mkdir JRE
+    pv jre.tar.gz | tar -zxf - -C JRE
+    mv JRE/$(ls JRE) QSignServer/JRE
+    rm -rf jre.tar.gz
+    rm -rf JRE
+    PATH=$PATH:$HOME/QSignServer/JRE/bin
+    export JAVA_HOME=$HOME/QSignServer/JRE
+fi
+echo "${NewVersion}" > $HOME/QSignServer/Version
 export Version=${NewVersion}
 echo "${NewVersion}" > $HOME/QSignServer/Version
 }
