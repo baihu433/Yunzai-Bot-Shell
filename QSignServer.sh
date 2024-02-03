@@ -101,19 +101,19 @@ fi
 }
 case $(uname -m) in
 amd64|x86_64)
-JRE_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/21/jre/x64/linux/OpenJDK21U-jre_x64_linux_hotspot_21.0.2_13.tar.gz"
+JRE_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/17/jre/x64/linux/OpenJDK17U-jre_x64_linux_hotspot_17.0.10_7.tar.gz"
 ;;
 arm64|aarch64)
-JRE_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/21/jre/aarch64/linux/OpenJDK21U-jre_aarch64_linux_hotspot_21.0.2_13.tar.gz"
+JRE_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/17/jre/aarch64/linux/OpenJDK17U-jre_aarch64_linux_hotspot_17.0.10_7.tar.gz"
 ;;
 esac
 if [ $(command -v apk) ];then
 case $(uname -m) in
     amd64|x86_64)
-        JRE_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/21/jre/x64/alpine-linux/OpenJDK21U-jre_x64_alpine-linux_hotspot_21.0.2_13.tar.gz"
+        JRE_URL="https://mirror.tuna.tsinghua.edu.cn/Adoptium/17/jre/x64/alpine-linux/OpenJDK17U-jre_x64_alpine-linux_hotspot_17.0.9_9.tar.gz"
     ;;
     arm64|aarch64)
-        JRE_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/21/jre/aarch64/alpine-linux/OpenJDK21U-jre_aarch64_alpine-linux_hotspot_21.0.2_13.tar.gz"
+        JRE_URL="https://mirror.tuna.tsinghua.edu.cn/Adoptium/17/jre/aarch64/linux/OpenJDK17U-jre_aarch64_linux_hotspot_17.0.9_9.tar.gz"
     ;;
 esac
 fi
@@ -149,7 +149,7 @@ else
     exit
 fi
 JAVA_VERSION=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}')
-if [[ ! "${JAVA_VERSION}" == "2.1*"* ]]; then
+if [[ ! "${JAVA_VERSION}" == "1.8*"* ]]; then
     rm -rf $HOME/QSignServer/JRE > /dev/null 2>&1
     rm -rf $HOME/jre.tar.gz > /dev/null 2>&1
     until wget -O jre.tar.gz -c ${JRE_URL}
@@ -309,7 +309,7 @@ echo
 }
 Tmux_Start(){
 Start_Stop_Restart="启动"
-tmux_new qsignserver "until bash $HOME/QSignServer/qsign${QSIGN_VERSION}/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${version};do;echo -e ${red}程序停止 正在重启${background};done"
+tmux_new qsignserver "bash $HOME/QSignServer/qsign${QSIGN_VERSION}/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${version}"
 if tmux_gauge qsignserver
 then
     echo
