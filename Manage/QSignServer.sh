@@ -506,7 +506,7 @@ if [ -e QSignServer/bin/unidbg-fetch-qsign ];then
     if [ -e $HOME/QSignServer/config.yaml ];then
         Version=$(cat $HOME/QSignServer/config.yaml | grep ScriptVersion | sed 's/ScriptVersion: //g')
     fi
-    if [ "${Version}" == "${ScriptVersion}" ]
+    if [ "${Version}" = "${ScriptVersion}" ]
     then
         Version="${cyan}[${ScriptVersion}]"
     else
