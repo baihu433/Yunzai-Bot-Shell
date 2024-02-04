@@ -427,7 +427,9 @@ fi
 Port=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g")
 Key=$(grep -E key ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g")
 cd $HOME/QSignServer
-git pull -f
+git fetch --all
+git reset --hard origin/master
+git pull
 cd -
 }
 
