@@ -77,12 +77,10 @@ else
 fi
 }
 function qsign_curl(){
-for folder in $(ls -d $HOME/QSignServer/txlib/*)
-do
-    file="${folder}/config.json"
-    port_=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g" )
-done
-if curl -sL 127.0.0.1:${port_} > /dev/null 2>&1
+LibraryVersion=$(grep "LibraryVersion" ${config} | sed 's/LibraryVersion: //g')
+file=$HOME/QSignServer/txlib/${LibraryVersion}/config.json
+Port=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g")
+if curl -sL 127.0.0.1:${Port} > /dev/null 2>&1
 then
     return 0
 else
@@ -443,12 +441,10 @@ Version="${red}[未部署]"
 }
 
 log_QSignServer(){
-for folder in $(ls -d $HOME/QSignServer/txlib/*)
-do
-    file="${folder}/config.json"
-    port_=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g" )
-done
-if ! curl 127.0.0.1:${port_} > /dev/null 2>&1
+LibraryVersion=$(grep "LibraryVersion" ${config} | sed 's/LibraryVersion: //g')
+file=$HOME/QSignServer/txlib/${LibraryVersion}/config.json
+Port=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g")
+if ! curl 127.0.0.1:${Port} > /dev/null 2>&1
 then
     echo -en ${red}签名服务器 未启动 ${cyan}回车返回${background};read
     echo
