@@ -221,7 +221,7 @@ node app
 ;;
 esac
 ##############################
-old_version="1.0.0"
+old_version="1.0.0a"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
