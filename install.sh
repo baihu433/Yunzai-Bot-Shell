@@ -107,8 +107,8 @@ function Script_Install(){
     echo
     echo -e ${white}=========================${background}
     echo -e ${green}请选择安装途径${background}
-    echo -e ${green}1${cyan}) Gitee${background}
-    echo -e ${green}2${cyan}) Github${background}
+    echo -e ${green}1${cyan}\) Gitee${background}
+    echo -e ${green}2${cyan}\) Github${background}
     echo -e ${white}=========================${background}
     echo -e ${white}请选择: ${background};read Choice
     case ${Choice} in 
