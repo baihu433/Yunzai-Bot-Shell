@@ -280,8 +280,6 @@ return 0
 if start
 then
   AttachPage "在TMUX窗口启动" "窗口"
-else
-  
 fi
 }
 TmuxAttach(){
