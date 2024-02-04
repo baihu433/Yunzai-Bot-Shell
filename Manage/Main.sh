@@ -60,19 +60,24 @@ fi
 }
 ##############################
 RedisServerStart(){
-if [ ! "$(redis-cli ping 2>&1)" = "PONG" ];then
+PedisCliPing(){
+if [ "$(redis-cli ping 2>&1)" == "PONG" ]
+then
+  return 0
+else
+  return 1
+fi
+}
+if $(PedisCliPing)
+then
+  echo -e ${cyan}Redis-Server${green} 已启动${background}
+else
   $(nohup redis-server > /dev/null 2>&1 &)
   echo -e ${cyan}等待Redis-Server启动中${background}
-  until ping -c 1 127.0.0.1 -p 6379 > /dev/null 2>&1
+  until PedisCliPing
   do
-    sleep 1s
+    sleep 0.5s
   done
-  if [ "$(redis-cli ping 2>&1)" = "PONG" ]
-  then
-    echo -e ${cyan}Redis-Server ${green}已启动${background}
-  else
-    echo -e ${cyan}Redis-Server ${red}启动错误${background}
-  fi
 fi
 }
 function TmuxLs(){
@@ -225,7 +230,7 @@ node app
 ;;
 esac
 ##############################
-old_version="1.0.0d"
+old_version="1.0.0e"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
