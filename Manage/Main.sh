@@ -60,10 +60,14 @@ fi
 }
 ##############################
 RedisServerStart(){
-Redis=$(redis-cli ping 2>&1)
-if [ ! "${Redis}" = "PONG" ];then
+if [ ! "$(redis-cli ping 2>&1)" = "PONG" ];then
   $(nohup redis-server > /dev/null 2>&1 &)
-  if [ "${Redis}" = "PONG" ]
+  echo -e ${cyan}等待Redis-Server启动中${background}
+  until curl 127.0.0.1:6379 > /dev/null 2>&1
+  do
+    sleep 1s
+  done
+  if [ "$(redis-cli ping 2>&1)" = "PONG" ]
   then
     echo -e ${cyan}Redis-Server ${green}已启动${background}
   else
@@ -221,7 +225,7 @@ node app
 ;;
 esac
 ##############################
-old_version="1.0.0a"
+old_version="1.0.0b"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
