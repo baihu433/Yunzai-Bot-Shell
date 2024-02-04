@@ -289,8 +289,10 @@ then
     return
 fi
 Foreground_Start(){
-until sh $HOME/QSignServer/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${LibraryVersion}
-do
+export Boolean=true
+while ${Boolean}
+do 
+  sh $HOME/QSignServer/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${LibraryVersion}
   echo -e ${red}签名服务器关闭 正在重启${background}
 done
 echo -en ${cyan}回车返回${background}
@@ -299,7 +301,8 @@ echo
 }
 Tmux_Start(){
 Start_Stop_Restart="启动"
-tmux_new qsignserver "until sh $HOME/QSignServer/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${LibraryVersion}; do echo -e ${red}签名服务器关闭 正在重启${background}; done"
+export Boolean=true
+tmux_new qsignserver "while ${Boolean}; do sh $HOME/QSignServer/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${LibraryVersion}; echo -e ${red}签名服务器关闭 正在重启${background}; done"
 if tmux_gauge qsignserver
 then
     echo
@@ -322,7 +325,8 @@ if [ -x "$(command -v pm2)" ]
 then
     if ! pm2 show qsignserver | grep -q online > /dev/null 2>&1
     then
-        pm2 start --name qsignserver "until sh $HOME/QSignServer/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${LibraryVersion}; do echo -e ${red}签名服务器关闭 正在重启${background}; done"
+        export Boolean=true
+        pm2 start --name qsignserver "while ${Boolean}; do sh $HOME/QSignServer/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${LibraryVersion}; echo -e ${red}签名服务器关闭 正在重启${background}; done"
         echo
         echo -en ${yellow}签名服务器已经启动,是否打开日志 [Y/n]${background}
         read YN
@@ -370,10 +374,11 @@ Port=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g")
 if curl 127.0.0.1:${Port} > /dev/null 2>&1
 then
     echo -e ${yellow}正在停止签名服务器${background}
+    export Boolean=false
     tmux_kill_session qsignserver > /dev/null 2>&1
     pm2 delete qsignserver > /dev/null 2>&1
     PID=$(ps aux | grep qsign | sed '/grep/d' | awk '{print $2}')
-    if [ ! -z ${PID} ];then
+    if ! [ -z ${PID} ];then
         kill ${PID}
     fi
     echo -en ${red}签名服务器停止成功 ${cyan}回车返回${background}
