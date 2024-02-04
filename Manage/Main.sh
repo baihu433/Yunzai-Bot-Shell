@@ -563,7 +563,7 @@ function BotPath(){
         cd ${BotPath}
         Main
     else
-        if ${dialog_whiptail} --title "白狐-Bot-Plugin" \
+        if ${DialogWhiptail} --title "白狐-Bot-Plugin" \
         --yesno "${BotName}未安装 是否安装 ${BotName}" \
         8 50
         then
