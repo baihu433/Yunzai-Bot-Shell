@@ -537,11 +537,7 @@ case $(uname -m) in
     exit
 ;;
 esac
-command_all=( \
-BOT-PKG.sh \
-BOT_INSTALL.sh \
-BOT-NODE.JS.sh \
-GitBOT.sh)
+command_all="BOT-PKG.sh BOT_INSTALL.sh BOT-NODE.JS.sh GitBOT.sh"
 i=1
 URL="https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage"
 for command in ${command_all}
@@ -567,7 +563,12 @@ function BotPath(){
         cd ${BotPath}
         Main
     else
-        BotInstall
+        if ${dialog_whiptail} --title "白狐-Bot-Plugin" \
+        --yesno "${BotName}未安装 是否安装 ${BotName}" \
+        8 50
+        then
+            BotInstall
+        fi
     fi
 }
 function master(){
