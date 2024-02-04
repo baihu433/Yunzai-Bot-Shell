@@ -9,35 +9,55 @@ export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
 
-if pacman -Qs nodejs > /dev/null 2>&1;then
-    echo -e ${yellow}卸载软件 nodejs${background}
-    pacman -Rcs --noconfirm nodejs
-fi
-
-pkg_list=("tar" "pv" "xz" "gzip" "wget" )
-for package in ${pkg_list[@]}
-do
-    if ! pacman -Qs "${package}" > /dev/null 2>&1;then
-        echo -e ${yellow}安装软件 ${package}${background}
-        pacman -Syy --noconfirm --needed ${package}
-    fi
-done
-
-echo -e ${yellow}安装软件 Node.JS${background}
 case $(uname -m) in
     x86_64|amd64)
-    export ARCH=x64
+    ARCH=x64
 ;;
     arm64|aarch64)
-    export ARCH=arm64
+    ARCH=arm64
 ;;
 *)
     echo ${red}您的框架为${yellow}$(uname -m)${red},快让白狐做适配.${background}
     exit
 ;;
 esac
-wget -O node.tar.xz -c https://cdn.npmmirror.com/binaries/node/latest-v18.x/node-v18.17.0-linux-${ARCH}.tar.xz
 
+if ping -c 1 google.com > /dev/null 2>&1
+then
+    NpmMirror="https://registry.npmjs.org"
+    NodeJS_URL="https://nodejs.org/dist/latest-v18.x/node-v18.19.0-linux-${ARCH}.tar.xz"
+elif ping -c 1 baidu.com > /dev/null 2>&1
+then
+    NpmMirror="https://registry.npmjs.org"
+    NodeJS_URL="https://registry.npmmirror.com/-/binary/node/latest-v18.x/node-v18.19.0-linux-${ARCH}.tar.xz"
+    NodeJS_URL=$(curl ${NodeJS_URL})
+    NodeJS_URL=$(echo ${NodeJS_URL#*\"})
+    NodeJS_URL=$(echo ${NodeJS_URL%\"*})
+fi
+
+if pacman -Qs nodejs > /dev/null 2>&1;then
+    echo -e ${yellow}卸载软件 nodejs${background}
+    pacman -Rcs --noconfirm nodejs
+fi
+
+pkg_list=("tar" "pv" "xz" "gzip" "wget")
+for package in ${pkg_list[@]}
+do
+    if ! pacman -Qi "${package}" > /dev/null 2>&1;then
+        echo -e ${yellow}安装软件 ${package}${background}
+        pacman -Syy --noconfirm --needed ${package}
+    fi
+done
+i=1
+echo -e ${yellow}安装软件 Node.JS${background}
+until wget -O node.tar.xz -c ${NodeJS_URL}
+do
+    if [ "${i}" == "3" ];then
+        echo -e ${red}错误次数过多 退出${background}
+        exit 
+    fi
+    i=$((${i}+1))
+done
 if [ ! -d node ];then
     mkdir node
 fi
@@ -53,14 +73,6 @@ fi
 export PATH=$PATH:/usr/local/node/bin
 export PATH=$PATH:/root/.local/share/pnpm
 export PNPM_HOME=/root/.local/share/pnpm
-if ! grep -q '#Node.JS' /etc/profile;then
-echo '
-#Node.JS
-export PATH=$PATH:/usr/local/node/bin
-export PATH=$PATH:/root/.local/share/pnpm
-export PNPM_HOME=/root/.local/share/pnpm
-' >> /etc/profile
-fi
 if [ -e /etc/fish/config.fish ];then
 if ! grep -q '#Node.JS' /etc/fish/config.fish;then
 echo '
@@ -70,8 +82,17 @@ set PNPM_HOME /root/.local/share/pnpm
 ' >> /etc/fish/config.fish
 fi
 source /etc/fish/config.fish
-fi
+else
+if ! grep -q '#Node.JS' /etc/profile;then
+echo '
+#Node.JS
+export PATH=$PATH:/usr/local/node/bin
+export PATH=$PATH:/root/.local/share/pnpm
+export PNPM_HOME=/root/.local/share/pnpm
+' >> /etc/profile
 source /etc/profile
+fi
+fi
 rm -rf node node.tar.xz > /dev/null
 rm -rf node node.tar.xz > /dev/null
 if [ ! -x "$(command -v pnpm)" ];then

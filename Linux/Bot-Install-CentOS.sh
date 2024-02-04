@@ -9,13 +9,15 @@ export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
 
+echo -e ${red}暂时放弃对centos的支持${background}
+
 if [ $(command -v dnf) ];then
     pkg_install="dnf"
 elif [ $(command -v yum) ];then
     pkg_install="yum"
 fi
 
-bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PKG.sh)
+bash <(curl -sL https://${Git_Mirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PKG.sh)
 
 if ! ${pkg_install} list installed xz >/dev/null 2>&1
     then
@@ -47,8 +49,33 @@ if ! ${pkg_install} list installed fonts >/dev/null 2>&1
         done    
 fi
 
+if [ -x "$(command -v node)" ]
+then
+    Nodsjs_Version=$(node -v | cut -d '.' -f1)
+fi
+
+case $(uname -m) in
+    x86_64|amd64)
+    ARCH=x64
+;;
+    arm64|aarch64)
+    ARCH=arm64
+;;
+*)
+    echo ${red}您的框架为${yellow}$(uname -m)${red},快让白狐做适配.${background}
+    exit
+;;
+esac
+
 function node_install(){
-until wget -O node.tar.xz -c https://cdn.npmmirror.com/binaries/node/latest-${version1}.x/node-${version2}-linux-${ARCH}.tar.xz
+if ping -c 1 gitee.com > /dev/null 2>&1
+then
+    NodeJS_URL="https://registry.npmmirror.com/-/binary/node/latest-${version1}.x/node-${version2}-linux-${ARCH}.tar.xz"
+elif ping -c 1 github.com > /dev/null 2>&1
+then
+    NodeJS_URL="https://nodejs.org/dist/latest-${version1}.x/node-${version2}-linux-${ARCH}.tar.xz"
+fi
+until wget -O node.tar.xz -c ${NodeJS_URL}
 do
     if [[ ${i} -eq 3 ]]
     then
@@ -59,26 +86,19 @@ do
     echo -e ${red}安装失败 3秒后重试${background}
     sleep 3s
 done
-bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-NODE.JS.sh)
 }
-
-if [ -x "$(command -v node)" ]
-then
-    Nodsjs_Version=$(node -v | cut -d '.' -f1)
-fi
 
 if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
     echo -e ${yellow}安装软件 Node.JS${background}
-    source <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh)
-    if awk '{print $2}' /etc/os-release | grep -q -E 9
+        if awk '{print $2}' /etc/os-release | grep -q -E 9
         then
             version1=v18
-            version2=v18.18.2
+            version2=v18.19.0
             node_install
     elif cat /etc/os-release | grep VERSION | grep -q -E 8
         then
             version1=v18
-            version2=v18.18.2
+            version2=v18.19.0
             node_install
     elif cat /etc/os-release | grep VERSION | grep -q -E 7
         then
@@ -92,7 +112,7 @@ if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
             node_install
     else
             version1=v16
-            version2=v16.20.0
+            version2=v16.20.2
             node_install
     fi
 fi

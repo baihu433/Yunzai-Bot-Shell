@@ -16,8 +16,7 @@ export PATH=$PATH:/usr/local/node/bin
 export PATH=$PATH:/root/.local/share/pnpm
 export PNPM_HOME=/root/.local/share/pnpm
 i=0
-sed -i "s/\^5.1.6/5.1.6/g" package.json
-until echo "Y" | pnpm install -P && echo "Y" | pnpm install
+until echo "Y" | pnpm install -P
 do
     echo -e ${red}依赖安装失败 ${green}正在重试${background}
     if [ ! -d $HOME/.local/share/pnpm ];then
@@ -33,8 +32,10 @@ do
     pnpm setup
     source ~/.bashrc
     i=$((${i}+1))
+    pnpm uninstall sqlite3
+    pnpm install sqlite3@5.1.6
 done
-pnpm install puppeteer@19.0.0 -w
+pnpm install puppeteer@19.4.0 -w
 pnpm install icqq@latest -w
 echo -en ${yellow}正在初始化${background}
 pnpm run start

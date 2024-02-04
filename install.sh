@@ -23,38 +23,42 @@ if [ "$(id -u)" != "0" ]; then
     echo -e ${red} 请使用root用户!${background}
     exit 0
 fi
-function whiptail_dialog(){
-install_dialog(){
+function Dependency(){
+InstallDependency(){
 echo -e ${green}正在安装必要依赖 dialog${background}
-if [ $(command -v apk) ];then
-    apk add dialog
-elif [ $(command -v apt) ];then
-    apt install -y dialog
+if [ $(command -v apt) ];then
+    apt install -y dialog curl
 elif [ $(command -v dnf) ];then
-    dnf install -y dialog
+    dnf install -y dialog curl
 elif [ $(command -v yum) ];then
-    yum install -y dialog
+    yum install -y dialog curl
 elif [ $(command -v pacman) ];then
-    pacman -Syy --noconfirm --needed dialog
+    pacman -S --noconfirm --needed dialog curl
 fi
 }
-if [ -x "$(command -v whiptail)" ];then
+if [ -x "$(command -v whiptail)"];then
     dialog_whiptail=whiptail
 elif [ -x "$(command -v dialog)" ];then
     dialog_whiptail=dialog
 else
-    install_dialog
+    dialog_whiptail=dialog
+    InstallDependency
+fi
+if [ ! -x "$(command -v curl)" ];then
+    InstallDependency
 fi
 }
 
-function system_check(){
-if grep -q -E -i Alpine /etc/issue && [ -x /sbin/apk ];then
-    echo -e ${green}系统校验通过${background}
-elif grep -q -E -i Arch /etc/issue && [ -x /usr/bin/pacman ];then
+function SystemCheck(){
+if grep -q -E -i Arch /etc/issue && [ -x /usr/bin/pacman ];then
     echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Kernel /etc/issue && [ -x /usr/bin/dnf ];then
+    echo -e ${red}暂时放弃对centos的支持${background}
+    exit
     echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Kernel /etc/issue && [ -x /usr/bin/yum ];then
+    echo -e ${red}暂时放弃对centos的支持${background}
+    exit
     echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Ubuntu /etc/issue && [ -x /usr/bin/apt ];then
     echo -e ${green}系统校验通过${background}
@@ -67,8 +71,12 @@ elif grep -q -E -i Alpine /etc/os-release && [ -x /sbin/apk ];then
 elif grep -q -E -i Arch /etc/os-release && [ -x /usr/bin/pacman ];then
     echo -e ${green}系统校验通过${background}
 elif grep -q -E -i CentOS /etc/os-release && [ -x /usr/bin/dnf ];then
+    echo -e ${red}暂时放弃对centos的支持${background}
+    exit
     echo -e ${green}系统校验通过${background}
 elif grep -q -E -i CentOS /etc/os-release && [ -x /usr/bin/yum ];then
+    echo -e ${red}暂时放弃对centos的支持${background}
+    exit
     echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Ubuntu /etc/os-release && [ -x /usr/bin/apt ];then
     echo -e ${green}系统校验通过${background}
@@ -97,8 +105,26 @@ function Script_Install(){
     echo -e ${green}" "作者:" "${cyan}白狐"   "\(baihu433\) ${background}
     echo -e ${white}=========================${background}
     echo
+    echo -e ${white}=========================${background}
+    echo -e ${green}请选择安装途径${background}
+    echo -e ${green}1${cyan}) Gitee${background}
+    echo -e ${green}2${cyan}) Github${background}
+    echo -e ${white}=========================${background}
+    echo -e ${white}请选择: ${background};read Choice
+    case ${Choice} in 
+        1)
+            export Git_Mirror=gitee.com
+            ;;
+        2)
+            export Git_Mirror=github.com
+            ;;
+        *)
+            echo -e ${red}输入错误${background}
+            exit
+            ;;
+    esac
     echo -e ${yellow} - ${cyan}正在安装${background}
-    curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Mian.sh > bh
+    curl https://${Git_Mirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Main > bh
     mv -f bh /usr/local/bin/bh
     chmod +x /usr/local/bin/bh
     echo
@@ -133,8 +159,8 @@ if [  "${yn}" == "同意安装" ]
 then
     echo -e ${green}3秒后开始安装${background}
     sleep 2s
-    system_check
-    whiptail_dialog
+    SystemCheck
+    Dependency
     echo
     Script_Install
 else

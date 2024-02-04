@@ -9,16 +9,14 @@ export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
 
-if [ $(command -v apk) ];then
-    pkg_install="apk add --no-cache"
-elif [ $(command -v apt) ];then
+if [ $(command -v apt) ];then
     pkg_install="apt install -y"
 elif [ $(command -v yum) ];then
     pkg_install="yum install -y"
 elif [ $(command -v dnf) ];then
     pkg_install="dnf install -y"
 elif [ $(command -v pacman) ];then
-    pkg_install="pacman -Syy --noconfirm --needed"
+    pkg_install="pacman -S --noconfirm --needed"
 fi
 
 function pkg_install(){
@@ -46,13 +44,12 @@ pkg_list=("tar" \
 "curl" \
 "unzip" \
 "git" \
-"tmux" \
-"make")
+"tmux")
 
 for package in ${pkg_list[@]}
 do
     if [ -x "$(command -v pacman)" ];then
-        if ! pacman -Qs "${package}" > /dev/null 2>&1;then
+        if ! pacman -Qi "${package}" > /dev/null 2>&1;then
             pkg="${package} ${pkg}" 
         fi
     elif [ -x "$(command -v apt)" ];then
@@ -72,14 +69,16 @@ done
 
 if [ ! -z "${pkg}" ];then
     if [ -x "$(command -v pacman)" ];then
+        pacman -Syy
         pkg_install
     elif [ -x "$(command -v apt)" ];then
-        apt update
+        apt update -y
         pkg_install
     elif [ -x "$(command -v yum)" ];then
-        yum update
+        yum makecache -y
         pkg_install
     elif [ -x "$(command -v dnf)" ];then
+        dnf makecache -y
         pkg_install
     fi
 fi
@@ -97,26 +96,44 @@ if [ ! -x "$(command -v vim)" ];then
     pkg=vim
     pkg_install
 fi
-if [ ! -x "$(command -v ffmpeg)" ];then
-    if [ ${Git_Mirror} == gitee.com ]
+
+case $(uname -m) in
+    x86_64|amd64)
+    ARCH=x64
+;;
+    arm64|aarch64)
+    ARCH=arm64
+;;
+*)
+    echo ${red}您的框架为${yellow}$(uname -m)${red},快让白狐做适配.${background}
+    exit
+;;
+esac
+
+if [ ! -x "/usr/local/bin/ffmpeg" ];then
+    if ping -c 1 google.com > /dev/null 2>&1
+    then
+        if [ ! -d ffmpeg ];then
+            mkdir ffmpeg
+        fi
+        ffmpegURL=https://johnvansickle.com/ffmpeg/releases
+        ffmpegURL=${ffmpegURL}ffmpeg-release-${ARCH}-static.tar.xz
+        wget -O ffmpeg.tar.xz ${ffmpegURL}
+        pv ffmpeg.tar.xz | tar -xf ffmpeg.tar.xz -C ffmpeg
+        chmod +x ffmpeg/$(ls ffmpeg)/*
+        mv -f ffmpeg/$(ls ffmpeg)/ffmpeg /usr/local/bin/ffmpeg
+        mv -f ffmpeg/$(ls ffmpeg)/ffprobe /usr/local/bin/ffprobe
+    elif ping -c 1 baidu.com > /dev/null 2>&1
     then
         echo -e ${yellow}安装软件 ffmpeg${background}
-        URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-ARCH.sh
-        ffmpeg_static_URL=https://registry.npmmirror.com/-/binary/ffmpeg-static/b6.0
-        source <(curl -sL ${URL})
-        ffmpeg_URL=${ffmpeg_static_URL}/ffmpeg-linux-${ARCH}
-        ffprobe_URL=${ffmpeg_static_URL}/ffprobe-linux-${ARCH}
-        wget -O ffmpeg ${ffmpeg_URL}
-        wget -O ffprobe ${ffprobe_URL}
+        ffmpeg_URL=https://registry.npmmirror.com/-/binary/ffmpeg-static/b6.0
+        ffmpegURL=${ffmpeg_URL}/ffmpeg-linux-${ARCH}
+        ffprobeURL=${ffmpeg_URL}/ffprobe-linux-${ARCH}
+        wget -O ffmpeg ${ffmpegURL}
+        wget -O ffprobe ${ffprobeURL}
         chmod +x ffmpeg ffprobe
         mv -f ffmpeg /usr/local/bin/ffmpeg
         mv -f ffprobe /usr/local/bin/ffprobe
-    elif [ ${Git_Mirror} == github.com ]
-    then
-        
-    fi
-    if [ ! -x "/usr/local/bin/ffmpeg" ];then
-        
     fi
 fi
     

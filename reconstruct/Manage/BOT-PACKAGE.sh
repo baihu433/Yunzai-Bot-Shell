@@ -35,7 +35,7 @@ do
     pnpm uninstall sqlite3
     pnpm install sqlite3@5.1.6
 done
-pnpm install puppeteer@19.0.0 -w
+pnpm install puppeteer@19.4.0 -w
 pnpm install icqq@latest -w
 echo -en ${yellow}正在初始化${background}
 pnpm run start

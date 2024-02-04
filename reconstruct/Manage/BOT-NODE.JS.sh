@@ -24,15 +24,6 @@ export PATH=$PATH:/usr/local/node/bin
 export PATH=$PATH:/root/.local/share/pnpm
 export PNPM_HOME=/root/.local/share/pnpm
 export PUPPETEER_EXECUTABLE_PATH=${chromium_path}
-if ! grep -q '#Node.JS' /etc/profile;then
-echo '
-#Node.JS
-export PATH=$PATH:/usr/local/node/bin
-export PATH=$PATH:/root/.local/share/pnpm
-export PNPM_HOME=/root/.local/share/pnpm
-' >> /etc/profile
-fi
-
 if [ -e /etc/fish/config.fish ];then
 if ! grep -q '#Node.JS' /etc/fish/config.fish;then
 echo '
@@ -40,17 +31,33 @@ echo '
 set -x PATH /root/.local/share/pnpm /usr/local/node/bin $PATH
 set PNPM_HOME /root/.local/share/pnpm
 ' >> /etc/fish/config.fish
-fi
 source /etc/fish/config.fish
 fi
+else
+if ! grep -q '#Node.JS' /etc/profile;then
+echo '
+#Node.JS
+export PATH=$PATH:/usr/local/node/bin
+export PATH=$PATH:/root/.local/share/pnpm
+export PNPM_HOME=/root/.local/share/pnpm
+' >> /etc/profile
 source /etc/profile
+fi
+fi
 rm -rf node node.tar.xz > /dev/null
 rm -rf node node.tar.xz > /dev/null
+if ping -c 1 gitee.com > /dev/null 2>&1
+then
+  NPMMirror="https://registry.npmmirror.com"
+elif ping -c 1 github.com > /dev/null 2>&1
+then
+  NPMMirror="https://registry.npmjs.org"
+fi
 if [ ! -x "$(command -v pnpm)" ];then
     echo -e ${yellow}正在使用npm安装pnpm${background}
     a=0
-    npm config set registry https://registry.npmmirror.com
-    npm config set registry https://registry.npmmirror.com
+    npm config set registry ${NPMMirror}
+    npm config set registry ${NPMMirror}
     npm install -g npm@latest
     until npm install -g pnpm@latest
     do
@@ -64,7 +71,5 @@ if [ ! -x "$(command -v pnpm)" ];then
     echo
 fi
 echo -e ${yellow}正在为pnpm更换默认源${background}
-pnpm config set registry https://registry.npmmirror.com
-pnpm config set registry https://registry.npmmirror.com
-pnpm config set node_sqlite3_binary_host_mirror https://npmmirror.com/mirrors/sqlite3
-pnpm config set node_sqlite3_binary_host_mirror https://npmmirror.com/mirrors/sqlite3
+pnpm config set registry ${NPMMirror}
+pnpm config set registry ${NPMMirror}

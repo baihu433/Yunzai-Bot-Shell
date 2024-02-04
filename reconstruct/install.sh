@@ -53,8 +53,12 @@ function SystemCheck(){
 if grep -q -E -i Arch /etc/issue && [ -x /usr/bin/pacman ];then
     echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Kernel /etc/issue && [ -x /usr/bin/dnf ];then
+    echo -e ${red}暂时放弃对centos的支持${background}
+    exit
     echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Kernel /etc/issue && [ -x /usr/bin/yum ];then
+    echo -e ${red}暂时放弃对centos的支持${background}
+    exit
     echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Ubuntu /etc/issue && [ -x /usr/bin/apt ];then
     echo -e ${green}系统校验通过${background}
@@ -67,8 +71,12 @@ elif grep -q -E -i Alpine /etc/os-release && [ -x /sbin/apk ];then
 elif grep -q -E -i Arch /etc/os-release && [ -x /usr/bin/pacman ];then
     echo -e ${green}系统校验通过${background}
 elif grep -q -E -i CentOS /etc/os-release && [ -x /usr/bin/dnf ];then
+    echo -e ${red}暂时放弃对centos的支持${background}
+    exit
     echo -e ${green}系统校验通过${background}
 elif grep -q -E -i CentOS /etc/os-release && [ -x /usr/bin/yum ];then
+    echo -e ${red}暂时放弃对centos的支持${background}
+    exit
     echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Ubuntu /etc/os-release && [ -x /usr/bin/apt ];then
     echo -e ${green}系统校验通过${background}
@@ -97,10 +105,12 @@ function Script_Install(){
     echo -e ${green}" "作者:" "${cyan}白狐"   "\(baihu433\) ${background}
     echo -e ${white}=========================${background}
     echo
-    echo -en ${green}请选择安装途径${background}
-    echo -en ${green}1${cyan}) Gitee${background}
-    echo -en ${green}2${cyan}) Github${background}
-    echo -en ${white}请选择: ${background};read Choice
+    echo -e ${white}=========================${background}
+    echo -e ${green}请选择安装途径${background}
+    echo -e ${green}1${cyan}) Gitee${background}
+    echo -e ${green}2${cyan}) Github${background}
+    echo -e ${white}=========================${background}
+    echo -e ${white}请选择: ${background};read Choice
     case ${Choice} in 
         1)
             export Git_Mirror=gitee.com
