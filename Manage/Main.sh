@@ -52,10 +52,10 @@ fi
 function MirrorCheck(){
 if ping -c 1 gitee.com > /dev/null 2>&1
 then
-    GitMirror="gitee.com"
+    export GitMirror="gitee.com"
 elif ping -c 1 github.com > /dev/null 2>&1
 then
-    GitMirror="github.com"
+    export GitMirror="github.com"
 fi
 }
 ##############################
@@ -124,17 +124,18 @@ Port=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g")
   case $1 in
   Check)
   if ! curl 127.0.0.1:${Port};then
-    echo -e ${cyan}签名服务器未启动${background}
+    echo -e ${cyan}签名服务器${red} 未启动${background}
     QSignServer Start
   fi
   ;;
   Start)
     tmux_new qsignserver "until sh $HOME/QSignServer/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${LibraryVersion}; do echo -e ${red}签名服务器关闭 正在重启${background}; done"
     echo -e ${cyan}等待签名服务器启动中${background}
-    until curl 127.0.0.1:${Port}
+    until curl 127.0.0.1:${Port} > /dev/null 2>&1
     do
       sleep 1s
     done
+    echo
   ;;
   esac
 fi
@@ -155,9 +156,12 @@ echo -e ${green}===============================${background}
 echo -e ${yellow} 脚本完全免费 打击倒卖 从你我做起${background}
 echo -e ${green} QQ群:${cyan}狐狸窝:705226976${background}
 echo -e ${green}=============================${background}
-exit
 }
 case $1 in
+help)
+help
+exit
+;;
 PI)
 bash <(curl -sL https://mirror.ghproxy.com/https://raw.githubusercontent.com/baihu433/baihu433.github.io/main/BOT-PlugIn.sh)
 exit
@@ -235,14 +239,14 @@ node app
 ;;
 esac
 ##############################
-old_version="1.0.0g"
+old_version="1.0.0h"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
 new_version="$(echo ${version_date} | grep version | awk '{print $2}' )"
 if [ "${new_version}" != "${old_version}" ];then
     echo -e ${cyan}正在更新${background}
-    echo -e https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Main.sh
+    #echo -e https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Main.sh
     curl -o bh https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Main.sh
     if bash bh help > /dev/null 2>&1
     then
