@@ -223,7 +223,7 @@ version_date=$(curl -sL ${URL})
 new_version="$(echo ${version_date} | grep version | awk '{print $2}' )"
 if [ "${new_version}" != "${old_version}" ];then
     echo -e ${cyan}正在更新${background}
-    curl -o bh https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Mian.sh
+    curl -o bh https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Main.sh
     if bash bh help > /dev/null 2>&1
     then
         rm /usr/local/bin/bh
