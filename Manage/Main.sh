@@ -113,6 +113,10 @@ exit
 ##############################
 QSignServer(){
 if [ -e $HOME/QSignServer/bin/unidbg-fetch-qsign ];then
+if [ -d $HOME/QSignServer/JRE ];then
+    export PATH=$PATH:$HOME/QSignServer/JRE/bin
+    export JAVA_HOME=$HOME/QSignServer/JRE
+fi
 config=$HOME/QSignServer/config.yaml
 LibraryVersion=$(grep "LibraryVersion" ${config} | sed 's/LibraryVersion: //g')
 file=$HOME/QSignServer/txlib/${LibraryVersion}/config.json
@@ -231,7 +235,7 @@ node app
 ;;
 esac
 ##############################
-old_version="1.0.0f"
+old_version="1.0.0g"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
