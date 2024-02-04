@@ -221,7 +221,7 @@ node app
 ;;
 esac
 ##############################
-old_version="0.8.8"
+old_version="1.0.0"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
@@ -236,8 +236,6 @@ if [ "${new_version}" != "${old_version}" ];then
         mv bh /usr/local/bin/bh
         chmod +x /usr/local/bin/bh
         echo -en ${cyan}更新完成 回车继续${background};read
-        bh
-        exit
     else
         echo -en ${red}出现错误 跳过更新 ${cyan}回车继续${background};read
         bh
