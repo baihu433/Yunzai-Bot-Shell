@@ -537,7 +537,7 @@ case $(uname -m) in
     exit
 ;;
 esac
-command_all="BOT-PKG.sh BOT_INSTALL.sh BOT-NODE.JS.sh GitBOT.sh"
+command_all="BOT-PKG.sh BOT_INSTALL.sh BOT-NODE.JS.sh GitBot.sh"
 i=1
 URL="https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage"
 for command in ${command_all}
@@ -585,13 +585,13 @@ feedback=$?
 feedback
 case ${Number} in
     1)
-        BotName="Miao-Yunzai"
+        export BotName="Miao-Yunzai"
         BOT_COMMAND="Miao-Yun"
         TmuxName=MZ
         BotPath
         ;;
     2)
-        BotName="TRSS-Yunzai"
+        export BotName="TRSS-Yunzai"
         BOT_COMMAND="TRSS Yun"
         TmuxName=TZ
         BotPath
