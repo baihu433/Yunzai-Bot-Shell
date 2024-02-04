@@ -60,7 +60,7 @@ elif grep -q -E -i Kernel /etc/issue && [ -x /usr/bin/yum ];then
     echo -e ${red}暂时放弃对centos的支持${background}
     exit
     echo -e ${green}系统校验通过${background}
-elif grep -q -E -i Ubuntu /etc/issue && [ -x /usr/bin/apt ];then
+elif grep -q -E -i Ubuntu /etc/issue && -x /usr/bin/apt ;then
     echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Debian /etc/issue && [ -x /usr/bin/apt ];then
     echo -e ${green}系统校验通过${background}
