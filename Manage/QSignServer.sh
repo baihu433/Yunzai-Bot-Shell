@@ -421,7 +421,7 @@ then
 fi
 Port=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g")
 Key=$(grep -E key ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g")
-cd ${QSignServer}
+cd $HOME/QSignServer
 git pull -f
 cd -
 }
@@ -504,7 +504,7 @@ if [ -e QSignServer/bin/unidbg-fetch-qsign ];then
         condition="${red}[未启动]"
     fi
     if [ -e $HOME/QSignServer/config.yaml ];then
-        Version=$(cat $HOME/QSignServer/config.yaml | grep ScriptVersion | sed 's/ScriptVersion://g')
+        Version=$(cat $HOME/QSignServer/config.yaml | grep ScriptVersion | sed 's/ScriptVersion: //g')
     fi
     if [ "${Version}" == "${ScriptVersion}" ]
     then
