@@ -491,6 +491,32 @@ echo
 echo -en ${green}请输入您的选项: ${background};read num
 }
 main(){
+if [ -e QSignServer/bin/unidbg-fetch-qsign ];then
+    LibraryVersion=$(grep "LibraryVersion" ${config} | sed 's/LibraryVersion: //g')
+    file=$HOME/QSignServer/txlib/${LibraryVersion}/config.json
+    Port=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g")
+    if curl -sL 127.0.0.1:${Port} > /dev/null 2>&1
+    then
+        QsignVersion=$(curl -sL 127.0.0.1:${Port} | grep version | sed 's|"||g' | sed 's|:||g' | sed 's|,||g')
+        QsignVersion=$(echo ${QsignVersion} | awk '{print $4}')
+        condition="${cyan}[${QsignVersion}]"
+    else
+        condition="${red}[未启动]"
+    fi
+    if [ -e $HOME/QSignServer/config.yaml ];then
+        Version=$(cat $HOME/QSignServer/config.yaml | grep ScriptVersion | sed 's/ScriptVersion://g')
+    fi
+    if [ "${Version}" == "${ScriptVersion}" ]
+    then
+        Version="${cyan}[${ScriptVersion}]"
+    else
+        Version="${red}${Version}[请更新]"
+    fi
+else
+    Version="${red}[未部署]"
+    condition="${red}[未部署]"
+fi
+
 echo -e ${white}"====="${green}白狐-QSignServer${white}"====="${background}
 echo -e  ${green} 1.  ${cyan}安装签名服务器${background}
 echo -e  ${green} 2.  ${cyan}启动签名服务器${background}
