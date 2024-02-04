@@ -129,7 +129,7 @@ Port=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g")
   fi
   ;;
   Start)
-    tmux_new qsignserver "until sh $HOME/QSignServer/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${LibraryVersion}; do echo -e ${red}签名服务器关闭 正在重启${background}; done"
+    tmux_new qsignserver "until sh $HOME/QSignServer/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${LibraryVersion}; do echo -e ${red}签名服务器关闭 正在重启${background} ; sleep1s ; done"
     echo -e ${cyan}等待签名服务器启动中${background}
     until curl 127.0.0.1:${Port} > /dev/null 2>&1
     do
@@ -239,7 +239,7 @@ node app
 ;;
 esac
 ##############################
-old_version="1.0.0j"
+old_version="1.0.0k"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
@@ -325,7 +325,6 @@ fi
 BOT(){
 case $1 in
   start)
-    RedisServerStart
     RunningState
     res="$?"
     if [ ${res} -eq 1 ];then
@@ -335,7 +334,7 @@ case $1 in
     elif [ ${res} -eq 3 ];then
       AttachPage "在Pm2后台启动" "日志"
     else
-      if tmux -S ${TmuxNam} -d "bh ${BotName} n"
+      if tmux new -s ${TmuxNam} -d "bh ${BotName} n"
       then
         ProgressBar "启动"
       else
@@ -344,7 +343,6 @@ case $1 in
     fi
     ;;
   ForegroundStart)
-    RedisServerStart
     RunningState
     res="$?"
     if [ ${res} -eq 1 ];then
@@ -390,8 +388,7 @@ case $1 in
     if [ ${res} -eq 1 ];then
       if tmux kill-session -t ${BotName}
       then
-        RedisServerStart
-        tmux -S ${TmuxNam} -d "bh ${BotName} n"
+        tmux new -s ${TmuxNam} -d "bh ${BotName} n"
         ProgressBar "启动"
         ${DialogWhiptail} --title "白狐-Script" --msgbox "重启成功" 10 60
       fi
@@ -404,7 +401,6 @@ case $1 in
     elif [ ${res} -eq 3 ];then
       if kill $(ps all | sed /grep/d | grep -q "${BOT_COMMAND}")
       then
-        RedisServerStart
         bh ${BotName} n
       fi
     else
