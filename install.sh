@@ -60,7 +60,7 @@ elif grep -q -E -i Kernel /etc/issue && [ -x /usr/bin/yum ];then
     echo -e ${red}暂时放弃对centos的支持${background}
     exit
     echo -e ${green}系统校验通过${background}
-elif grep -q -E -i Ubuntu /etc/issue && -x /usr/bin/apt ;then
+elif $(grep -q -E -i Ubuntu /etc/issue) && [ -x /usr/bin/apt ];then
     echo -e ${green}系统校验通过${background}
 elif grep -q -E -i Debian /etc/issue && [ -x /usr/bin/apt ];then
     echo -e ${green}系统校验通过${background}
@@ -110,7 +110,7 @@ function Script_Install(){
     echo -e ${green}1${cyan}\) Gitee${background}
     echo -e ${green}2${cyan}\) Github${background}
     echo -e ${white}=========================${background}
-    echo -e ${white}请选择: ${background};read Choice
+    echo -en ${green}请选择: ${background};read Choice
     case ${Choice} in 
         1)
             export Git_Mirror=gitee.com
@@ -124,7 +124,7 @@ function Script_Install(){
             ;;
     esac
     echo -e ${yellow} - ${cyan}正在安装${background}
-    curl https://${Git_Mirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Main > bh
+    curl https://${Git_Mirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Main.sh > bh
     mv -f bh /usr/local/bin/bh
     chmod +x /usr/local/bin/bh
     echo
