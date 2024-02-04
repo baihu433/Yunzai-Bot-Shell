@@ -256,7 +256,7 @@ echo -en ${green}修改完成 ${cyan}回车返回${background}
 }
 
 QuitGroupChat(){
-file="config/config/bot.yaml"
+file="config/config/other.yaml"
 if [ ! -e ${file} ];then
     echo -e ${red}文件不存在${background}
     return

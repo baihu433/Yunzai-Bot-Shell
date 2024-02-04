@@ -521,6 +521,9 @@ case ${num} in
         MirrorCheck
         bash <(curl -sL https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/OtherFunctions.sh)
         ;;
+    0)
+        return
+        ;;
 esac
 }
 function BotInstall(){
