@@ -490,7 +490,7 @@ Number=$(${DialogWhiptail} \
 3>&1 1>&2 2>&3)
 feedback=$?
 feedback
-case ${num} in
+case ${Number} in
     1)
         BOT start
         ;;
