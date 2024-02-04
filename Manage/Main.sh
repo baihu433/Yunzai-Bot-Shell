@@ -239,7 +239,7 @@ node app
 ;;
 esac
 ##############################
-old_version="1.0.0i"
+old_version="1.0.0j"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
@@ -335,9 +335,7 @@ case $1 in
     elif [ ${res} -eq 3 ];then
       AttachPage "在Pm2后台启动" "日志"
     else
-      RedisServerStart
-      QSignServer Check
-      if tmux -s ${TmuxNam} -d "bh ${BotName} n"
+      if tmux -S ${TmuxNam} -d "bh ${BotName} n"
       then
         ProgressBar "启动"
       else
@@ -393,7 +391,7 @@ case $1 in
       if tmux kill-session -t ${BotName}
       then
         RedisServerStart
-        tmux -s ${TmuxNam} -d "bh ${BotName} n"
+        tmux -S ${TmuxNam} -d "bh ${BotName} n"
         ProgressBar "启动"
         ${DialogWhiptail} --title "白狐-Script" --msgbox "重启成功" 10 60
       fi
