@@ -78,6 +78,7 @@ else
   do
     sleep 0.5s
   done
+  echo -e ${cyan}Redis-Server${green} 启动成功${background}
 fi
 }
 function TmuxLs(){
@@ -111,7 +112,7 @@ exit
 }
 ##############################
 QSignServer(){
-if [ -e QSignServer/bin/unidbg-fetch-qsign ];then
+if [ -e $HOME/QSignServer/bin/unidbg-fetch-qsign ];then
 config=$HOME/QSignServer/config.yaml
 LibraryVersion=$(grep "LibraryVersion" ${config} | sed 's/LibraryVersion: //g')
 file=$HOME/QSignServer/txlib/${LibraryVersion}/config.json
@@ -230,7 +231,7 @@ node app
 ;;
 esac
 ##############################
-old_version="1.0.0e"
+old_version="1.0.0f"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})

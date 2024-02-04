@@ -132,7 +132,7 @@ npm install -g npm@latest
 pnpm install -g pnpm@latest
 pnpm install -g pm2@latest
 echo "Y" | pnpm install
-pnpm install puppeteer@19.0.0 -w
+pnpm install puppeteer@19.4.0 -w
 pnpm install icqq@latest -w
 echo -en ${green}安装完成 ${cyan}回车返回${background}
 }
@@ -161,7 +161,7 @@ do
     fi
     i=$((${i}+1))
 done
-pnpm install puppeteer@19.0.0 -w
+pnpm install puppeteer@19.4.0 -w
 pnpm install icqq@latest -w
 echo -e ${cyan}正在安装插件依赖${background}
 plugin=$(ls plugins)
@@ -193,7 +193,7 @@ pnpm install sqlite3@5.1.6 -w
 
 LowerPptr(){
 pnpm uninstall puppeteer
-pnpm install puppeteer@19.0.0 -w
+pnpm install puppeteer@19.4.0 -w
 }
 
 UpdateNodeJS(){
@@ -208,13 +208,11 @@ if [ ! -e ${file} ];then
     echo -e ${red}文件不存在${background}
     return
 fi
-echo -e ${yellow}注意: 路径以.exe结尾${background}
 echo -en ${cyan}请输入ffmpeg路径: ${background}
 read NewFfmpegPath
 echo -en ${cyan}请输入ffprobe路径: ${background}
 read NewFfprobePath
-if ! $(echo ${NewFfmpegPath} | grep -q .*.exe);then
-    echo -e ${red}请以.exe结尾${background}
+if ! $(echo ${NewFfmpegPath} | grep -q '/');then
     echo -en ${cyan}回车返回${background}
     read
     return
@@ -240,11 +238,10 @@ if [ ! -e ${file} ];then
     echo -e ${red}文件不存在${background}
     return
 fi
-echo -e ${yellow}注意: 路径以.exe结尾${background}
 echo -en ${cyan}请输入浏览器路径: ${background}
 read NewBrowserPath
-if ! $(echo ${NewBrowserPath} | grep -q .*.exe);then
-    echo -e ${red}请以.exe结尾${background}
+if ! $(echo ${NewBrowserPath} | grep -q '/');then
+    echo -e ${red}请输入路径${background}
     echo -en ${cyan}回车返回${background}
     read
     return
