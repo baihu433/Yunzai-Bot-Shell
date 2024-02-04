@@ -17,6 +17,12 @@ if [ -d /usr/local/node/bin ];then
     PNPM_HOME=/root/.local/share/pnpm
 fi
 ##############################
+if [ -x "$(command -v whiptail)" ];then
+    DialogWhiptail=whiptail
+elif [ -x "$(command -v dialog)" ];then
+    DialogWhiptail=dialog
+fi
+##############################
 function BotPathCheck(){
 if [ -d "/root/${BotName}/node_modules" ];then
     BotPath="/root/${BotName}"
