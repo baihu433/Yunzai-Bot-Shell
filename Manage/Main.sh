@@ -46,7 +46,6 @@ elif [ -d "${BotPath}" ];then
     echo -e ${cyan}自定义路径: ${BotPath} ${green}判断通过${background}
     return 0
 else
-    echo -e ${red}对象错误${background}
     return 1
 fi
 }
