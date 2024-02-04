@@ -239,7 +239,7 @@ node app
 ;;
 esac
 ##############################
-old_version="1.0.0h"
+old_version="1.0.0i"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
@@ -274,7 +274,7 @@ then
 elif ps all | sed /grep/d | grep -q "${BOT_COMMAND}"
 then
     return 2
-elif pnpm pm2 list | grep -q ${BotName}
+elif pnpm pm2 list | grep -q ${BotName} | grep -q online
 then
     return 3
 else
