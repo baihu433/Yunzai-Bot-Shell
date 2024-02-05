@@ -943,7 +943,7 @@ do
           ;;
         69)
           Name="米游社手动验证"
-          Git="https://gitee.com/haanxuan/GT-Manual.git"
+          Git="https://gitee.com/Yummy-cookie/GT-Manual.git"
           PluginFolder="GT-Manual"
           PluginInstall
           ;;
