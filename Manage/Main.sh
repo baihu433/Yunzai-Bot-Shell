@@ -239,7 +239,7 @@ node app
 ;;
 esac
 ##############################
-old_version="1.0.0l"
+old_version="1.0.0m"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
@@ -361,7 +361,7 @@ case $1 in
     RunningState
     res="$?"
     if [ ${res} -eq 1 ];then
-      if tmux kill-session -t ${BotName}
+      if tmux kill-session -t ${TmuxName}
       then
         ${DialogWhiptail} --title "白狐-Script" --msgbox "停止成功" 10 60
       else
@@ -386,9 +386,9 @@ case $1 in
     RunningState
     res="$?"
     if [ ${res} -eq 1 ];then
-      if tmux kill-session -t ${BotName}
+      if tmux kill-session -t ${TmuxName}
       then
-        tmux new -s ${TmuxNam} -d "bh ${BotName} n"
+        tmux new -s ${TmuxName} -d "bh ${BotName} n"
         ProgressBar "启动"
         ${DialogWhiptail} --title "白狐-Script" --msgbox "重启成功" 10 60
       fi
