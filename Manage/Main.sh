@@ -239,7 +239,7 @@ node app
 ;;
 esac
 ##############################
-old_version="1.0.0k"
+old_version="1.0.0l"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
@@ -334,7 +334,7 @@ case $1 in
     elif [ ${res} -eq 3 ];then
       AttachPage "在Pm2后台启动" "日志"
     else
-      if tmux new -s ${TmuxNam} -d "bh ${BotName} n"
+      if tmux new -s ${TmuxName} -d "bh ${BotName} n"
       then
         ProgressBar "启动"
       else
