@@ -531,13 +531,14 @@ ModifyVersion
 4)
 share_token="$(grep -E share_token ${file})"
 value_share_token=$(echo ${share_token} | sed "s/\"share_token\"://g" | sed "s/,//g")
-if [ "${value_share_token}" = "false" ]
+if echo ${value_share_token} | grep -q false
 then
   sed -i "s/${share_token}/  \"share_token\": true,/g" ${file}
-  echo  -e ${cyan}共享token已设置为${green} 开启${background}
-elif [ "${value_share_token}" = "true" ]
+  echo -e ${cyan}共享token已设置为${green} 开启${background}
+elif echo ${value_share_token} | grep -q true
+then
   sed -i "s/${share_token}/  \"share_token\": false,/g" ${file}
-  echo  -e ${cyan}共享token已设置为${green} 关闭${background}
+  echo -e ${cyan}共享token已设置为${green} 关闭${background}
 fi
 echo -en${cyan}回车返回${background};read
 ;;
