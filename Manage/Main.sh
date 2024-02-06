@@ -56,6 +56,8 @@ then
 elif ping -c 1 github.com > /dev/null 2>&1
 then
     export GitMirror="github.com"
+else 
+    export GitMirror="gitee.com"
 fi
 }
 ##############################
@@ -239,7 +241,7 @@ node app
 ;;
 esac
 ##############################
-old_version="1.0.0m"
+old_version="1.0.0n"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})

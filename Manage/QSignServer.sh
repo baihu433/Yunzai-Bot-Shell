@@ -127,69 +127,7 @@ Git="https://${GitMirror}/baihu433/QSignServer"
 ScriptVersion="1.1.1"
 config=$HOME/QSignServer/config.yaml
 
-install_QSignServer(){
-if [ -e QSignServer/bin/unidbg-fetch-qsign ];then
-  echo -e ${yellow}您已安装签名服务器${background}
-  exit
-fi
-if [ -e /etc/resolv.conf ]; then
-  if ! grep -q "114.114.114.114" /etc/resolv.conf && grep -q "8.8.8.8" /etc/resolv.conf ;then
-    cp -f /etc/resolv.conf /etc/resolv.conf.backup
-      echo -e ${yellow}DNS已备份至 /etc/resolv.conf.backup${background}
-      echo "nameserver 114.114.114.114" > /etc/resolv.conf
-      echo "nameserver 8.8.8.8" >> /etc/resolv.conf
-      echo -e ${yellow}DNS已修改为 114.114.114.114 8.8.8.8${background}
-  fi
-fi
-if [ $(command -v apt) ];then
-  apt update -y
-  apt install -y tar gzip wget curl unzip git tmux pv
-elif [ $(command -v yum) ];then
-  yum makecache -y
-  yum install -y tar gzip wget curl unzip git tmux pv
-elif [ $(command -v dnf) ];then
-  dnf makecache -y
-  dnf install -y tar gzip wget curl unzip git tmux pv
-elif [ $(command -v pacman) ];then
-  pacman -Syy --noconfirm --needed tar gzip wget curl unzip git tmux pv
-else
-  echo -e ${red}不受支持的Linux发行版${background}
-  exit
-fi
-until git clone --depth=1 ${Git}
-do
-  if [ ${i} -eq 3 ]
-  then
-    echo -e ${red}错误次数过多 退出${background}
-    exit
-  fi
-  i=$((${i}+1))
-  echo -en ${red}命令执行失败 ${green}3秒后重试${background}
-  rm -rf QSignServer
-  sleep 3s
-  echo
-done
-
-JAVA_VERSION=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}')
-if [[ ! "${JAVA_VERSION}" == "21.*"* ]]; then
-    rm -rf $HOME/QSignServer/JRE > /dev/null 2>&1
-    rm -rf $HOME/jre.tar.gz > /dev/null 2>&1
-    until wget -O jre.tar.gz -c ${JRE_URL}
-    do
-      echo -e ${red}下载失败 ${green}正在重试${background}
-    done
-    if [ ! -d $HOME/QSignServer ];then
-        mkdir QSignServer
-    fi
-    echo -e ${yellow}正在解压JRE文件,请耐心等候${background}
-    mkdir JRE
-    pv jre.tar.gz | tar -zxf - -C JRE
-    mv JRE/$(ls JRE) QSignServer/JRE
-    rm -rf jre.tar.gz
-    rm -rf JRE
-    export PATH=$PATH:$HOME/QSignServer/JRE/bin
-    export JAVA_HOME=$HOME/QSignServer/JRE
-fi
+ModifyVersion(){
 echo -e ${white}"====="${green}白狐-QSignServer${white}"====="${background}
 echo -e ${cyan}请选择签名服务器适配的QQ共享库版本${background}
 echo -e  ${green} 1.  ${cyan}HD: 8.9.58${background}
@@ -268,6 +206,73 @@ esac
 NewLibraryVersion=${LibraryVersion}
 OldLibraryVersion=$(grep "LibraryVersion" ${config} | sed 's/LibraryVersion: //g')
 sed -i "s/${OldLibraryVersion}/${NewLibraryVersion}/g" ${config}
+}
+
+
+install_QSignServer(){
+if [ -e QSignServer/bin/unidbg-fetch-qsign ];then
+  echo -e ${yellow}您已安装签名服务器${background}
+  exit
+fi
+if [ -e /etc/resolv.conf ]; then
+  if ! grep -q "114.114.114.114" /etc/resolv.conf && grep -q "8.8.8.8" /etc/resolv.conf ;then
+    cp -f /etc/resolv.conf /etc/resolv.conf.backup
+      echo -e ${yellow}DNS已备份至 /etc/resolv.conf.backup${background}
+      echo "nameserver 114.114.114.114" > /etc/resolv.conf
+      echo "nameserver 8.8.8.8" >> /etc/resolv.conf
+      echo -e ${yellow}DNS已修改为 114.114.114.114 8.8.8.8${background}
+  fi
+fi
+if [ $(command -v apt) ];then
+  apt update -y
+  apt install -y tar gzip wget curl unzip git tmux pv
+elif [ $(command -v yum) ];then
+  yum makecache -y
+  yum install -y tar gzip wget curl unzip git tmux pv
+elif [ $(command -v dnf) ];then
+  dnf makecache -y
+  dnf install -y tar gzip wget curl unzip git tmux pv
+elif [ $(command -v pacman) ];then
+  pacman -Syy --noconfirm --needed tar gzip wget curl unzip git tmux pv
+else
+  echo -e ${red}不受支持的Linux发行版${background}
+  exit
+fi
+until git clone --depth=1 ${Git}
+do
+  if [ ${i} -eq 3 ]
+  then
+    echo -e ${red}错误次数过多 退出${background}
+    exit
+  fi
+  i=$((${i}+1))
+  echo -en ${red}命令执行失败 ${green}3秒后重试${background}
+  rm -rf QSignServer
+  sleep 3s
+  echo
+done
+
+JAVA_VERSION=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}')
+if [[ ! "${JAVA_VERSION}" == "21.*"* ]]; then
+    rm -rf $HOME/QSignServer/JRE > /dev/null 2>&1
+    rm -rf $HOME/jre.tar.gz > /dev/null 2>&1
+    until wget -O jre.tar.gz -c ${JRE_URL}
+    do
+      echo -e ${red}下载失败 ${green}正在重试${background}
+    done
+    if [ ! -d $HOME/QSignServer ];then
+        mkdir QSignServer
+    fi
+    echo -e ${yellow}正在解压JRE文件,请耐心等候${background}
+    mkdir JRE
+    pv jre.tar.gz | tar -zxf - -C JRE
+    mv JRE/$(ls JRE) QSignServer/JRE
+    rm -rf jre.tar.gz
+    rm -rf JRE
+    export PATH=$PATH:$HOME/QSignServer/JRE/bin
+    export JAVA_HOME=$HOME/QSignServer/JRE
+fi
+ModifyVersion
 if [ ! "${install_QSignServer}" == "true" ]
 then
     echo -en ${yellow}安装完成 是否启动?[Y/n]${background};read yn
@@ -482,20 +487,74 @@ echo -en ${yellow}回车返回${background};read
 }
 
 function config_QSignServer(){
+LibraryVersion=$(grep "LibraryVersion" ${config} | sed 's/LibraryVersion: //g')
+file=$HOME/QSignServer/txlib/${LibraryVersion}/config.json
 echo -e ${white}"====="${green}白狐-QSignServer${white}"====="${background}
 echo -e  ${green} 1.  ${cyan}修改端口${background}
 echo -e  ${green} 2.  ${cyan}修改key值${background}
-echo -e  ${green} 3.  ${cyan}设置共享token${background}
-echo -e  ${green} 4.  ${cyan}修改最大实例数量${background}
-echo -e  ${green} 5.  ${cyan}设置高并发${background}
-echo -e  ${green} 6.  ${cyan}设置黑名单${background}
+echo -e  ${green} 3.  ${cyan}修改共享库版本${background}
+echo -e  ${green} 4.  ${cyan}设置共享token${background}
+echo -e  ${green} 5.  ${cyan}修改最大实例数量${background}
+echo -e  ${green} 6.  ${cyan}设置高并发${background}
 echo -e  ${green} 7.  ${cyan}设置自动注册${background}
 echo -e  ${green} 8.  ${cyan}设置kvm${background}
 echo -e  ${green} 9.  ${cyan}设置unicorn${background}
 echo -e  ${green} 0.  ${cyan}返回${background}
 echo "========================="
-echo
+echo -e ${green}注意: 各版本之间的配置不通用${background}
+echo "========================="
 echo -en ${green}请输入您的选项: ${background};read num
+case ${num} in
+1)
+OldPort=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g")
+echo -e ${cyan}请输入您的新端口${background};read NewPort
+if [[ ! ${NewPort} =~ ^[0-9]+$ ]];then
+  echo -e ${red}请输入数字!!!${background}
+  return
+fi
+sed -i "s/${OldPort}/${NewPort}/g" ${file}
+echo -en ${green}修改完成 ${cyan}回车返回${background};read
+;;
+2)
+OldKey=$(grep -E key ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g")
+echo -e ${cyan}请输入您的新Key${background};read NewKey
+if [ -z ${NewKey} ];then
+  echo -e ${red}输入错误${background}
+  return
+fi
+sed -i "s/${OldKey}/${NewKey}/g" ${file}
+echo -en ${green}修改完成 ${cyan}回车返回${background};read
+;;
+3)
+ModifyVersion
+;;
+4)
+share_token="$(grep -E share_token ${file})"
+value_share_token=$(echo ${share_token} | sed "s/\"share_token\"://g" | sed "s/,//g")
+if [ "${value_share_token}" = "false" ]
+then
+  sed -i "s/${share_token}/  \"share_token\": true,/g" ${file}
+  echo  -e ${cyan}共享token已设置为${green} 开启${background}
+elif [ "${value_share_token}" = "true" ]
+  sed -i "s/${share_token}/  \"share_token\": false,/g" ${file}
+  echo  -e ${cyan}共享token已设置为${green} 关闭${background}
+fi
+echo -en${cyan}回车返回${background};read
+;;
+5)
+OldNum=$(grep -E count ${file})
+echo -e ${cyan}请输入最大实例数${background};read NewNum
+if [[ ! ${NewPort} =~ ^[0-9]+$ ]];then
+  echo -e ${red}请输入数字!!!${background}
+  return
+fi
+sed -i "s/${OldNum}/  \"count\": ${NewNum},/g" ${file}
+echo  -e ${cyan}最大实例数已设置为${green} ${NewNum}${background}
+;;
+*)
+echo -e ${red}暂时没做完${background}
+;;
+esac
 }
 main(){
 if [ -e QSignServer/bin/unidbg-fetch-qsign ];then
