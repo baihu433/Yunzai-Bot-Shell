@@ -635,7 +635,6 @@ echo
 link_QSignServer
 ;;
 9)
-echo -e ${red}暂时没做完${background}
 config_QSignServer
 ;;
 0)
