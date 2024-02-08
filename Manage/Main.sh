@@ -66,6 +66,7 @@ if pnpm pm2 list | grep -q ${BotName} | grep -q online
 then
   echo -e ${red}程序进入后台运行 ${cyan}正在转为前台${background}
   pnpm pm2 stop ${BotName}
+  pnpm pm2 delete ${BotName}
   Runing
 else
   node app
@@ -252,7 +253,7 @@ Runing
 ;;
 esac
 ##############################
-old_version="1.0.1"
+old_version="1.0.2"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
