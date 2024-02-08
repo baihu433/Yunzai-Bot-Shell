@@ -8,6 +8,10 @@ export purple="\033[35m"
 export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
+if node -v > /dev/null
+then
+  exit
+fi
 if [ ! -d node ];then
     mkdir node
 fi

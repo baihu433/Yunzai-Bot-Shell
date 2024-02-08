@@ -61,6 +61,16 @@ else
 fi
 }
 ##############################
+Runing(){
+if pnpm pm2 list | grep -q ${BotName}
+then
+  echo -e ${red}程序进入后台运行 ${cyan}正在转为前台${background}
+  pnpm pm2 stop ${BotName}
+  Runing
+else
+  node app
+  Runing
+}
 RedisServerStart(){
 PedisCliPing(){
 if [ "$(redis-cli ping 2>&1)" == "PONG" ]
@@ -237,11 +247,11 @@ case $2 in
 n)
 RedisServerStart
 QSignServer Check
-node app
+Runing
 ;;
 esac
 ##############################
-old_version="1.0.0n"
+old_version="1.0.1"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
@@ -356,7 +366,7 @@ case $1 in
     else
       RedisServerStart
       QSignServer Check
-      node app
+      Runing
     fi
     ;;
   stop)
