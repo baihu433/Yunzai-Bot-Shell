@@ -70,6 +70,7 @@ then
 else
   node app
   Runing
+fi
 }
 RedisServerStart(){
 PedisCliPing(){
