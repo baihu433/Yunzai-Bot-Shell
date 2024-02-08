@@ -395,6 +395,9 @@ case ${num} in
   15)
     ChangeHost
     ;;
+  16)
+    BotBackup
+    ;;
   *)
     echo -e ${red}输入错误${background}
     exit

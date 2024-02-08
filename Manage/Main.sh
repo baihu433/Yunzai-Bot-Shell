@@ -62,7 +62,7 @@ fi
 }
 ##############################
 Runing(){
-if pnpm pm2 list | grep -q ${BotName}
+if pnpm pm2 list | grep -q ${BotName} | grep -q online
 then
   echo -e ${red}程序进入后台运行 ${cyan}正在转为前台${background}
   pnpm pm2 stop ${BotName}
@@ -269,8 +269,7 @@ if [ "${new_version}" != "${old_version}" ];then
         echo -en ${cyan}更新完成 回车继续${background};read
     else
         echo -en ${red}出现错误 跳过更新 ${cyan}回车继续${background};read
-        bh
-        exit
+        rm bh
     fi
 fi
 ##############################
