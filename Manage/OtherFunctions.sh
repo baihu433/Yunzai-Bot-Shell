@@ -309,13 +309,13 @@ echo -en ${green}修改完成 ${cyan}回车返回${background}
 read
 }
 
-ChangePort(){
+ChangeHost(){
 if ! GuoBaCheck
 then
     read
     return
 fi
-echo -en ${cyan}请输入地址: ${background}
+echo -en ${cyan}请输入端口: ${background}
 read NewHost
 if ! $(echo ${NewHost} | grep -q '.');then
     echo -e ${red}请输入IP或者域名${background}
@@ -324,7 +324,7 @@ if ! $(echo ${NewHost} | grep -q '.');then
     return
 fi
 NewHost="host: ${NewHost}"
-OldHost=$(grep "port:" ${file})
+OldHost=$(grep "host:" ${file})
 sed -i "s/${OldHost}/  ${NewHost}/g" ${file}
 echo -en ${green}修改完成 ${cyan}回车返回${background}
 read
