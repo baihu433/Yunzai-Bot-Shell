@@ -16,7 +16,7 @@ if [ -d /usr/local/node/bin ];then
     PNPM_HOME=/root/.local/share/pnpm
 fi
 
-ChangeAccoun(){
+ChangeAccount(){
 file="config/config/qq.yaml"
 if [ ! -e ${file} ];then
     echo -e ${red}文件不存在${background}
