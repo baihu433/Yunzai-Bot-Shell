@@ -177,7 +177,7 @@ help
 exit
 ;;
 PI)
-bash <(curl -sL https://mirror.ghproxy.com/https://raw.githubusercontent.com/baihu433/baihu433.github.io/main/BOT-PlugIn.sh)
+bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PlugIn.sh)
 exit
 ;;
 QS)
@@ -253,7 +253,7 @@ Runing
 ;;
 esac
 ##############################
-old_version="1.0.2"
+old_version="1.0.3"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
@@ -434,11 +434,7 @@ case $1 in
     fi
     ;;
   plugin)
-    echo -e ${cyan}请填入Github镜像站${background}
-    echo -en ${cyan}不填为不使用镜像站${background}
-    echo -e ${cyan}没有请填入 ${green}https://mirrors.chenby.cn/${background}
-    echo -en ${cyan}请填入: ${background};read GithubMirror
-    bash <(curl -sL ${GithubMirror}https://raw.githubusercontent.com/ArcticFox520/YZ/main/BOT-PlugIn.sh)
+    bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PlugIn.sh)
     ;;
 esac
 }
