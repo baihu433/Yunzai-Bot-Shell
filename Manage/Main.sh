@@ -126,6 +126,7 @@ exit
 }
 ##############################
 QSignServer(){
+echo
 if [ -e $HOME/QSignServer/bin/unidbg-fetch-qsign ];then
 if [ -d $HOME/QSignServer/JRE ];then
     export PATH=$PATH:$HOME/QSignServer/JRE/bin
@@ -137,7 +138,12 @@ file=$HOME/QSignServer/txlib/${LibraryVersion}/config.json
 Port=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g")
   case $1 in
   Check)
-  if ! curl 127.0.0.1:${Port};then
+  if curl 127.0.0.1:${Port}
+  then
+    echo
+    echo -e ${cyan}签名服务器${green} 已启动${background}
+  else
+    echo
     echo -e ${cyan}签名服务器${red} 未启动${background}
     QSignServer Start
   fi
@@ -253,7 +259,7 @@ Runing
 ;;
 esac
 ##############################
-old_version="1.0.3"
+old_version="1.0.4"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})

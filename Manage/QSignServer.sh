@@ -27,11 +27,13 @@ if [ -d $HOME/QSignServer/JRE ];then
 fi
 
 if ping -c 1 gitee.com > /dev/null 2>&1
-    then
+then
     export GitMirror="gitee.com"
 elif ping -c 1 github.com > /dev/null 2>&1
 then
     export GitMirror="github.com"
+else
+    export GitMirror="gitee.com"
 fi
 case $(uname -m) in
     x86_64|amd64)

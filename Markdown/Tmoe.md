@@ -371,9 +371,9 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 然后会出现以下界面
 
-![mz1.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/mz1.png)
+![mz1.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/bhmiao.png)
 
-选择第二个 `2 Miao-Yunzai` 并 `回车` 来安装喵崽
+选择第一个 `1 Miao-Yunzai` 并 `回车` 来安装喵崽
 
 <hr/>
 
@@ -383,22 +383,6 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 ![mz2.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/mz2.png)
 
 选择 `安装` 并 `回车` 来确定安装喵崽
-
-<hr/>
-
-等他跑完后，会出现以下界面
-询问下载喵崽的地址
-
-![mz3.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/mz3.png)
-
-选择 `Gitee` 并 `回车` 
-
-等他跑完后，会出现以下界面
-询问下载喵喵插件的地址
-
-![mp.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/mp.png)
-
-同样是选择 `Gitee` 并 `回车`
 
 <hr/>
 
@@ -413,42 +397,72 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 等他跑完后，会出现以下界面
 
-![bhmain.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/bhmain.png)
+![bhmain.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/bhmiao1.png)
 
-手机用户请选择 `9  前台启动` 
+选择`0 返回`
 
 <hr/>
 
-然后会提示选择签名服务器版本
+然后我们来部署签名服务器
 
-![qsign.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qsign.png)
+![](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qsign.png)
 
-推荐: `9. HD: 8.9.80` 
-填入 `9` 并回车
-###### `注意: 如果8.9.80提示45错误，那就往上增加版本`
-
+选择第三个 `3 签名服务器管理`
 
 <hr>
 
+然后会提示这个
+
+![](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qsign1.png)
+
+填入`1` 并 `回车`
+
+<hr>
+
+然后会让你选择签名服务器的QQ共享库版本
+
+![qsign.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qsign.png)
+
+推荐: `9. HD: 8.9.78` 
+填入 `9` 并回车
+
+<hr>
+
+然后会提示 `安装完成 是否启动?[Y/n]`
+
+填大写的 `Y` 并 `回车`
+
 然后会提示选择启动方式
 
-![qsign1.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qsign1.png)
+![qsign3.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qsign3.png)
 
 推荐: `2. TMUX后台启动` 
 填入 `2` 并回车
 
 <hr/>
 
-然后会提示 是否打开窗口
-
-![qsign2.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qsign2.png)
+然后会提示 `启动成功 是否打开窗口 [Y/N]:`
 
 填入 `N` 并回车
 如果提示 `回车返回` 就回车一下
 
 <hr>
 
-随后 机器人就开始启动了
+随后 它会返回到签名服务器的管理界面
+
+填 `0` 并 `回车`
+
+返回到BOT的管理页面
+
+<hr>
+
+然后选择 `1 Miao-Yunzai` 并`回车`进入Miao-Yunzai的管理页面
+
+这里注意:
+手机用户请选择 `2 前台启动`
+服务器用户请选择 `启动运行`
+
+<hr>
 
 1.`请输入机器人QQ号(建议用小号)：` <br>
 ↑这一项 填你`机器人`的QQ号
