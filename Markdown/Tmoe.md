@@ -388,7 +388,7 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 等他跑完后，会出现以下界面
 
-![bhmain.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/bhmiao1.png)
+![bhmain.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/bhmiao.png)
 
 选择`0 返回`
 
