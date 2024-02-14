@@ -387,15 +387,6 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 <hr/>
 
 等他跑完后，会出现以下界面
-询问是否部署签名服务器
-
-![qs.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qs.png)
-
-选择 `马上部署` 并 `回车`
-
-<hr/>
-
-等他跑完后，会出现以下界面
 
 ![bhmain.png](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/bhmiao1.png)
 
@@ -405,7 +396,7 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 然后我们来部署签名服务器
 
-![](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/qsign.png)
+![](https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/img/bh/bhmiao2.png)
 
 选择第三个 `3 签名服务器管理`
 
