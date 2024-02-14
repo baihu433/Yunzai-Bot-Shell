@@ -434,7 +434,7 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 然后会提示 `启动成功 是否打开窗口 [Y/N]:`
 
-填入 `N` 并回车
+填入 `N` 并回车<br>
 如果提示 `回车返回` 就回车一下
 
 <hr>
@@ -449,9 +449,9 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 然后选择 `1 Miao-Yunzai` 并`回车`进入Miao-Yunzai的管理页面
 
-这里注意:
-手机用户请选择 `2 前台启动`
-服务器用户请选择 `启动运行`
+这里注意:<br>
+手机用户请选择 `2 前台启动` <br>
+服务器用户请选择 `1 启动运行`
 
 <hr>
 
@@ -482,7 +482,7 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.s
 
 如果提示 `? 触发滑动验证，需要获取ticket通过验证，请选择获取方式: (Use arrow keys)`
 
-下载 [`Sakura Login Solver`](https://ghproxy.com/https://github.com/KasukuSakura/mirai-login-solver-sakura/releases/download/v0.0.12/apk-release.apk)(这是一个可以点击的链接)
+下载 [`Sakura Login Solver`](https://mirrors.chenby.cn/https://github.com/KasukuSakura/mirai-login-solver-sakura/releases/download/v0.0.12/apk-release.apk)(这是一个可以点击的链接)
 
 选择 `滑动验证app请求码获取` 并 `回车`
 
