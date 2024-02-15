@@ -10,6 +10,7 @@ export white="\033[37m"
 export background="\033[0m"
 
 echo -e ${red}暂时放弃对centos的支持${background}
+exit
 
 if [ $(command -v dnf) ];then
     pkg_install="dnf"

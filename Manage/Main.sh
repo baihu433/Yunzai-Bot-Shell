@@ -50,14 +50,13 @@ else
 fi
 }
 function MirrorCheck(){
-if ping -c 1 gitee.com > /dev/null 2>&1
+URL="https://ipinfo.io"
+Address=$(curl ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
+if [ ${Address} = "CN" ]
 then
     export GitMirror="gitee.com"
-elif ping -c 1 github.com > /dev/null 2>&1
-then
-    export GitMirror="github.com"
 else 
-    export GitMirror="gitee.com"
+    export GitMirror="github.com"
 fi
 }
 ##############################
@@ -550,7 +549,6 @@ case ${Number} in
 esac
 }
 function BotInstall(){
-MirrorCheck
 case $(uname -m) in
     x86_64|amd64)
     export ARCH=x64
@@ -563,6 +561,7 @@ case $(uname -m) in
     exit
 ;;
 esac
+MirrorCheck
 command_all="BOT-PKG.sh BOT_INSTALL.sh BOT-NODE.JS.sh GitBot.sh"
 i=1
 URL="https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage"
@@ -589,7 +588,7 @@ function BotPath(){
         cd ${BotPath}
         Main
     else
-        if ${DialogWhiptail} --title "白狐-Bot-Plugin" \
+        if ${DialogWhiptail} --title "白狐-Bot" \
         --yesno "${BotName}未安装 是否安装 ${BotName}" \
         8 50
         then

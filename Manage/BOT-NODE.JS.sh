@@ -50,13 +50,18 @@ fi
 fi
 rm -rf node node.tar.xz > /dev/null
 rm -rf node node.tar.xz > /dev/null
-if ping -c 1 gitee.com > /dev/null 2>&1
-then
-  NPMMirror="https://registry.npmmirror.com"
-elif ping -c 1 github.com > /dev/null 2>&1
-then
-  NPMMirror="https://registry.npmjs.org"
+
+if [ -z "${GitMirror}" ];then
+  URL="https://ipinfo.io"
+  Address=$(curl ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
+  if [ "${Address}" = "CN" ]
+  then
+    NPMMirror="https://registry.npmmirror.com"
+  else
+    NPMMirror="https://registry.npmjs.org"
+  fi
 fi
+
 if [ ! -x "$(command -v pnpm)" ];then
     echo -e ${yellow}正在使用npm安装pnpm${background}
     a=0

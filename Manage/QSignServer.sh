@@ -26,15 +26,17 @@ if [ -d $HOME/QSignServer/JRE ];then
     export JAVA_HOME=$HOME/QSignServer/JRE
 fi
 
-if ping -c 1 gitee.com > /dev/null 2>&1
-then
-    export GitMirror="gitee.com"
-elif ping -c 1 github.com > /dev/null 2>&1
-then
-    export GitMirror="github.com"
-else
-    export GitMirror="gitee.com"
+if [ -z "${GitMirror}" ];then
+  URL="https://ipinfo.io"
+  Address=$(curl -sL ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
+  if [ "${Address}" = "CN" ]
+  then
+      GitMirror="gitee.com"
+  else
+      GitMirror="github.com"
+  fi
 fi
+
 case $(uname -m) in
     x86_64|amd64)
     ARCH=x64

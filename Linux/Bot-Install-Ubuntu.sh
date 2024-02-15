@@ -8,6 +8,17 @@ export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
 
+if [ -z "${GitMirror}" ];then
+  URL="https://ipinfo.io"
+  Address=$(curl ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
+  if [ "${Address}" = "CN" ]
+  then
+      GitMirror="gitee.com"
+  else 
+      GitMirror="github.com"
+  fi
+fi
+
 if ! dpkg -s xz-utils >/dev/null 2>&1
     then
         echo -e ${yellow}安装xz解压工具${background}
@@ -57,10 +68,10 @@ case $(uname -m) in
 esac
 
 function node_install(){
-if ping -c 1 gitee.com > /dev/null 2>&1
+if [ "${GitMirror}" == "gitee.com" ]
 then
     NodeJS_URL="https://registry.npmmirror.com/-/binary/node/latest-${version1}.x/node-${version2}-linux-${ARCH}.tar.xz"
-elif ping -c 1 github.com > /dev/null 2>&1
+elif [ "${GitMirror}" == "github.com" ]
 then
     NodeJS_URL="https://nodejs.org/dist/latest-${version1}.x/node-${version2}-linux-${ARCH}.tar.xz"
 fi
