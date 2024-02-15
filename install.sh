@@ -116,7 +116,7 @@ function Script_Install(){
             export Git_Mirror=gitee.com
             ;;
         2)
-            export Git_Mirror=github.com
+            export Git_Mirror=https://raw.githubusercontent.com/
             ;;
         *)
             echo -e ${red}输入错误${background}
