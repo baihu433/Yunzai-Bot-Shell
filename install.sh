@@ -92,7 +92,17 @@ fi
 }
 function Script_Install(){
     echo -e ${green}正在获取版本信息${background}
-    URL=https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version
+    if [  -z  "${GitMirror}"  ];then
+      URL="https://ipinfo.io"
+      Address=$(curl ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
+      if [ "${Address}" = "CN" ]
+      then
+          GitMirror="gitee.com"
+      else 
+          GitMirror="github.com"
+      fi
+    fi
+    URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl ${URL})
     version="$(echo ${version_date} | grep version | awk '{print $2}' )"
     date="$(echo ${version_date} | grep date | awk '{print $4}' )"
@@ -116,7 +126,7 @@ function Script_Install(){
             export Git_Mirror=gitee.com
             ;;
         2)
-            export Git_Mirror=https://raw.githubusercontent.com/
+            export Git_Mirror=raw.githubusercontent.com
             ;;
         *)
             echo -e ${red}输入错误${background}
