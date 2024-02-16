@@ -91,7 +91,7 @@ done
 
 if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
     echo -e ${yellow}安装软件 Node.JS${background}
-        version1=v16
-        version2=v16.20.2
+        version1=v18
+        version2=v18.19.1
         node_install
 fi
