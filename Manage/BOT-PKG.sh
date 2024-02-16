@@ -99,7 +99,8 @@ fi
 
 case $(uname -m) in
     x86_64|amd64)
-    ARCH=x64
+    ARCH1=x64
+    ARCH2=amd64
 ;;
     arm64|aarch64)
     ARCH=arm64
@@ -127,8 +128,8 @@ if [ ! -x "/usr/local/bin/ffmpeg" ];then
     if [ ! -d ffmpeg ];then
       mkdir ffmpeg
     fi
-    ffmpegURL=https://johnvansickle.com/ffmpeg/releases
-    ffmpegURL=${ffmpegURL}ffmpeg-release-${ARCH}-static.tar.xz
+    ffmpegURL=https://johnvansickle.com/ffmpeg/releases/
+    ffmpegURL=${ffmpegURL}ffmpeg-release-${ARCH2}-static.tar.xz
     wget -O ffmpeg.tar.xz ${ffmpegURL}
     pv ffmpeg.tar.xz | tar -xf ffmpeg.tar.xz -C ffmpeg
     chmod +x ffmpeg/$(ls ffmpeg)/*
