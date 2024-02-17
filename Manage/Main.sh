@@ -26,7 +26,7 @@ fi
 function BotPathCheck(){
 if [ -d "/root/${BotName}/node_modules" ];then
     BotPath="/root/${BotName}"
-    
+    return 0
 elif [ -d "/root/.fox@bot/${BotName}/node_modules" ];then
     BotPath="/root/.fox@bot/${BotName}"
     return 0
@@ -66,8 +66,6 @@ then
   echo -e ${red}程序进入后台运行 ${cyan}正在转为前台${background}
   pnpm pm2 stop ${BotName}
   pnpm pm2 delete ${BotName}
-  Runing
-else
   node app
   Runing
 fi
@@ -130,10 +128,21 @@ if [ -d $HOME/QSignServer/JRE ];then
     export PATH=$PATH:$HOME/QSignServer/JRE/bin
     export JAVA_HOME=$HOME/QSignServer/JRE
 fi
-config=$HOME/QSignServer/config.yaml
-LibraryVersion=$(grep "LibraryVersion" ${config} | sed 's/LibraryVersion: //g')
+QsignConfig=$HOME/QSignServer/config.yaml
+BotConfig=config/config/bot.yaml
+LibraryVersion=$(grep "LibraryVersion" ${QsignConfig} | sed 's/LibraryVersion: //g')
 file=$HOME/QSignServer/txlib/${LibraryVersion}/config.json
 Port=$(grep -E port ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/://g")
+Key=$(grep -E key ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g")
+Host=$(grep -E host ${file} | awk '{print $2}' | sed 's/"//g' | sed "s/,//g")
+QSignLink="http://""${Host}":"${Port}"/sign?key="${Key}"
+if [ -e ${BotConfig} ];then
+  if ! grep -q ${QSignLink} ${BotConfig};then
+    old_sign_api_addr=$(grep sign_api_addr ${BotConfig})
+    new_sign_api_addr="sign_api_addr: ${QSignLink}"
+    sed -i "s|${old_sign_api_addr}|${new_sign_api_addr}|g" ${BotConfig}
+  fi
+fi
   case $1 in
   Check)
   if curl 127.0.0.1:${Port}
@@ -252,11 +261,12 @@ case $2 in
 n)
 RedisServerStart
 QSignServer Check
+node app
 Runing
 ;;
 esac
 ##############################
-old_version="1.0.5"
+old_version="1.0.6"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
@@ -370,6 +380,7 @@ case $1 in
     else
       RedisServerStart
       QSignServer Check
+      node app
       Runing
     fi
     ;;

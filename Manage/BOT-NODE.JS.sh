@@ -51,15 +51,13 @@ fi
 rm -rf node node.tar.xz > /dev/null
 rm -rf node node.tar.xz > /dev/null
 
-if [ -z "${GitMirror}" ];then
-  URL="https://ipinfo.io"
-  Address=$(curl ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
-  if [ "${Address}" = "CN" ]
-  then
-    NPMMirror="https://registry.npmmirror.com"
-  else
-    NPMMirror="https://registry.npmjs.org"
-  fi
+URL="https://ipinfo.io"
+Address=$(curl ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
+if [ "${Address}" = "CN" ]
+then
+  NPMMirror="https://registry.npmmirror.com"
+else
+  NPMMirror="https://registry.npmjs.org"
 fi
 
 if [ ! -x "$(command -v pnpm)" ];then
