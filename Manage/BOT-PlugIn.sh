@@ -8,6 +8,12 @@ export purple="\033[35m"
 export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
+URL="https://ipinfo.io"
+Address=$(curl -sL ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
+if [ "${Address}" = "CN" ]
+then
+    GitHubMirror="https://mirrors.chenby.cn/"
+fi
 function backmain(){
 echo
 echo -en ${cyan}回车返回${background}
@@ -949,13 +955,13 @@ do
           ;;
         70)
           Name="简化GPT插件"
-          Git="https://${GitHubMirror}/https://github.com/CikeyQi/gpti-plugin"
+          Git="${GitHubMirror}/https://github.com/CikeyQi/gpti-plugin"
           PluginFolder="gpti-plugin"
           PluginInstall
           ;;
         71)
           Name="米家插件"
-          Git="https://${GitHubMirror}/https://github.com/CikeyQi/mijia-plugin"
+          Git="${GitHubMirror}/https://github.com/CikeyQi/mijia-plugin"
           PluginFolder="mijia-plugin"
           PluginInstall
           ;;

@@ -330,6 +330,16 @@ echo -en ${green}修改完成 ${cyan}回车返回${background}
 read
 }
 
+BotBackup(){
+date=$(date +"%Y-%m-%d-%H-%M-%S")
+if [ ! -d "$HOME/BotBackup" ];then
+  mkdir $HOME/BotBackup
+fi
+cp -rf data $HOME/BotBackup/data
+cp -rf config $HOME/BotBackup/config
+
+}
+
 echo -e ${white}"====="${green}白狐-Script${white}"====="${background}
 echo -e ${green}请选择您的操作[${Bot_Name}]${background}
 echo -e  ${green} 1. ${cyan}修改登录账号${background}
