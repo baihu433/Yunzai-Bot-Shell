@@ -103,7 +103,8 @@ case $(uname -m) in
     ARCH2=amd64
 ;;
     arm64|aarch64)
-    ARCH=arm64
+    ARCH1=arm64
+    ARCH2=arm64
 ;;
 *)
     echo ${red}您的框架为${yellow}$(uname -m)${red},快让白狐做适配.${background}
@@ -139,8 +140,8 @@ if [ ! -x "/usr/local/bin/ffmpeg" ];then
   then
     echo -e ${yellow}安装软件 ffmpeg${background}
     ffmpeg_URL=https://registry.npmmirror.com/-/binary/ffmpeg-static/b6.0
-    ffmpegURL=${ffmpeg_URL}/ffmpeg-linux-${ARCH}
-    ffprobeURL=${ffmpeg_URL}/ffprobe-linux-${ARCH}
+    ffmpegURL=${ffmpeg_URL}/ffmpeg-linux-${ARCH1}
+    ffprobeURL=${ffmpeg_URL}/ffprobe-linux-${ARCH1}
     wget -O ffmpeg ${ffmpegURL}
     wget -O ffprobe ${ffprobeURL}
     chmod +x ffmpeg ffprobe
