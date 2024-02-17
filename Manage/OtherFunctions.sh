@@ -80,6 +80,7 @@ esac
 OldDevice=$(grep "platform:" ${file})
 NewDevice="platform: ${DeviceNumber}"
 sed -i "s/${OldDevice}/${NewDevice}/g" ${file}
+rm -rf data > /dev/null
 echo -en ${green}修改完成 ${cyan}回车返回${background}
 read
 }
