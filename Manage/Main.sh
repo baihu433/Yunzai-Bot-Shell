@@ -51,7 +51,7 @@ fi
 }
 function MirrorCheck(){
 URL="https://ipinfo.io"
-Address=$(curl ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
+Address=$(curl -sL ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
 if [ ${Address} = "CN" ]
 then
     export GitMirror="gitee.com"
@@ -266,7 +266,7 @@ Runing
 ;;
 esac
 ##############################
-old_version="1.0.6"
+old_version="1.0.7"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
@@ -448,7 +448,14 @@ case $1 in
     fi
     ;;
   plugin)
-    bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/BOT-PlugIn.sh)
+    URL="https://ipinfo.io"
+    Address=$(curl -sL ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
+    if [ ${Address} = "CN" ]
+    then
+        bash <(curl -sL https://mirrors.chenby.cn/https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/Manage/BOT-PlugIn.sh)
+    else 
+        bash <(curl -sL https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/Manage/BOT-PlugIn.sh)
+    fi
     ;;
 esac
 }
