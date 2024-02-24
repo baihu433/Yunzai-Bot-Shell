@@ -7,15 +7,12 @@
 - [x] 已适配
 
 #### 适配系统
-- [x] Alpine
 - [x] Android
 - [x] Arch
-- [x] Centos
+- [ ] Centos
 - [x] Debian
 - [x] Ubuntu
-- [x] Kali
-###### 下面是正在鸽的系统
-- [ ] Fedora
+
 #### 特点
 - [x] 一键化部署
 - [x] 多BOT支持
@@ -26,9 +23,6 @@
 - [x] 插件的安装/更新/卸载
 - [x] ffmpeg安装
 - [x] 签名服务器部署
-###### 下面是正在鸽的功能
-- [ ] 自定义安装目录
-- [ ] python3.10 pip poetry的安装
 
 <br>
 <hr/>

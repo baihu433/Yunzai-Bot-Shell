@@ -111,3 +111,30 @@ if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
             node_install
     fi
 fi
+
+if [ ! -x "/usr/local/bin/ffmpeg" ];then
+  if [ "${GitMirror}" == "github.com" ]
+  then
+    if [ ! -d ffmpeg ];then
+      mkdir ffmpeg
+    fi
+    ffmpegURL=https://johnvansickle.com/ffmpeg/releases/
+    ffmpegURL=${ffmpegURL}ffmpeg-release-${ARCH2}-static.tar.xz
+    wget -O ffmpeg.tar.xz ${ffmpegURL}
+    pv ffmpeg.tar.xz | tar -xf ffmpeg.tar.xz -C ffmpeg
+    chmod +x ffmpeg/$(ls ffmpeg)/*
+    mv -f ffmpeg/$(ls ffmpeg)/ffmpeg /usr/local/bin/ffmpeg
+    mv -f ffmpeg/$(ls ffmpeg)/ffprobe /usr/local/bin/ffprobe
+  elif [ "${GitMirror}" == "gitee.com" ]
+  then
+    echo -e ${yellow}安装软件 ffmpeg${background}
+    ffmpeg_URL=https://registry.npmmirror.com/-/binary/ffmpeg-static/b6.0
+    ffmpegURL=${ffmpeg_URL}/ffmpeg-linux-${ARCH1}
+    ffprobeURL=${ffmpeg_URL}/ffprobe-linux-${ARCH1}
+    wget -O ffmpeg ${ffmpegURL}
+    wget -O ffprobe ${ffprobeURL}
+    chmod +x ffmpeg ffprobe
+    mv -f ffmpeg /usr/local/bin/ffmpeg
+    mv -f ffprobe /usr/local/bin/ffprobe
+  fi
+fi

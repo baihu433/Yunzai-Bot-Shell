@@ -94,12 +94,12 @@ if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
         if awk '{print $2}' /etc/os-release | grep -q -E 9
         then
             version1=v18
-            version2=v18.19.0
+            version2=v18.19.1
             node_install
     elif cat /etc/os-release | grep VERSION | grep -q -E 8
         then
             version1=v18
-            version2=v18.19.0
+            version2=v18.19.1
             node_install
     elif cat /etc/os-release | grep VERSION | grep -q -E 7
         then

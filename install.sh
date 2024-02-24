@@ -124,9 +124,11 @@ function Script_Install(){
     case ${Choice} in 
         1)
             export Git_Mirror=gitee.com
+            raw="/raw"
             ;;
         2)
             export Git_Mirror=raw.githubusercontent.com
+            raw=
             ;;
         *)
             echo -e ${red}输入错误${background}
@@ -134,7 +136,7 @@ function Script_Install(){
             ;;
     esac
     echo -e ${yellow} - ${cyan}正在安装${background}
-    curl https://${Git_Mirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Main.sh > bh
+    curl https://${Git_Mirror}/baihu433/Yunzai-Bot-Shell${raw}/master/Manage/Main.sh > bh
     mv -f bh /usr/local/bin/bh
     chmod +x /usr/local/bin/bh
     echo

@@ -26,29 +26,30 @@ if [ -d $HOME/QSignServer/JRE ];then
     export JAVA_HOME=$HOME/QSignServer/JRE
 fi
 
-if [ -z "${GitMirror}" ];then
-  URL="https://ipinfo.io"
-  Address=$(curl -sL ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
-  if [ "${Address}" = "CN" ]
-  then
-      GitMirror="gitee.com"
-  else
-      GitMirror="github.com"
-  fi
-fi
-
 case $(uname -m) in
     x86_64|amd64)
     ARCH=x64
 ;;
     arm64|aarch64)
-    ARCH=aarch64
+    ARCH=aarch64   
 ;;
 *)
     echo ${red}您的框架为${yellow}$(uname -m)${red},快让白狐做适配.${background}
     exit
 ;;
 esac
+
+URL="https://ipinfo.io"
+Address=$(curl -sL ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
+if [ "${Address}" = "CN" ]
+then
+  GitMirror="gitee.com"
+  GithubMirror="https://mirrors.chenby.cn/"
+else
+  GitMirror="github.com"
+  GithubMirror=""
+fi
+JRE_URL=${GithubMirror}https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2+13/OpenJDK21U-jre_${ARCH}_linux_hotspot_21.0.2_13.tar.gz
 
 function tmux_new(){
 Tmux_Name="$1"
@@ -118,14 +119,6 @@ then
     echo -en ${yellow}回车返回${background};read
 fi
 }
-
-if ping -c 1 gitee.com > /dev/null 2>&1
-then
-    JRE_URL="https://mirrors.tuna.tsinghua.edu.cn/Adoptium/21/jre/${ARCH}/linux/OpenJDK21U-jre_${ARCH}_linux_hotspot_21.0.2_13.tar.gz"
-elif ping -c 1 github.com > /dev/null 2>&1
-then
-    JRE_URL="https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2+13/OpenJDK21U-jre_${ARCH}_linux_hotspot_21.0.2_13.tar.gz"
-fi
 
 Git="https://${GitMirror}/baihu433/QSignServer"
 ScriptVersion="1.1.1"
@@ -218,15 +211,16 @@ if [ -e QSignServer/bin/unidbg-fetch-qsign ];then
   echo -e ${yellow}您已安装签名服务器${background}
   exit
 fi
+
 if [ -e /etc/resolv.conf ]; then
-  if ! grep -q "114.114.114.114" /etc/resolv.conf && grep -q "8.8.8.8" /etc/resolv.conf ;then
+  if ! grep -q "8.8.8.8" /etc/resolv.conf ;then
     cp -f /etc/resolv.conf /etc/resolv.conf.backup
-      echo -e ${yellow}DNS已备份至 /etc/resolv.conf.backup${background}
-      echo "nameserver 114.114.114.114" > /etc/resolv.conf
-      echo "nameserver 8.8.8.8" >> /etc/resolv.conf
-      echo -e ${yellow}DNS已修改为 114.114.114.114 8.8.8.8${background}
+    echo -e ${yellow}DNS已备份至 /etc/resolv.conf.backup${background}
+    echo "nameserver 8.8.8.8" > /etc/resolv.conf
+    echo -e ${yellow}DNS已修改为 8.8.8.8${background}
   fi
 fi
+
 if [ $(command -v apt) ];then
   apt update -y
   apt install -y tar gzip wget curl unzip git tmux pv
@@ -303,6 +297,7 @@ while ${Boolean}
 do 
   sh $HOME/QSignServer/bin/unidbg-fetch-qsign --basePath=$HOME/QSignServer/txlib/${LibraryVersion}
   echo -e ${red}签名服务器关闭 正在重启${background}
+  sleep 2s
 done
 echo -en ${cyan}回车返回${background}
 read
