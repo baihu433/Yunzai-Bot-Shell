@@ -72,7 +72,7 @@ function node_install(){
 if [ "${GitMirror}" == "gitee.com" ]
 then
     NodeJS_URL="https://registry.npmmirror.com/-/binary/node/latest-${version1}.x/node-${version2}-linux-${ARCH}.tar.xz"
-elif [ "${GitMirror}" == "gitee.com" ]
+elif [ "${GitMirror}" == "github.com" ]
 then
     NodeJS_URL="https://nodejs.org/dist/latest-${version1}.x/node-${version2}-linux-${ARCH}.tar.xz"
 fi
@@ -96,29 +96,11 @@ if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
         node_install
 fi
 
-if [ ! -x "/usr/local/bin/ffmpeg" ];then
-  if [ "${GitMirror}" == "github.com" ]
-  then
-    if [ ! -d ffmpeg ];then
-      mkdir ffmpeg
-    fi
-    ffmpegURL=https://johnvansickle.com/ffmpeg/releases/
-    ffmpegURL=${ffmpegURL}ffmpeg-release-${ARCH2}-static.tar.xz
-    wget -O ffmpeg.tar.xz ${ffmpegURL}
-    pv ffmpeg.tar.xz | tar -xf ffmpeg.tar.xz -C ffmpeg
-    chmod +x ffmpeg/$(ls ffmpeg)/*
-    mv -f ffmpeg/$(ls ffmpeg)/ffmpeg /usr/local/bin/ffmpeg
-    mv -f ffmpeg/$(ls ffmpeg)/ffprobe /usr/local/bin/ffprobe
-  elif [ "${GitMirror}" == "gitee.com" ]
-  then
-    echo -e ${yellow}安装软件 ffmpeg${background}
-    ffmpeg_URL=https://registry.npmmirror.com/-/binary/ffmpeg-static/b6.0
-    ffmpegURL=${ffmpeg_URL}/ffmpeg-linux-${ARCH1}
-    ffprobeURL=${ffmpeg_URL}/ffprobe-linux-${ARCH1}
-    wget -O ffmpeg ${ffmpegURL}
-    wget -O ffprobe ${ffprobeURL}
-    chmod +x ffmpeg ffprobe
-    mv -f ffmpeg /usr/local/bin/ffmpeg
-    mv -f ffprobe /usr/local/bin/ffprobe
-  fi
+if ! dpkg -s ffmpeg >/dev/null 2>&1; then
+    echo -e ${yellow}安装ffmpeg${background}
+    until apt install -y ffmpeg
+    do
+        echo -e ${red}安装失败 3秒后重试${background}
+        sleep 3s
+    done
 fi
