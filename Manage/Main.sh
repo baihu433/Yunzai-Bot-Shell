@@ -643,10 +643,6 @@ case ${Number} in
         MirrorCheck
         URL="https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage"
         bash <(curl -sL ${URL}/QSignServer.sh)
-        ;;
-            0)
-        exit 0
-        ;;
 esac
 }
 function mainbak()
