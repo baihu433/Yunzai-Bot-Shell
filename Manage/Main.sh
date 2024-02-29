@@ -268,13 +268,13 @@ esac
 ##############################
 old_version="1.0.7"
 MirrorCheck
-URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
+URL=https://${GitMirror}/laomu61996/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
 new_version="$(echo ${version_date} | grep version | awk '{print $2}' )"
 if [ "${new_version}" != "${old_version}" ];then
     echo -e ${cyan}正在更新${background}
-    #echo -e https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Main.sh
-    curl -o bh https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Main.sh
+    #echo -e https://${GitMirror}/laomu61996/Yunzai-Bot-Shell/raw/master/Manage/Main.sh
+    curl -o bh https://${GitMirror}/laomu61996/Yunzai-Bot-Shell/raw/master/Manage/Main.sh
     if bash bh help > /dev/null 2>&1
     then
         rm /usr/local/bin/bh
@@ -454,7 +454,7 @@ case $1 in
     then
         bash <(curl -sL https://mirrors.chenby.cn/https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/Manage/BOT-PlugIn.sh)
     else 
-        bash <(curl -sL https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/Manage/BOT-PlugIn.sh)
+        bash <(curl -sL https://raw.githubusercontent.com/laomu61996/Yunzai-Bot-Shell/master/Manage/BOT-PlugIn.sh)
     fi
     ;;
 esac
@@ -559,7 +559,7 @@ case ${Number} in
         ;;
     9)
         MirrorCheck
-        bash <(curl -sL https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/OtherFunctions.sh)
+        bash <(curl -sL https://${GitMirror}/laomu61996/Yunzai-Bot-Shell/raw/master/Manage/OtherFunctions.sh)
         ;;
     0)
         return
@@ -582,7 +582,7 @@ esac
 MirrorCheck
 command_all="BOT-PKG.sh BOT_INSTALL.sh BOT-NODE.JS.sh GitBot.sh"
 i=1
-URL="https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage"
+URL="https://${GitMirror}/laomu61996/Yunzai-Bot-Shell/raw/master/Manage"
 for command in ${command_all}
 do
   until bash <(curl -sL ${URL}/${command})
@@ -641,7 +641,7 @@ case ${Number} in
         ;;
     3)
         MirrorCheck
-        URL="https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage"
+        URL="https://${GitMirror}/laomu61996/Yunzai-Bot-Shell/raw/master/Manage"
         bash <(curl -sL ${URL}/QSignServer.sh)
         ;;
     0)
