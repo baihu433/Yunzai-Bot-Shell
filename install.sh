@@ -102,7 +102,7 @@ function Script_Install(){
           GitMirror="github.com"
       fi
     fi
-    URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
+    URL=https://${GitMirror}/laomu61996/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl ${URL})
     version="$(echo ${version_date} | grep version | awk '{print $2}' )"
     date="$(echo ${version_date} | grep date | awk '{print $4}' )"
@@ -136,7 +136,7 @@ function Script_Install(){
             ;;
     esac
     echo -e ${yellow} - ${cyan}正在安装${background}
-    curl https://${Git_Mirror}/baihu433/Yunzai-Bot-Shell${raw}/master/Manage/Main.sh > bh
+    curl https://${Git_Mirror}/laomu61996/Yunzai-Bot-Shell${raw}/master/Manage/Main.sh > bh
     mv -f bh /usr/local/bin/bh
     chmod +x /usr/local/bin/bh
     echo
