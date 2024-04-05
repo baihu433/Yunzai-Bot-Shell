@@ -14,6 +14,16 @@ if [ "${Address}" = "CN" ]
 then
     GitHubMirror="https://mirrors.chenby.cn/"
 fi
+
+if [ -d /usr/local/node/bin ];then
+    PATH=$PATH:/usr/local/node/bin
+    if [ ! -d $HOME/.local/share/pnpm ];then
+        mkdir -p $HOME/.local/share/pnpm
+    fi
+    PATH=$PATH:/root/.local/share/pnpm
+    PNPM_HOME=/root/.local/share/pnpm
+fi
+
 function backmain(){
 echo
 echo -en ${cyan}回车返回${background}

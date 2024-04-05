@@ -61,7 +61,7 @@ fi
 }
 ##############################
 Runing(){
-if pnpm pm2 list | grep -q ${BotName} | grep -q online
+if $(pnpm pm2 show ${BotName} 2>&1 | grep -q online)
 then
   echo -e ${red}程序进入后台运行 ${cyan}正在转为前台${background}
   pnpm pm2 stop ${BotName}
@@ -266,7 +266,7 @@ Runing
 ;;
 esac
 ##############################
-old_version="1.0.7"
+old_version="1.0.8"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})
@@ -300,7 +300,7 @@ then
 elif ps all | sed /grep/d | grep -q "${BOT_COMMAND}"
 then
     return 2
-elif pnpm pm2 list | grep -q ${BotName} | grep -q online
+elif pnpm pm2 show ${BotName} 2>&1 | grep -q online
 then
     return 3
 else
@@ -316,7 +316,7 @@ do
   sleep 0.05s
   echo -e ${i}
   if [[ "${i}" == "100" ]];then
-    echo -e "错误: 启动失败\n错误原因: $(TmuxAttach)"
+    echo -e "错误: 启动失败\n错误原因: $(node )"
     backmain
     return 1
   fi
@@ -330,6 +330,7 @@ then
 fi
 }
 TmuxAttach(){
+#echo $TmuxName
 if ! tmux attach -t ${TmuxName} > /dev/null 2>&1
 then
   error=$(tmux attach -t ${TmuxName} 2>&1)
@@ -339,10 +340,13 @@ fi
 AttachPage(){
 RunningState="$1"
 TWPL="$2"
+RunningState
 if (${DialogWhiptail} --yesno "${BotName} [已"${RunningState}"] \n是否打开${BotName}${TWPL}" 8 50)
 then
-  if [ ${res} -eq 2 ];then
+  if [ ${res} -eq 1 ];then
     TmuxAttach
+  elif [ ${res} -eq 2 ];then
+      ${DialogWhiptail} --title "白狐-Script" --msgbox "${BotName}已在前台运行" 10 60
   elif [ ${res} -eq 3 ];then
     pnpm pm2 log ${BotName}
   fi
