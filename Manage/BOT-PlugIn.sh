@@ -1014,10 +1014,10 @@ done
         echo -en ${green}请输入您需要安装插件的序号,可以多选,用[空格]分开:${background}
         Single_Choice="false"
         read -p " " number
-        if [ "${Number}" == "0" ];then
+        if [ "${number}" == "0" ];then
             main
             exit
-        elif [ -z ${Number} ];then
+        elif [ -z ${number} ];then
             echo
             echo -en ${red}输入错误 ${cyan}回车返回${background};read
             main
