@@ -95,12 +95,3 @@ if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
         version2=v18.19.1
         node_install
 fi
-
-if ! dpkg -s ffmpeg >/dev/null 2>&1; then
-    echo -e ${yellow}安装ffmpeg${background}
-    until apt install -y ffmpeg
-    do
-        echo -e ${red}安装失败 3秒后重试${background}
-        sleep 3s
-    done
-fi
