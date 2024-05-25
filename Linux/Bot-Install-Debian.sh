@@ -71,9 +71,13 @@ esac
 function node_install(){
 if [ "${GitMirror}" == "gitee.com" ]
 then
+    WebURL="https://mirrors.bfsu.edu.cn/nodejs-release/"
+    version2=$(curl ${WebURL} | grep v18.20 | grep -oP 'href=\K[^ ]+' | sed 's|"||g' | sed 's|/||g' | tail -n 1)
     NodeJS_URL="https://registry.npmmirror.com/-/binary/node/latest-${version1}.x/node-${version2}-linux-${ARCH}.tar.xz"
 elif [ "${GitMirror}" == "github.com" ]
 then
+    WebURL="https://nodejs.org/dist/latest-v18.x/"
+    version2=$(curl ${WebURL} | grep v18.20 | grep -oP 'href=\K[^ ]+' | awk -F'"' '{print $2}' | grep pkg  | sed 's|node-||g' | sed 's|.pkg||g')
     NodeJS_URL="https://nodejs.org/dist/latest-${version1}.x/node-${version2}-linux-${ARCH}.tar.xz"
 fi
 until wget -O node.tar.xz -c ${NodeJS_URL}
@@ -92,6 +96,6 @@ done
 if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
     echo -e ${yellow}安装软件 Node.JS${background}
         version1=v18
-        version2=v18.20.2
+        version2=v18.20
         node_install
 fi

@@ -70,10 +70,14 @@ esac
 function node_install(){
 if [ "${GitMirror}" == "gitee.com" ]
 then
-    NodeJS_URL="https://registry.npmmirror.com/-/binary/node/latest-${version1}.x/node-${version2}-linux-${ARCH}.tar.xz"
+    WebURL="https://mirrors.bfsu.edu.cn/nodejs-release/"
+    version3=$(curl ${WebURL} | grep ${version2} | grep -oP 'href=\K[^ ]+' | sed 's|"||g' | sed 's|/||g' | tail -n 1)
+    NodeJS_URL="https://registry.npmmirror.com/-/binary/node/latest-${version1}.x/node-${version3}-linux-${ARCH}.tar.xz"
 elif [ "${GitMirror}" == "github.com" ]
 then
-    NodeJS_URL="https://nodejs.org/dist/latest-${version1}.x/node-${version2}-linux-${ARCH}.tar.xz"
+    WebURL="https://nodejs.org/dist/latest-v18.x/"
+    version3=$(curl ${WebURL} | grep ${version2} | grep -oP 'href=\K[^ ]+' | awk -F'"' '{print $2}' | grep pkg  | sed 's|node-||g' | sed 's|.pkg||g')
+    NodeJS_URL="https://nodejs.org/dist/latest-${version1}.x/node-${version3}-linux-${ARCH}.tar.xz"
 fi
 until wget -O node.tar.xz -c ${NodeJS_URL}
 do
@@ -93,21 +97,21 @@ if ! [[ "$Nodsjs_Version" == "v16" || "$Nodsjs_Version" == "v18" ]];then
     if awk '{print $2}' /etc/issue | grep -q -E 22.*
         then
             version1=v18
-            version2=v18.20.2
+            version2=v18.20
             node_install
     elif awk '{print $2}' /etc/issue | grep -q -E 23.*
         then
             version1=v18
-            version2=v18.20.2
+            version2=v18.20
             node_install
     elif awk '{print $2}' /etc/issue | grep -q -E 24.*
         then
             version1=v18
-            version2=v18.20.2
+            version2=v18.20
             node_install
     else
             version1=v16
-            version2=v16.20.2
+            version2=v16.20
             node_install
     fi
 fi

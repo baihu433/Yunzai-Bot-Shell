@@ -125,6 +125,7 @@ if [ ! -x "/usr/local/bin/ffmpeg" ];then
     chmod +x ffmpeg/$(ls ffmpeg)/*
     mv -f ffmpeg/$(ls ffmpeg)/ffmpeg /usr/local/bin/ffmpeg
     mv -f ffmpeg/$(ls ffmpeg)/ffprobe /usr/local/bin/ffprobe
+    rm -rf ffmpeg*
   elif [ "${GitMirror}" == "gitee.com" ]
   then
     echo -e ${yellow}安装软件 ffmpeg${background}
@@ -136,5 +137,6 @@ if [ ! -x "/usr/local/bin/ffmpeg" ];then
     chmod +x ffmpeg ffprobe
     mv -f ffmpeg /usr/local/bin/ffmpeg
     mv -f ffprobe /usr/local/bin/ffprobe
+    rm -rf ffmpeg*
   fi
 fi
