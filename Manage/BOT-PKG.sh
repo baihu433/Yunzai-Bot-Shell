@@ -124,19 +124,14 @@ if [ ! -x "/usr/local/bin/ffmpeg" ];then
     pv ffmpeg.tar.xz | tar -xf ffmpeg.tar.xz -C ffmpeg
     chmod +x ffmpeg/$(ls ffmpeg)/*
     mv -f ffmpeg/$(ls ffmpeg)/ffmpeg /usr/local/bin/ffmpeg
-    mv -f ffmpeg/$(ls ffmpeg)/ffprobe /usr/local/bin/ffprobe
     rm -rf ffmpeg*
   elif [ "${GitMirror}" == "gitee.com" ]
   then
     echo -e ${yellow}安装软件 ffmpeg${background}
-    ffmpeg_URL=https://registry.npmmirror.com/-/binary/ffmpeg-static/b6.0
-    ffmpegURL=${ffmpeg_URL}/ffmpeg-linux-${ARCH1}
-    ffprobeURL=${ffmpeg_URL}/ffprobe-linux-${ARCH1}
+    ffmpeg_URL=https://registry.npmmirror.com/-/binary/ffmpeg-static/b6.0/
     wget -O ffmpeg ${ffmpegURL}
-    wget -O ffprobe ${ffprobeURL}
-    chmod +x ffmpeg ffprobe
+    chmod +x ffmpeg
     mv -f ffmpeg /usr/local/bin/ffmpeg
-    mv -f ffprobe /usr/local/bin/ffprobe
     rm -rf ffmpeg*
   fi
 fi
