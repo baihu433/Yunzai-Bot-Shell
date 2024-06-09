@@ -98,11 +98,12 @@ function Script_Install(){
       if [ "${Address}" = "CN" ]
       then
           GitMirror="gitee.com"
+          URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version"
       else 
           GitMirror="raw.githubusercontent.com"
+          URL="https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/version"
       fi
     fi
-    URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
     version_date=$(curl ${URL})
     version="$(echo ${version_date} | grep version | awk '{print $2}' )"
     date="$(echo ${version_date} | grep date | awk '{print $4}' )"
@@ -124,7 +125,7 @@ function Script_Install(){
     case ${Choice} in 
         1)
             export Git_Mirror=gitee.com
-            URL="https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/Manage/Main.sh"
+            URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Main.sh"
             ;;
         2)
             export Git_Mirror=github
