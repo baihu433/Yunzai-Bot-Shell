@@ -56,7 +56,7 @@ if [ ${Address} = "CN" ]
 then
     export GitMirror="gitee.com"
 else 
-    export GitMirror="github.com"
+    export GitMirror="raw.githubusercontent.com"
 fi
 }
 ##############################
@@ -266,7 +266,7 @@ Runing
 ;;
 esac
 ##############################
-old_version="1.0.8"
+old_version="1.1.0"
 MirrorCheck
 URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
 version_date=$(curl -sL ${URL})

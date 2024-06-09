@@ -7,9 +7,10 @@ if [ -z "${GitMirror}" ];then
       GitMirror="gitee.com"
   else 
       GitMirror="github.com"
+      GitMirrorSource="raw.githubusercontent.com"
   fi
 fi
-URL="https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage"
+URL="https://${GitMirrorSource}/baihu433/Yunzai-Bot-Shell/raw/master/Manage"
 install_Bot(){
   if [ "${BotName}" == "Miao-Yunzai" ]
   then

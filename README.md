@@ -187,6 +187,7 @@ bash <(curl -sL https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/QS
 |好心人|2元|
 |想白佬的第N天|1.68元|
 |焦糖白茶.很吉利喵~|1.23元|
+|気|1.1元|
 |汐鸢|1元|
 |承影|1元|
 |百草(白狐准新郎)|0.52元|
