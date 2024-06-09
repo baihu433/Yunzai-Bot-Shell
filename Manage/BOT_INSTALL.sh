@@ -1,15 +1,11 @@
 #!/bin/env bash
-if [ -z "${GitMirror}" ];then
-  URL="https://ipinfo.io"
-  Address=$(curl ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
-  if [ "${Address}" = "CN" ]
-  then
-      GitMirror="gitee.com"
-  else 
-      GitMirror="raw.githubusercontent.com"
-  fi
+if ping -c 1 gitee.com > /dev/null 2>&1
+then
+  URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Linux/Bot-Install-"
+elif ping -c 1 github.com > /dev/null 2>&1
+then
+  URL="https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/Linux/Bot-Install-"
 fi
-URL="https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Linux/Bot-Install-"
 Arch_Script="${URL}ArchLinux.sh"
 Kernel_Script="${URL}CentOS.sh"
 Ubuntu_Script="${URL}Ubuntu.sh"

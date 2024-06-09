@@ -594,7 +594,6 @@ case $(uname -m) in
     exit
 ;;
 esac
-MirrorCheck
 command_all="BOT-PKG.sh BOT_INSTALL.sh BOT-NODE.JS.sh GitBot.sh"
 i=1
 if ping -c 1 gitee.com > /dev/null 2>&1
