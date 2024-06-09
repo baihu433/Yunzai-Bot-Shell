@@ -266,15 +266,13 @@ Runing
 ;;
 esac
 ##############################
-old_version="1.1.0"
-MirrorCheck
-URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
-version_date=$(curl -sL ${URL})
+function UPDATE(){
+version_date=$(curl -sL ${VersionURL})
 new_version="$(echo ${version_date} | grep version | awk '{print $2}' )"
 if [ "${new_version}" != "${old_version}" ];then
     echo -e ${cyan}正在更新${background}
     #echo -e https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Main.sh
-    curl -o bh https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Main.sh
+    curl -o bh ${URL}
     if bash bh help > /dev/null 2>&1
     then
         rm /usr/local/bin/bh
@@ -285,6 +283,17 @@ if [ "${new_version}" != "${old_version}" ];then
         echo -en ${red}出现错误 跳过更新 ${cyan}回车继续${background};read
         rm bh
     fi
+fi
+}
+old_version="1.1.1"
+if ping -c 1 gitee.com > /dev/null 2>&1
+  VersionURL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version"
+  URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Main.sh"
+  UPDATE
+elif ping -c 1 github.com > /dev/null 2>&1
+  VersionURL="https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/version"
+  URL="https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/Manage/Main.sh"
+  UPDATE
 fi
 ##############################
 function feedback(){

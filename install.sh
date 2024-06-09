@@ -124,11 +124,11 @@ function Script_Install(){
     case ${Choice} in 
         1)
             export Git_Mirror=gitee.com
-            URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/install.sh"
+            URL="https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/Manage/Main.sh"
             ;;
         2)
             export Git_Mirror=github
-            URL="https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/install.sh"
+            URL="https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/Manage/Main.sh"
             ;;
         *)
             echo -e ${red}输入错误${background}
