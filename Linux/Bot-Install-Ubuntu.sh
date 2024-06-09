@@ -53,10 +53,12 @@ fi
 
 case $(uname -m) in
     x86_64|amd64)
-    ARCH=x64
+    ARCH1=x64
+    ARCH2=amd64
 ;;
     arm64|aarch64)
-    ARCH=arm64
+    ARCH1=arm64
+    ARCH2=arm64
 ;;
 *)
     echo ${red}您的框架为${yellow}$(uname -m)${red},快让白狐做适配.${background}
