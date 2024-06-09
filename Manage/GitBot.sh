@@ -1,14 +1,14 @@
 #!/bin/env bash
-URL="https://ipinfo.io"
-Address=$(curl -sL ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
-if [ "${Address}" = "CN" ]
+if ping -c 1 gitee.com > /dev/null 2>&1
 then
-    GitMirror="gitee.com"
-    URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage"
-else 
-    GitMirror="github.com"
-    URL="https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/Manage"
+  GitMirror="gitee.com"
+  URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage"
+elif ping -c 1 github.com > /dev/null 2>&1
+then
+  GitMirror="github.com"
+  URL="https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/Manage"
 fi
+
 install_Bot(){
   if [ "${BotName}" == "Miao-Yunzai" ]
   then
