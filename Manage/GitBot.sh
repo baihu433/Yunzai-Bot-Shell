@@ -5,12 +5,12 @@ if [ -z "${GitMirror}" ];then
   if [ "${Address}" = "CN" ]
   then
       GitMirror="gitee.com"
+      URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage"
   else 
       GitMirror="github.com"
-      GitMirrorSource="raw.githubusercontent.com"
+      URL="https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/Manage"
   fi
 fi
-URL="https://${GitMirrorSource}/baihu433/Yunzai-Bot-Shell/raw/master/Manage"
 install_Bot(){
   if [ "${BotName}" == "Miao-Yunzai" ]
   then

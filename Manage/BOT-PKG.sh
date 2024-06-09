@@ -111,27 +111,3 @@ case $(uname -m) in
     exit
 ;;
 esac
-
-if [ ! -x "/usr/local/bin/ffmpeg" ];then
-  if [ "${GitMirror}" == "github.com" ]
-  then
-    if [ ! -d ffmpeg ];then
-      mkdir ffmpeg
-    fi
-    ffmpegURL=https://johnvansickle.com/ffmpeg/releases/
-    ffmpegURL=${ffmpegURL}ffmpeg-release-${ARCH2}-static.tar.xz
-    wget -O ffmpeg.tar.xz ${ffmpegURL}
-    pv ffmpeg.tar.xz | tar -xf ffmpeg.tar.xz -C ffmpeg
-    chmod +x ffmpeg/$(ls ffmpeg)/*
-    mv -f ffmpeg/$(ls ffmpeg)/ffmpeg /usr/local/bin/ffmpeg
-    rm -rf ffmpeg*
-  elif [ "${GitMirror}" == "gitee.com" ]
-  then
-    echo -e ${yellow}安装软件 ffmpeg${background}
-    ffmpeg_URL=https://registry.npmmirror.com/-/binary/ffmpeg-static/b6.0/
-    wget -O ffmpeg ${ffmpegURL}
-    chmod +x ffmpeg
-    mv -f ffmpeg /usr/local/bin/ffmpeg
-    rm -rf ffmpeg*
-  fi
-fi
