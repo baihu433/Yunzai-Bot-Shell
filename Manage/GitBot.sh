@@ -1,6 +1,6 @@
 #!/bin/env bash
 URL="https://ipinfo.io"
-Address=$(curl ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
+Address=$(curl -sL ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
 if [ "${Address}" = "CN" ]
 then
     GitMirror="gitee.com"

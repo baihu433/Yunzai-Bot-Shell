@@ -9,15 +9,12 @@ export cyan="\033[36m"
 export white="\033[37m"
 export background="\033[0m"
 
-if [ -z "${GitMirror}" ];then
-  URL="https://ipinfo.io"
-  Address=$(curl ${URL} | sed -n 's/.*"country": "\(.*\)",.*/\1/p')
-  if [ "${Address}" = "CN" ]
-  then
-      GitMirror="gitee.com"
-  else 
-      GitMirror="github.com"
-  fi
+if ping -c 1 gitee.com > /dev/null 2>&1
+then
+  GitMirror="gitee.com"
+elif ping -c 1 github.com > /dev/null 2>&1
+then
+  GitMirror="github.com"
 fi
 
 if ! pacman -Qs xz >/dev/null 2>&1
