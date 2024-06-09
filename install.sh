@@ -99,7 +99,7 @@ function Script_Install(){
       then
           GitMirror="gitee.com"
       else 
-          GitMirror="github.com"
+          GitMirror="raw.githubusercontent.com"
       fi
     fi
     URL=https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/version
