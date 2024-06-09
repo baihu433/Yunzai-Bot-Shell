@@ -285,12 +285,14 @@ if [ "${new_version}" != "${old_version}" ];then
     fi
 fi
 }
-old_version="1.1.1"
+old_version="1.1.2"
 if ping -c 1 gitee.com > /dev/null 2>&1
+then
   VersionURL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version"
   URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage/Main.sh"
   UPDATE
 elif ping -c 1 github.com > /dev/null 2>&1
+then
   VersionURL="https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/version"
   URL="https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/Manage/Main.sh"
   UPDATE
