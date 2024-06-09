@@ -285,7 +285,7 @@ if [ "${new_version}" != "${old_version}" ];then
     fi
 fi
 }
-old_version="1.1.2"
+old_version="1.1.3"
 if ping -c 1 gitee.com > /dev/null 2>&1
 then
   VersionURL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/version"
@@ -597,7 +597,13 @@ esac
 MirrorCheck
 command_all="BOT-PKG.sh BOT_INSTALL.sh BOT-NODE.JS.sh GitBot.sh"
 i=1
-URL="https://${GitMirror}/baihu433/Yunzai-Bot-Shell/raw/master/Manage"
+if ping -c 1 gitee.com > /dev/null 2>&1
+then
+  URL="https://gitee.com/baihu433/Yunzai-Bot-Shell/raw/master/Manage"
+elif ping -c 1 github.com > /dev/null 2>&1
+then
+  URL="https://raw.githubusercontent.com/baihu433/Yunzai-Bot-Shell/master/Manage"
+fi
 for command in ${command_all}
 do
   until bash <(curl -sL ${URL}/${command})
